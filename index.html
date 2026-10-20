@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ipanema Beauty & Spa, Orlando: brows, Brazilian wax and hair. Book, tips and reminders.">
+<title>Ipanema Beauty & Spa</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Ipanema Beauty &amp; Spa">
+<meta name="theme-color" content="#f2f2f2">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="icon" href="img/icon-192.png">
+<style>
+/* Layout: iOS-style app. Official palette from the Ipanema logo kit: grays (primary), cream, sage; teal only inside the logo/symbol. */
+:root{
+  --bg:#f2f2f2; --surface:#ffffff; --surface-2:#f2f2f2; --fg:#333333; --fg-2:#4d4d4d; --muted:#8c8c8c;
+  --accent:#4d4d4d; --on-accent:#ffffff; --soft:#ebe7d2; --sage:#bec6b8;
+  --sep:rgba(51,51,51,.12); --glass:rgba(242,242,242,.82); --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 24px rgba(0,0,0,.06);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --r-lg:22px; --r-md:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#141414; --surface:#1f1f1f; --surface-2:#2b2b2b; --fg:#f2f2f2; --fg-2:#d6d6d6; --muted:#9a9a9a;
+  --accent:#ebe7d2; --on-accent:#1f1f1f; --soft:#3a3833; --sage:#5b6356;
+  --sep:rgba(255,255,255,.12); --glass:rgba(24,24,24,.82); --shadow:none; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141414; --surface:#1f1f1f; --surface-2:#2b2b2b; --fg:#f2f2f2; --fg-2:#d6d6d6; --muted:#9a9a9a;
+  --accent:#ebe7d2; --on-accent:#1f1f1f; --soft:#3a3833; --sage:#5b6356;
+  --sep:rgba(255,255,255,.12); --glass:rgba(24,24,24,.82); --shadow:none; color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:17px;line-height:1.35;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+*{box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+.wrap{max-width:600px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:.5px solid var(--sep)}
+.topbar .wrap{display:flex;align-items:center;gap:10px;padding-block:8px}
+.logo-chip{display:block;margin-left:-4px}
+.logo{height:58px;width:auto;display:block}
+.dk-only{display:none!important}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .dk-only{display:block!important}:root:not([data-theme="light"]) .lt-only{display:none!important}}
+:root[data-theme="dark"] .dk-only{display:block!important}:root[data-theme="dark"] .lt-only{display:none!important}
+.spacer{flex:1}
+.lang{display:grid;grid-auto-flow:column;background:var(--surface-2);border-radius:999px;padding:2px}
+.lang button{border:0;background:none;color:var(--muted);font:700 12px var(--font);padding:6px 8px;border-radius:999px;cursor:pointer;min-width:34px}
+.lang button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:15px;border-radius:999px;padding:8px 16px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;font-family:var(--font)}
+.pill.soft{background:var(--soft);color:var(--fg)}
+.pill.big{font-size:17px;padding:14px 22px;width:100%}
+section.screen{display:grid;gap:22px;padding-block:8px 24px}
+section.screen[hidden]{display:none}
+.lt{font-size:34px;font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:14px 0 0;text-wrap:balance}
+.sub{color:var(--muted);font-size:15px;margin-top:4px}
+h2{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:0;text-wrap:balance}
+h3{font-size:17px;font-weight:600;margin:0}
+p{margin:0}
+.caption{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.02em;padding:0 16px 6px}
+.foot{font-size:13px;color:var(--muted);padding:6px 16px 0}
+.card{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+.brand{display:grid;place-items:center;padding:22px 6px 6px;background:radial-gradient(60% 70% at 50% 45%,rgba(255,255,255,.9),rgba(255,255,255,0) 70%)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{background:radial-gradient(60% 70% at 50% 45%,rgba(255,255,255,.07),rgba(255,255,255,0) 70%)}}
+:root[data-theme="dark"] .brand{background:radial-gradient(60% 70% at 50% 45%,rgba(255,255,255,.07),rgba(255,255,255,0) 70%)}
+.brand img{width:min(100%,440px);height:auto}
+/* brows hero */
+.bhero{position:relative}
+.bhero .ph{position:relative;aspect-ratio:4/5;background:var(--surface-2)}
+.bhero .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bhero .ph .tag{position:absolute;left:14px;top:14px;background:rgba(255,255,255,.88);color:#333;font:700 12px var(--font);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;backdrop-filter:blur(8px)}
+.bhero .in{padding:20px;display:grid;gap:10px}
+.bhero h1{font-size:30px;font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:0;text-wrap:balance}
+.bhero p{color:var(--fg-2);font-size:16px}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.thumbs button{border:0;padding:0;border-radius:12px;overflow:hidden;aspect-ratio:1;cursor:pointer;background:var(--surface-2)}
+.thumbs img{width:100%;height:100%;object-fit:cover;display:block}
+/* quick */
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.quick button{background:var(--surface);border:0;border-radius:18px;box-shadow:var(--shadow);padding:14px 4px 12px;display:grid;justify-items:center;gap:8px;color:var(--fg);font:600 12px var(--font);cursor:pointer}
+.quick .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--soft);color:var(--fg)}
+.quick svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.offer{display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:18px}
+.price-xl{font-size:40px;font-weight:700;letter-spacing:-.03em;line-height:1}
+.price-xl s{display:block;font-size:13px;color:var(--muted);font-weight:500;letter-spacing:0;margin-top:4px}
+/* lists */
+.group{background:var(--surface);border-radius:var(--r-md);overflow:hidden;box-shadow:var(--shadow)}
+.row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 12px;padding:12px 16px;position:relative;text-decoration:none;color:inherit}
+.row+.row::before{content:"";position:absolute;top:0;left:16px;right:0;border-top:.5px solid var(--sep)}
+.row .t{font-size:17px}
+.row .d{font-size:13px;color:var(--muted);grid-column:1}
+.row .v{grid-row:1 / span 2;grid-column:2;font-weight:600;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.row .badge{display:inline-block;font-size:11px;font-weight:700;color:var(--fg);background:var(--soft);border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:2px}
+.row.link .v{font-weight:500;color:var(--fg-2)}
+.chev .v::after{content:"›";color:var(--muted);font-size:22px;margin-left:6px;font-weight:400}
+.segmented{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;background:var(--surface-2);border-radius:10px;padding:2px;gap:2px}
+.segmented button{border:0;background:transparent;color:var(--fg);font:600 13px var(--font);padding:7px 2px;border-radius:8px;cursor:pointer}
+.segmented button[aria-pressed="true"]{background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+/* gallery */
+.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;border-radius:var(--r-md);overflow:hidden}
+.gal button{border:0;padding:0;background:var(--surface-2);aspect-ratio:3/4;cursor:zoom-in}
+.gal img{width:100%;height:100%;object-fit:cover;display:block}
+.strip{display:grid;grid-auto-flow:column;grid-auto-columns:42%;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px;scrollbar-width:none}
+.strip::-webkit-scrollbar{display:none}
+.strip button{scroll-snap-align:start;border:0;padding:0;border-radius:16px;overflow:hidden;aspect-ratio:3/4;background:var(--surface-2);cursor:zoom-in}
+.strip img{width:100%;height:100%;object-fit:cover;display:block}
+.catph{border-radius:var(--r-lg);overflow:hidden;aspect-ratio:16/10;position:relative}
+.catph img{width:100%;height:100%;object-fit:cover;display:block}
+.lightbox{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.92);display:grid;place-items:center;padding:calc(20px + env(safe-area-inset-top,0px)) 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.lightbox img{max-height:82vh;max-width:100%;border-radius:12px}
+.lightbox button{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:calc(14px + env(safe-area-inset-right,0px));background:rgba(255,255,255,.18);color:#fff;border:0;border-radius:999px;width:36px;height:36px;font-size:18px;cursor:pointer}
+/* tips */
+details{background:var(--surface);border-radius:var(--r-md);box-shadow:var(--shadow);padding:0 16px}
+details+details{margin-top:10px}
+summary{list-style:none;cursor:pointer;padding:15px 0;display:flex;align-items:center;gap:12px;font-weight:600}
+summary::-webkit-details-marker{display:none}
+summary .em{width:34px;height:34px;border-radius:10px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto}
+summary .em svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+summary .s{flex:1;min-width:0}
+summary .s small{display:block;font-weight:400;font-size:13px;color:var(--muted)}
+summary::after{content:"›";color:var(--muted);font-size:22px;transition:transform .2s}
+details[open] summary::after{transform:rotate(90deg)}
+details .body{padding:0 0 16px 46px;display:grid;gap:10px;font-size:15px;color:var(--fg-2)}
+details ul{margin:0;padding-left:18px;display:grid;gap:6px}
+.when{font-size:12px;font-weight:700;color:var(--fg);text-transform:uppercase;letter-spacing:.04em}
+/* planner */
+.planner{padding:16px;display:grid;gap:14px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:380px){.fields{grid-template-columns:1fr}}
+label{font-size:13px;color:var(--muted);display:block;margin-bottom:4px}
+select,input[type=date]{width:100%;font:16px var(--font);color:var(--fg);background:var(--surface-2);border:0;border-radius:10px;padding:11px 12px;min-height:44px}
+.result{background:var(--soft);border-radius:14px;padding:14px;display:grid;gap:4px}
+.result .big{font-size:26px;font-weight:700;letter-spacing:-.02em}
+.result .small{font-size:14px;color:var(--fg-2)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.note{display:flex;gap:12px;align-items:flex-start;padding:14px 16px}
+.note svg{width:22px;height:22px;flex:0 0 auto;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.note p{font-size:14px;color:var(--fg-2)}
+.toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:80;background:#333;color:#fff;font-size:14px;padding:12px 16px;border-radius:14px;max-width:min(92vw,420px);box-shadow:0 8px 24px rgba(0,0,0,.25)}
+/* club */
+.pkg{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;padding:16px}
+.pkg+.pkg{border-top:.5px solid var(--sep)}
+.pkg .n{width:46px;height:46px;border-radius:14px;background:linear-gradient(160deg,#666,#333);color:#fff;display:grid;place-items:center;font-weight:700;font-size:15px}
+.pkg .p{font-size:22px;font-weight:700;letter-spacing:-.02em}
+.copybtn{border:0;background:var(--soft);color:var(--fg);font:600 13px var(--font);border-radius:999px;padding:6px 12px;cursor:pointer}
+.mono{font-variant-numeric:tabular-nums;user-select:all}
+.about{display:flex;gap:14px;align-items:center;padding:16px}
+.symbol{height:64px;width:auto}
+/* booking sheet */
+.sheet{position:fixed;inset:0;z-index:60;background:var(--surface);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+.sheet[hidden]{display:none}
+.sheet-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:10px 16px;border-bottom:.5px solid var(--sep);font-weight:600}
+.sheet-bar button{justify-self:start;background:none;border:0;font:600 17px var(--font);color:var(--fg);cursor:pointer;padding:6px 0}
+.sheet-bar a{justify-self:end;color:var(--muted);font-size:13px;text-decoration:none}
+.sheet iframe{flex:1;width:100%;border:0;background:#fff}
+@media (prefers-reduced-motion: no-preference){.sheet:not([hidden]){animation:up .3s cubic-bezier(.2,.8,.2,1)}section.screen:not([hidden]){animation:rise .28s cubic-bezier(.2,.8,.2,1)}}
+@keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+@keyframes rise{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+/* tab bar */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+nav.tabs .in{max-width:600px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs button{background:none;border:0;color:var(--muted);font:500 10px var(--font);padding:7px 2px 6px;display:grid;justify-items:center;gap:3px;cursor:pointer}
+nav.tabs svg{width:25px;height:25px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs button[aria-selected="true"]{color:var(--fg)}
+nav.tabs button[aria-selected="true"] svg{fill:var(--soft)}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <span class="logo-chip"><img class="logo lt-only" src="img/logo3d.png" alt="Ipanema Beauty & Spa"><img class="logo dk-only" src="img/logo3d-dark.png" alt="Ipanema Beauty & Spa"></span>
+  <span class="spacer"></span>
+  <div class="lang" role="group" aria-label="Language">
+    <button data-lang="en" aria-pressed="true">EN</button><button data-lang="pt" aria-pressed="false">PT</button><button data-lang="es" aria-pressed="false">ES</button>
+  </div>
+  <a class="pill" href="https://www.ipanemabeautyandspa.com/book-online" data-t="book">Book</a>
+</div></div>
+
+<main class="wrap">
+
+<!-- HOME -->
+<section class="screen" data-tab="home">
+  <div class="brand"><img class="lt-only" src="img/logo3d.png" alt="Ipanema Beauty &amp; Spa"><img class="dk-only" src="img/logo3d-dark.png" alt="Ipanema Beauty &amp; Spa"></div>
+  <div class="card bhero">
+    <div class="ph"><img src="img/w/brow-149.jpg" alt=""><span class="tag" data-t="heroTag">Brows &amp; Lashes</span></div>
+    <div class="in">
+      <h1 data-t="heroTitle">Brows that frame your face.</h1>
+      <p data-t="heroText"></p>
+      <div class="thumbs" id="hero-thumbs"></div>
+      <a class="pill big" href="https://www.ipanemabeautyandspa.com/browsandlashes" data-t="heroCta">Book my brows</a>
+    </div>
+  </div>
+
+  <div class="quick">
+    <button data-go="book" data-cat="brows"><span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12c3-4 6-5 9-5s6 1 9 5"/><path d="M5 16c2-1.6 4.4-2.4 7-2.4s5 .8 7 2.4"/></svg></span><span data-t="qBrows">Brows</span></button>
+    <button data-go="book" data-cat="wax"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10z"/></svg></span><span data-t="qWax">Waxing</span></button>
+    <button data-go="book" data-cat="hair"><span class="ic"><svg viewBox="0 0 24 24"><path d="M6 21V10a6 6 0 0 1 12 0v11"/><path d="M10 21V12M14 21V12"/></svg></span><span data-t="qHair">Hair</span></button>
+    <button data-go="tips"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg></span><span data-t="qTips">Tips</span></button>
+  </div>
+
+  <div>
+    <div style="display:flex;justify-content:space-between;align-items:baseline;padding:0 4px 10px"><h2 data-t="ourWork">Our work</h2><button class="pill soft" data-go="gallery" style="padding:6px 12px;font-size:14px" data-t="seeAll">See all</button></div>
+    <div class="strip" id="strip"></div>
+  </div>
+
+  <div class="card offer">
+    <div class="price-xl">$39<s data-t="reg">reg. $53</s></div>
+    <div style="display:grid;gap:6px">
+      <h3 data-t="offerTitle">Your first Brazilian</h3>
+      <p class="sub" style="margin:0" data-t="offerText"></p>
+      <a class="pill soft" style="justify-self:start" href="https://www.ipanemabeautyandspa.com/booking-calendar/new-client-special-first-brazilian-39" data-t="offerCta">Book for $39</a>
+    </div>
+  </div>
+
+  <div class="card planner">
+    <div><h2 data-t="stayTitle">Stay on schedule</h2><p class="sub" data-t="stayText"></p></div>
+    <button class="pill big" data-go="tips" data-t="stayCta">Plan my next visit</button>
+  </div>
+
+  <div class="group">
+    <div class="row"><span class="t" data-t="bday">Birthday month</span><span class="d" data-t="bdayD"></span><span class="v" data-t="bdayV">10% off</span></div>
+    <div class="row"><span class="t" data-t="refer">Refer a friend</span><span class="d" data-t="referD"></span><span class="v" data-t="referV">$15 credit</span></div>
+    <div class="row link chev" role="button" tabindex="0" data-go="club"><span class="t">Ipanema Club</span><span class="d" data-t="clubD"></span><span class="v" data-t="clubV">From $105</span></div>
+  </div>
+
+  <div class="card note">
+    <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg>
+    <p data-t="install"></p>
+  </div>
+</section>
+
+<!-- BOOK -->
+<section class="screen" data-tab="book" hidden>
+  <div><h1 class="lt" data-t="book">Book</h1><p class="sub" data-t="bookSub"></p></div>
+  <div class="segmented" role="group" aria-label="Category" id="catseg">
+    <button data-cat="brows" aria-pressed="true" data-t="cBrows">Brows</button>
+    <button data-cat="brazilian" aria-pressed="false" data-t="cBraz">Brazilian</button>
+    <button data-cat="wax" aria-pressed="false" data-t="cWax">Waxing</button>
+    <button data-cat="hair" aria-pressed="false" data-t="cHair">Hair</button>
+    <button data-cat="skin" aria-pressed="false" data-t="cSkin">Facials</button>
+  </div>
+  <div id="cat-photo"></div>
+  <div>
+    <div class="group" id="svc"></div>
+    <p class="foot" data-t="priceNote"></p>
+  </div>
+  <a class="pill big" id="cat-book" href="https://www.ipanemabeautyandspa.com/book-online">Book</a>
+</section>
+
+<!-- GALLERY -->
+<section class="screen" data-tab="gallery" hidden>
+  <div><h1 class="lt" data-t="ourWork">Our work</h1><p class="sub" data-t="gallerySub"></p></div>
+  <div class="segmented" role="group" aria-label="Filter" id="galseg">
+    <button data-g="all" aria-pressed="true" data-t="all">All</button>
+    <button data-g="brows" aria-pressed="false" data-t="cBrows">Brows</button>
+    <button data-g="hair" aria-pressed="false" data-t="cHair">Hair</button>
+  </div>
+  <div class="gal" id="gal"></div>
+  <a class="pill soft big" href="https://www.instagram.com/ipanemabeauty_spa" target="_blank" rel="noopener" data-t="moreIg">More on Instagram</a>
+</section>
+
+<!-- TIPS -->
+<section class="screen" data-tab="tips" hidden>
+  <div><h1 class="lt" data-t="tipsTitle">Tips &amp; Care</h1><p class="sub" data-t="tipsSub"></p></div>
+  <div class="card planner" id="planner">
+    <h2 data-t="plannerTitle">Next visit planner</h2>
+    <div class="fields">
+      <div><label for="rb-svc" data-t="service">Service</label><select id="rb-svc"></select></div>
+      <div><label for="rb-date" data-t="lastVisit">Last visit</label><input type="date" id="rb-date"></div>
+    </div>
+    <div class="result" id="rb-out" aria-live="polite"></div>
+  </div>
+  <div id="tips"></div>
+</section>
+
+<!-- MORE -->
+<section class="screen" data-tab="more" hidden>
+  <div><h1 class="lt">Ipanema</h1></div>
+  <div id="club">
+    <p class="caption" data-t="clubCap"></p>
+    <div class="group">
+      <div class="pkg"><span class="n">6×</span><div><h3 data-t="club1">Brazilian Club</h3><span class="sub" data-t="club1d"></span></div><span class="p">$245</span></div>
+      <div class="pkg"><span class="n">6×</span><div><h3 data-t="club2">Brow Club</h3><span class="sub" data-t="club2d"></span></div><span class="p">$105</span></div>
+      <div class="pkg"><span class="n">6×</span><div><h3 data-t="club3">Blowout Club</h3><span class="sub" data-t="club3d"></span></div><span class="p">$375</span></div>
+    </div>
+    <p class="foot" data-t="clubFoot"></p>
+  </div>
+  <div>
+    <p class="caption" data-t="visit">Visit</p>
+    <div class="group">
+      <a class="row link chev" href="https://maps.google.com/?q=6735+Conroy+Rd+Suite+114+Orlando+FL+32835" target="_blank" rel="noopener"><span class="t">6735 Conroy Rd, Suite 114</span><span class="d">Orlando, FL 32835</span><span class="v">Maps</span></a>
+      <div class="row"><span class="t" data-t="mon">Monday</span><span class="v">9 AM – 5 PM</span></div>
+      <div class="row"><span class="t" data-t="tuefri">Tuesday – Friday</span><span class="v">9 AM – 6 PM</span></div>
+      <div class="row"><span class="t" data-t="sat">Saturday</span><span class="v">9 AM – 5 PM</span></div>
+      <div class="row"><span class="t" data-t="sun">Sunday</span><span class="v" style="color:var(--muted);font-weight:400" data-t="closed">Closed</span></div>
+    </div>
+  </div>
+  <div>
+    <p class="caption" data-t="contact">Contact</p>
+    <div class="group">
+      <div class="row"><span class="t mono">407-270-9102</span><span class="d" data-t="call">Call</span><span class="v"><button class="copybtn" data-copy="407-270-9102" data-t="copy">Copy</button></span></div>
+      <div class="row"><span class="t mono">321-986-9171</span><span class="d" data-t="text">Text or WhatsApp</span><span class="v"><button class="copybtn" data-copy="321-986-9171" data-t="copy">Copy</button></span></div>
+      <a class="row link chev" href="https://wa.me/13219869171" target="_blank" rel="noopener"><span class="t" data-t="wa">Message us on WhatsApp</span><span class="v"></span></a>
+      <a class="row link chev" href="https://www.instagram.com/ipanemabeauty_spa" target="_blank" rel="noopener"><span class="t">Instagram</span><span class="v">@ipanemabeauty_spa</span></a>
+      <a class="row link chev" href="https://www.tiktok.com/@ipanemabeauty_spa" target="_blank" rel="noopener"><span class="t">TikTok</span><span class="v">@ipanemabeauty_spa</span></a>
+    </div>
+  </div>
+  <div>
+    <p class="caption" data-t="reminders">Reminders</p>
+    <div class="group">
+      <div class="row"><span class="t" data-t="r1">Appointment reminder</span><span class="d" data-t="r1d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
+      <div class="row"><span class="t" data-t="r2">2-week reminder</span><span class="d" data-t="r2d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
+      <div class="row"><span class="t" data-t="r3">4-week reminder</span><span class="d" data-t="r3d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
+    </div>
+    <p class="foot" data-t="remFoot"></p>
+  </div>
+  <div class="card about">
+    <img class="symbol" src="img/symbol.svg" alt="">
+    <p class="sub" style="margin:0" data-t="about"></p>
+  </div>
+</section>
+</main>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-label="Book">
+  <div class="sheet-bar"><button id="sheet-close" data-t="done">Done</button><span data-t="book">Book</span><a id="sheet-ext" href="#" target="_blank" rel="noopener" data-t="openBrowser">Open in browser</a></div>
+  <iframe id="sheet-frame" title="Ipanema online booking"></iframe>
+</div>
+
+<nav class="tabs" aria-label="Main"><div class="in" role="tablist">
+  <button role="tab" data-tab="home" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-t="tHome">Home</span></button>
+  <button role="tab" data-tab="book" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-t="book">Book</span></button>
+  <button role="tab" data-tab="gallery" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="9" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span data-t="tWork">Our work</span></button>
+  <button role="tab" data-tab="tips" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.5-7 10-7 10z"/></svg><span data-t="tTips">Tips &amp; Care</span></button>
+  <button role="tab" data-tab="more" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg><span data-t="tMore">More</span></button>
+</div></nav>
+
+<script>
+const SITE="https://www.ipanemabeautyandspa.com";
+const T={
+en:{book:"Book",heroTag:"Brows & Lashes",heroTitle:"Brows that frame your face.",heroText:"Shaping, tint, henna, lamination and microblading by Brazilian brow specialists since 2011.",heroCta:"Book my brows",
+qBrows:"Brows",qWax:"Waxing",qHair:"Hair",qTips:"Tips",ourWork:"Our work",seeAll:"See all",reg:"reg. $53",offerTitle:"Your first Brazilian",offerText:"New clients, Saturdays. Add your first brow shaping the same day and save $10.",offerCta:"Book for $39",
+stayTitle:"Stay on schedule",stayText:"Know your next ideal visit and keep the maintenance price.",stayCta:"Plan my next visit",bday:"Birthday month",bdayD:"Mention it at checkout",bdayV:"10% off",refer:"Refer a friend",referD:"When she books her first visit",referV:"$15 credit",clubD:"Buy 5, get the 6th free",clubV:"From $105",
+install:"<strong>Add Ipanema to your Home Screen.</strong> iPhone: tap Share, then “Add to Home Screen”. Android: tap ⋮, then “Add to Home screen”.",
+bookSub:"Pick a service and book right here in the app.",cBrows:"Brows",cBraz:"Brazilian",cWax:"Waxing",cHair:"Hair",cSkin:"Facials",priceNote:"Prices in USD before tax. “From” prices depend on length and density and are confirmed by your professional.",
+bkbrows:"Book brows & lashes",bkbrazilian:"Book a Brazilian",bkwax:"Book waxing",bkhair:"Book hair",bkskin:"Book a facial",from:"from",seeMenu:"See menu",
+gallerySub:"Real clients, real results from our chairs.",all:"All",moreIg:"More on Instagram",tipsTitle:"Tips & Care",tipsSub:"How to prepare, how to care after, and when to come back.",plannerTitle:"Next visit planner",service:"Service",lastVisit:"Last visit",
+pickDate:"Pick the date of your last visit.",idealNext:"Your ideal next visit",bookDate:"Book this date",remindMe:"Remind me",
+remOk:"Done! We’ll remind you 2 and 4 weeks after this visit.",remInstall:"Reminders work in the installed app: add Ipanema to your Home Screen first, then tap “Remind me” again.",remDenied:"Notifications are off for Ipanema. Turn them on in your phone settings.",
+keepBy:d=>`Book by ${d} to keep the maintenance price.`,
+clubCap:"Ipanema Club · buy 5, get the 6th free · valid 6 months",club1:"Brazilian Club",club1d:"6 Brazilian waxes",club2:"Brow Club",club2d:"6 brow maintenance visits",club3:"Blowout Club",club3d:"6 medium blowouts",clubFoot:"Ask at the front desk to join. VIP status: 10 visits or $600 in 12 months.",
+visit:"Visit",mon:"Monday",tuefri:"Tuesday – Friday",sat:"Saturday",sun:"Sunday",closed:"Closed",contact:"Contact",call:"Call",text:"Text or WhatsApp",copy:"Copy",copied:"Copied",wa:"Message us on WhatsApp",
+reminders:"Reminders",r1:"Appointment reminder",r1d:"The day before your visit",r2:"2-week reminder",r2d:"Time for brow maintenance",r3:"4-week reminder",r3d:"Book in time to keep your maintenance price",notif:"In the app",remFoot:"Notifications arrive on your phone once Ipanema is on your Home Screen. You also get an email when you book.",
+about:"Born in Brazil in 2011, now in Orlando. A spa day with a Brazilian touch.",done:"Done",openBrowser:"Open in browser",tHome:"Home",tWork:"Our work",tTips:"Tips & Care",tMore:"More",
+before:"Before",after:"After",howOften:"How often"},
+pt:{book:"Agendar",heroTag:"Sobrancelhas & Cílios",heroTitle:"Sobrancelhas que valorizam seu rosto.",heroText:"Design, tintura, henna, brow lamination e microblading com especialistas brasileiras desde 2011.",heroCta:"Agendar sobrancelha",
+qBrows:"Sobrancelha",qWax:"Depilação",qHair:"Cabelo",qTips:"Dicas",ourWork:"Nossos trabalhos",seeAll:"Ver todos",reg:"normal $53",offerTitle:"Sua primeira brasileira",offerText:"Clientes novas, aos sábados. Faça também seu primeiro design de sobrancelha no mesmo dia e economize $10.",offerCta:"Agendar por $39",
+stayTitle:"Fique em dia",stayText:"Saiba a data ideal da próxima visita e mantenha o preço de manutenção.",stayCta:"Planejar minha próxima visita",bday:"Mês do aniversário",bdayD:"Avise no pagamento",bdayV:"10% off",refer:"Indique uma amiga",referD:"Quando ela agendar a primeira visita",referV:"$15 de crédito",clubD:"Compre 5, ganhe a 6ª",clubV:"A partir de $105",
+install:"<strong>Coloque a Ipanema na tela inicial.</strong> iPhone: toque em Compartilhar e depois “Adicionar à Tela de Início”. Android: toque em ⋮ e depois “Adicionar à tela inicial”.",
+bookSub:"Escolha o serviço e agende aqui mesmo no app.",cBrows:"Sobrancelha",cBraz:"Brasileira",cWax:"Depilação",cHair:"Cabelo",cSkin:"Facial",priceNote:"Preços em dólar, sem imposto. Preços “a partir de” dependem do comprimento e volume e são confirmados pela profissional.",
+bkbrows:"Agendar sobrancelha e cílios",bkbrazilian:"Agendar brasileira",bkwax:"Agendar depilação",bkhair:"Agendar cabelo",bkskin:"Agendar facial",from:"a partir de",seeMenu:"Ver menu",
+gallerySub:"Clientes reais, resultados reais do nosso salão.",all:"Todos",moreIg:"Mais no Instagram",tipsTitle:"Dicas e Cuidados",tipsSub:"Como se preparar, como cuidar depois e quando voltar.",plannerTitle:"Planejador da próxima visita",service:"Serviço",lastVisit:"Última visita",
+pickDate:"Escolha a data da sua última visita.",idealNext:"Sua próxima visita ideal",bookDate:"Agendar esta data",remindMe:"Me lembrar",
+remOk:"Pronto! Vamos te lembrar 2 e 4 semanas depois desta visita.",remInstall:"Os lembretes funcionam no app instalado: coloque a Ipanema na tela inicial e toque em “Me lembrar” de novo.",remDenied:"As notificações da Ipanema estão desligadas. Ative nos ajustes do celular.",
+keepBy:d=>`Agende até ${d} para manter o preço de manutenção.`,
+clubCap:"Ipanema Club · compre 5, ganhe a 6ª · válido por 6 meses",club1:"Clube Brasileira",club1d:"6 depilações brasileiras",club2:"Clube Sobrancelha",club2d:"6 manutenções de sobrancelha",club3:"Clube Escova",club3d:"6 escovas médias",clubFoot:"Peça na recepção para entrar. Status VIP: 10 visitas ou $600 em 12 meses.",
+visit:"Visite",mon:"Segunda",tuefri:"Terça a sexta",sat:"Sábado",sun:"Domingo",closed:"Fechado",contact:"Contato",call:"Ligar",text:"Mensagem ou WhatsApp",copy:"Copiar",copied:"Copiado",wa:"Fale com a gente no WhatsApp",
+reminders:"Lembretes",r1:"Lembrete do horário",r1d:"Um dia antes da sua visita",r2:"Lembrete de 2 semanas",r2d:"Hora da manutenção da sobrancelha",r3:"Lembrete de 4 semanas",r3d:"Agende a tempo de manter o preço de manutenção",notif:"No app",remFoot:"As notificações chegam no celular quando a Ipanema estiver na tela inicial. Você também recebe um e-mail ao agendar.",
+about:"Nascida no Brasil em 2011, hoje em Orlando. Um dia de spa com toque brasileiro.",done:"Fechar",openBrowser:"Abrir no navegador",tHome:"Início",tWork:"Trabalhos",tTips:"Dicas",tMore:"Mais",
+before:"Antes",after:"Depois",howOften:"Com que frequência"},
+es:{book:"Reservar",heroTag:"Cejas y Pestañas",heroTitle:"Cejas que realzan tu rostro.",heroText:"Diseño, tinte, henna, laminado y microblading con especialistas brasileñas desde 2011.",heroCta:"Reservar cejas",
+qBrows:"Cejas",qWax:"Depilación",qHair:"Cabello",qTips:"Consejos",ourWork:"Nuestro trabajo",seeAll:"Ver todo",reg:"normal $53",offerTitle:"Tu primera brasileña",offerText:"Clientas nuevas, los sábados. Agrega tu primer diseño de cejas el mismo día y ahorra $10.",offerCta:"Reservar por $39",
+stayTitle:"Mantente al día",stayText:"Conoce la fecha ideal de tu próxima visita y conserva el precio de mantenimiento.",stayCta:"Planear mi próxima visita",bday:"Mes de cumpleaños",bdayD:"Avísanos al pagar",bdayV:"10% off",refer:"Recomienda a una amiga",referD:"Cuando reserve su primera visita",referV:"$15 de crédito",clubD:"Compra 5, la 6ª gratis",clubV:"Desde $105",
+install:"<strong>Agrega Ipanema a tu pantalla de inicio.</strong> iPhone: toca Compartir y luego “Agregar a inicio”. Android: toca ⋮ y luego “Agregar a la pantalla principal”.",
+bookSub:"Elige un servicio y reserva aquí mismo en la app.",cBrows:"Cejas",cBraz:"Brasileña",cWax:"Depilación",cHair:"Cabello",cSkin:"Faciales",priceNote:"Precios en dólares, antes de impuestos. Los precios “desde” dependen del largo y la densidad y los confirma tu profesional.",
+bkbrows:"Reservar cejas y pestañas",bkbrazilian:"Reservar brasileña",bkwax:"Reservar depilación",bkhair:"Reservar cabello",bkskin:"Reservar facial",from:"desde",seeMenu:"Ver menú",
+gallerySub:"Clientas reales, resultados reales de nuestro salón.",all:"Todo",moreIg:"Más en Instagram",tipsTitle:"Consejos y Cuidados",tipsSub:"Cómo prepararte, cómo cuidarte después y cuándo volver.",plannerTitle:"Planificador de próxima visita",service:"Servicio",lastVisit:"Última visita",
+pickDate:"Elige la fecha de tu última visita.",idealNext:"Tu próxima visita ideal",bookDate:"Reservar esta fecha",remindMe:"Recordarme",
+remOk:"¡Listo! Te recordaremos 2 y 4 semanas después de esta visita.",remInstall:"Los recordatorios funcionan en la app instalada: agrega Ipanema a tu pantalla de inicio y toca “Recordarme” otra vez.",remDenied:"Las notificaciones de Ipanema están desactivadas. Actívalas en los ajustes del teléfono.",
+keepBy:d=>`Reserva antes del ${d} para conservar el precio de mantenimiento.`,
+clubCap:"Ipanema Club · compra 5, la 6ª gratis · válido 6 meses",club1:"Club Brasileña",club1d:"6 depilaciones brasileñas",club2:"Club Cejas",club2d:"6 mantenimientos de cejas",club3:"Club Brushing",club3d:"6 brushings medianos",clubFoot:"Pide unirte en recepción. Estado VIP: 10 visitas o $600 en 12 meses.",
+visit:"Visítanos",mon:"Lunes",tuefri:"Martes a viernes",sat:"Sábado",sun:"Domingo",closed:"Cerrado",contact:"Contacto",call:"Llamar",text:"Mensaje o WhatsApp",copy:"Copiar",copied:"Copiado",wa:"Escríbenos por WhatsApp",
+reminders:"Recordatorios",r1:"Recordatorio de cita",r1d:"Un día antes de tu visita",r2:"Recordatorio de 2 semanas",r2d:"Hora del mantenimiento de cejas",r3:"Recordatorio de 4 semanas",r3d:"Reserva a tiempo para conservar el precio de mantenimiento",notif:"En la app",remFoot:"Las notificaciones llegan a tu teléfono cuando Ipanema está en tu pantalla de inicio. También recibes un email al reservar.",
+about:"Nacida en Brasil en 2011, hoy en Orlando. Un día de spa con toque brasileño.",done:"Cerrar",openBrowser:"Abrir en el navegador",tHome:"Inicio",tWork:"Trabajos",tTips:"Consejos",tMore:"Más",
+before:"Antes",after:"Después",howOften:"Cada cuánto"}
+};
+const LOCALE={en:"en-US",pt:"pt-BR",es:"es-US"};
+const BOOK={brows:SITE+"/browsandlashes",brazilian:SITE+"/waxing",wax:SITE+"/waxing",hair:SITE+"/hair",skin:SITE+"/book-online"};
+const CATPHOTO={brows:"img/brows-02.jpg",hair:"img/w/hair-094.jpg",brazilian:null,wax:null,skin:null};
+// [name en, pt, es], [detail en, pt, es], price, from?, badge [en,pt,es]
+const W=(a,b,c)=>[a,b,c], S=x=>[x,x,x];
+const FT=W("First time","Primeira vez","Primera vez"), U2=W("Up to 2 weeks","Até 2 semanas","Hasta 2 semanas"), U4=W("Up to 4 weeks","Até 4 semanas","Hasta 4 semanas"), A4=W("After 4 weeks","Após 4 semanas","Después de 4 semanas");
+const MB=W("Brow maintenance","Manutenção de sobrancelha","Mantenimiento de cejas"), BZ=W("Brazilian","Depilação brasileira","Depilación brasileña");
+const SVC={
+brows:[[W("Brow shaping","Design de sobrancelha","Diseño de cejas"),FT,"$25"],[MB,U2,"$18"],[MB,U4,"$21"],[MB,A4,"$25"],[W("Brow tint or henna","Tintura ou henna","Tinte o henna"),S("30 min"),"$30"],[W("Shaping + tint or henna","Design + tintura ou henna","Diseño + tinte o henna"),S("1 h"),"$44"],[W("Brow lamination","Brow lamination","Laminado de cejas"),S("1 h 30 min"),"$73"],[W("Grow Brow treatment","Tratamento Grow Brow","Tratamiento Grow Brow"),S("1 h"),"$88"],[W("Lash tint","Tintura de cílios","Tinte de pestañas"),S("30 min"),"$30"],[W("Lash lift","Lash lift","Lifting de pestañas"),S("1 h"),"$73"],[W("Lash lift + tint","Lash lift + tintura","Lifting + tinte"),S("2 h"),"$88"],[S("Microblading"),W("Per session · $63.75 deposit","Por sessão · sinal de $63.75","Por sesión · depósito de $63.75"),"$212.50"]],
+brazilian:[[BZ,FT,"$53",1],[BZ,U4,"$49",0,W("Maintenance","Manutenção","Mantenimiento")],[BZ,A4,"$53"],[W("New client Brazilian","Brasileira – cliente nova","Brasileña – clienta nueva"),W("Saturdays","Sábados","Sábados"),"$39",0,W("New","Novo","Nuevo")],[W("Brazilian + Vajacial","Brasileira + Vajacial","Brasileña + Vajacial"),S("1 h"),"$88"],[W("Bikini line","Virilha simples","Línea de bikini"),S("30 min"),"$35"],[W("Bikini full","Virilha completa","Bikini completo"),S("30 min"),"$45"],[W("Bikini deep","Virilha cavada","Bikini profundo"),S("30 min"),"$40"],[W("Buttocks","Glúteos","Glúteos"),S("30 min"),"$33"]],
+wax:[[W("Underarm","Axilas","Axilas"),S("15 min"),"$27"],[W("Full legs","Pernas inteiras","Piernas completas"),S("45 min"),"$68",1],[W("Lower half legs","Meia perna (inferior)","Media pierna (inferior)"),S("30 min"),"$43",1],[W("Upper legs","Coxas","Muslos"),S("30 min"),"$45"],[W("Inner thigh","Parte interna da coxa","Parte interna del muslo"),S("30 min"),"$25"],[W("Full arms","Braços inteiros","Brazos completos"),S("30 min"),"$48"],[W("Half arms","Meio braço","Medio brazo"),S("30 min"),"$33"],[W("Full back","Costas inteiras","Espalda completa"),S("1 h"),"$53"],[W("Stomach","Barriga","Abdomen"),S("15 min"),"$25",1],[W("Lip or chin","Buço ou queixo","Labio o mentón"),W("Wax or thread","Cera ou linha","Cera o hilo"),"$17"],[W("Sideburns","Costeletas","Patillas"),S("15 min"),"$17"],[W("Full face","Rosto inteiro","Rostro completo"),W("No brows or nose","Sem sobrancelha e nariz","Sin cejas ni nariz"),"$53",1],[W("Full body","Corpo inteiro","Cuerpo completo"),S("2 h 45 min"),"$265"],[W("Men’s waxing","Depilação masculina","Depilación masculina"),W("Back, chest, arms, legs and more","Costas, peito, braços, pernas e mais","Espalda, pecho, brazos, piernas y más"),"menu"]],
+hair:[[W("Women’s haircut","Corte feminino","Corte de mujer"),S("1 h"),"$60"],[W("Men’s haircut","Corte masculino","Corte de hombre"),S("1 h"),"$35"],[W("Kids’ haircut","Corte infantil","Corte infantil"),W("Up to 12 years","Até 12 anos","Hasta 12 años"),"$35",1],[W("Haircut + blow dry","Corte + escova","Corte + brushing"),S("1 h 15 min"),"$80",1],[W("Blow dry","Escova","Brushing"),W("Short · medium · long","Curto · médio · longo","Corto · medio · largo"),"$60",1],[W("Root touch up","Retoque de raiz","Retoque de raíz"),S("1 h 30 min"),"$75",1],[W("All over color","Coloração completa","Color completo"),S("2 h"),"$135",1],[W("Highlights","Mechas","Mechas"),S("2–3 h 30 min"),"$190",1],[S("Balayage"),S("3 h"),"$260",1],[W("Keratin","Queratina","Keratina"),S("3 h"),"$190",1],[W("Hydration","Hidratação","Hidratación"),W("With or without machine","Com ou sem máquina","Con o sin máquina"),"$65",1],[W("Toner","Tonalizante","Matizador"),S("45 min"),"$50",1]],
+skin:[[S("Facial"),S("1 h 30 min"),"$110",1],[W("Dermaplane","Dermaplaning","Dermaplaning"),S("1 h"),"$85"]]
+};
+const BROWS=["brow-149","brow-152","brow-151","brow-150","brow-145","brow-155","brow-169","brow-170","brow-171","brow-172","brow-075","brow-076","brow-146","brow-147"].map(f=>["brows","img/w/"+f+".jpg"]).concat([["brows","img/brows-02.jpg"],["brows","img/brows-03.jpg"]]);
+const HAIR=["027","090","032","065","072","094","028","102","035","195","066","198","033","085","086","088","107","109","134","170","194","197","201","202","208","209","210","211","215","216","218","221","330","335","077"].map(n=>["hair","img/w/hair-"+n+".jpg"]);
+const PHOTOS=[];for(let i=0;i<Math.max(BROWS.length,HAIR.length);i++){if(BROWS[i])PHOTOS.push(BROWS[i]);if(HAIR[i])PHOTOS.push(HAIR[i])}
+const RULES={brazilian:{days:28,limit:28,n:W("Brazilian wax","Depilação brasileira","Depilación brasileña")},brows:{days:21,limit:28,n:W("Brow shaping","Design de sobrancelha","Diseño de cejas")},tint:{days:28,n:W("Brow tint or henna","Tintura ou henna","Tinte o henna")},lift:{days:49,n:W("Lash lift","Lash lift","Lifting de pestañas")},lam:{days:42,n:W("Brow lamination","Brow lamination","Laminado de cejas")},color:{days:35,n:W("Hair color / root touch up","Coloração / retoque de raiz","Color / retoque de raíz")}};
+const IC={drop:'<path d="M12 3c3 4 5 7 5 10a5 5 0 0 1-10 0c0-3 2-6 5-10z"/>',brow:'<path d="M3 12c3-4 6-5 9-5s6 1 9 5"/>',tint:'<path d="M4 14c2.5-3 5-4 8-4s5.5 1 8 4"/><path d="M8 18l1-2M12 19v-2M16 18l-1-2"/>',eye:'<path d="M2 12s4-6 10-6 10 6 10 6-4 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.5"/>',hair:'<path d="M6 21V10a6 6 0 0 1 12 0v11"/>',pen:'<path d="M4 20l4-1 11-11-3-3L5 16z"/>'};
+// tips: icon, title, subtitle, sections [[labelKey|null, [items] | text]]
+const TIPS={
+en:[["drop","Brazilian & body wax","Before, after and how often",[["before",["Let hair grow about ¼ inch, roughly 2–3 weeks after shaving.","Exfoliate gently 1–2 days before, not on the day.","No sunburn or tanning on the area for 48 hours before.","Arrive with clean, dry skin, no lotion or oil."]],["after",["For 24–48 hours: no hot tubs, saunas, steam, pools or intense workouts.","Wear loose cotton clothing the first day.","Skip sun, tanning and fragranced products on the area for 48 hours.","From day 3, exfoliate 2–3 times a week and moisturize daily to prevent ingrown hairs."]],["howOften","Every 4 weeks. Coming back within 4 weeks keeps the maintenance price."]]],
+["brow","Brow shaping & threading","Keep your shape between visits",[[null,["Don’t tweeze between visits so your professional sees the full growth.","No makeup, retinol or exfoliating acids on the brows for 24 hours after.","Any redness usually fades within a few hours."]],["howOften","Every 2–4 weeks. Maintenance is priced by time since your last visit: up to 2 weeks, up to 4 weeks, or after 4 weeks."]]],
+["tint","Tint, henna & lamination","The first 24 hours matter",[[null,["Keep brows dry for 24 hours: no washing, steam or sweating.","No brow makeup or skincare on the area for 24 hours.","Lamination: brush brows into place each morning; a little brow oil at night keeps hairs soft."]]]],
+["eye","Lash lift","Make the curl last",[[null,["Keep lashes dry for 24–48 hours: no steam, sauna or swimming.","No mascara for 24 hours, and avoid rubbing your eyes.","Sleep on your back the first night if you can."]],["howOften","A lift usually lasts 6–8 weeks."]]],
+["hair","Hair color & blowouts","Keep color bright longer",[[null,["Wait 48–72 hours before the first wash after color.","Use sulfate-free shampoo and cool or lukewarm water.","Use heat protection before every blow dry or flat iron.","Book a hydration every 4–6 weeks if you lighten your hair."]],["howOften","Root touch up every 4–6 weeks; highlights and balayage every 8–12 weeks."]]],
+["pen","Microblading","Deposit and rescheduling",[[null,"Each session is $212.50 ($425 for the 2 sessions), reserved with a $63.75 deposit that goes toward your service."],[null,["Deposits are not refunded.","Change or cancel 48 hours or more before: your deposit is credited to your next appointment.","Less than 48 hours’ notice, a no-show or arriving more than 15 minutes late: the deposit is not returned."]]]]],
+pt:[["drop","Depilação brasileira e corpo","Antes, depois e com que frequência",[["before",["Deixe o pelo crescer cerca de 0,5 cm, umas 2–3 semanas depois de raspar.","Esfolie de leve 1–2 dias antes, não no dia.","Sem queimadura de sol ou bronzeamento na área 48 horas antes.","Venha com a pele limpa e seca, sem creme ou óleo."]],["after",["Por 24–48 horas: nada de banheira quente, sauna, vapor, piscina ou treino intenso.","Use roupa de algodão folgada no primeiro dia.","Evite sol, bronzeamento e produtos perfumados na área por 48 horas.","A partir do 3º dia, esfolie 2–3 vezes por semana e hidrate todo dia para evitar pelos encravados."]],["howOften","A cada 4 semanas. Voltando dentro de 4 semanas você mantém o preço de manutenção."]]],
+["brow","Design e linha","Mantenha o formato entre as visitas",[[null,["Não tire pelos entre as visitas, para a profissional ver o crescimento completo.","Sem maquiagem, retinol ou ácidos nas sobrancelhas por 24 horas.","A vermelhidão costuma sumir em poucas horas."]],["howOften","A cada 2–4 semanas. A manutenção é cobrada pelo tempo desde a última visita: até 2 semanas, até 4 semanas ou depois de 4 semanas."]]],
+["tint","Tintura, henna e lamination","As primeiras 24 horas são importantes",[[null,["Mantenha as sobrancelhas secas por 24 horas: sem lavar, vapor ou suor.","Sem maquiagem ou skincare na área por 24 horas.","Lamination: penteie as sobrancelhas toda manhã; um pouco de óleo à noite deixa os fios macios."]]]],
+["eye","Lash lift","Para a curvatura durar mais",[[null,["Mantenha os cílios secos por 24–48 horas: sem vapor, sauna ou piscina.","Sem rímel por 24 horas e evite coçar os olhos.","Se puder, durma de barriga para cima na primeira noite."]],["howOften","O lash lift costuma durar de 6 a 8 semanas."]]],
+["hair","Coloração e escova","Cor viva por mais tempo",[[null,["Espere 48–72 horas para lavar o cabelo depois da coloração.","Use shampoo sem sulfato e água fria ou morna.","Use protetor térmico antes de secador ou chapinha.","Faça hidratação a cada 4–6 semanas se você clareia o cabelo."]],["howOften","Retoque de raiz a cada 4–6 semanas; mechas e balayage a cada 8–12 semanas."]]],
+["pen","Microblading","Sinal e remarcação",[[null,"Cada sessão custa $212.50 ($425 as 2 sessões), reservada com um sinal de $63.75 que é descontado do serviço."],[null,["O sinal não é reembolsado.","Remarcou ou cancelou com 48 horas ou mais: o sinal vira crédito para o próximo agendamento.","Aviso com menos de 48 horas, falta ou atraso de mais de 15 minutos: o sinal não é devolvido."]]]]],
+es:[["drop","Depilación brasileña y corporal","Antes, después y cada cuánto",[["before",["Deja crecer el vello unos 0,5 cm, unas 2–3 semanas después de afeitarte.","Exfolia suavemente 1–2 días antes, no el mismo día.","Sin quemaduras de sol ni bronceado en la zona 48 horas antes.","Llega con la piel limpia y seca, sin crema ni aceite."]],["after",["Durante 24–48 horas: nada de jacuzzi, sauna, vapor, piscina o ejercicio intenso.","Usa ropa de algodón holgada el primer día.","Evita el sol, el bronceado y productos con fragancia en la zona por 48 horas.","Desde el día 3, exfolia 2–3 veces por semana e hidrata a diario para evitar vellos encarnados."]],["howOften","Cada 4 semanas. Si vuelves antes de 4 semanas conservas el precio de mantenimiento."]]],
+["brow","Diseño de cejas e hilo","Mantén la forma entre visitas",[[null,["No te depiles entre visitas para que tu profesional vea todo el crecimiento.","Sin maquillaje, retinol ni ácidos en las cejas por 24 horas.","El enrojecimiento suele desaparecer en pocas horas."]],["howOften","Cada 2–4 semanas. El mantenimiento se cobra según el tiempo desde tu última visita: hasta 2 semanas, hasta 4 semanas o después de 4 semanas."]]],
+["tint","Tinte, henna y laminado","Las primeras 24 horas importan",[[null,["Mantén las cejas secas por 24 horas: sin lavar, vapor ni sudor.","Sin maquillaje ni skincare en la zona por 24 horas.","Laminado: peina las cejas cada mañana; un poco de aceite por la noche mantiene los vellos suaves."]]]],
+["eye","Lifting de pestañas","Para que la curva dure",[[null,["Mantén las pestañas secas por 24–48 horas: sin vapor, sauna ni piscina.","Sin rímel por 24 horas y evita frotarte los ojos.","Si puedes, duerme boca arriba la primera noche."]],["howOften","El lifting suele durar de 6 a 8 semanas."]]],
+["hair","Color y brushing","Color vivo por más tiempo",[[null,["Espera 48–72 horas antes del primer lavado después del color.","Usa champú sin sulfatos y agua fría o tibia.","Usa protector térmico antes del secador o la plancha.","Hazte una hidratación cada 4–6 semanas si aclaras tu cabello."]],["howOften","Retoque de raíz cada 4–6 semanas; mechas y balayage cada 8–12 semanas."]]],
+["pen","Microblading","Depósito y cambios de cita",[[null,"Cada sesión cuesta $212.50 ($425 las 2 sesiones) y se reserva con un depósito de $63.75 que se descuenta del servicio."],[null,["El depósito no es reembolsable.","Si cambias o cancelas con 48 horas o más: el depósito queda como crédito para tu próxima cita.","Con menos de 48 horas de aviso, si no te presentas o llegas más de 15 minutos tarde: el depósito no se devuelve."]]]]]
+};
+
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const LI={en:0,pt:1,es:2};
+let lang='en';
+try{lang=localStorage.getItem('ipa-lang')||''}catch(e){}
+if(!T[lang]){const n=(navigator.language||'en').slice(0,2);lang=T[n]?n:'en'}
+const t=k=>T[lang][k]??T.en[k]??'';
+let curCat='brows', curGal='all';
+
+function thumb(p){return `<button data-src="${p[1]}" aria-label="Photo"><img loading="lazy" src="${p[1]}" alt=""></button>`}
+function renderSvc(cat){
+  curCat=cat;const i=LI[lang];
+  $('#svc').innerHTML=SVC[cat].map(([n,d,p,f,b])=>{const price=p==='menu'?t('seeMenu'):(f?t('from')+' ':'')+p;return `<div class="row"><span class="t">${n[i]}${b?`<span class="badge">${b[i]}</span>`:''}</span><span class="d">${d[i]}</span><span class="v">${price}</span></div>`}).join('');
+  $$('#catseg [data-cat]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===cat));
+  $('#cat-book').href=BOOK[cat];$('#cat-book').textContent=t('bk'+cat);
+  $('#cat-photo').innerHTML=CATPHOTO[cat]?`<div class="catph"><img src="${CATPHOTO[cat]}" alt=""></div>`:'';
+}
+function renderGal(g){curGal=g;$('#gal').innerHTML=PHOTOS.filter(p=>g==='all'||p[0]===g).map(thumb).join('');$$('#galseg [data-g]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.g===g))}
+function renderTips(){
+  $('#tips').innerHTML=TIPS[lang].map(([ic,ti,sub,secs],k)=>`<details${k===0?' open':''}><summary><span class="em"><svg viewBox="0 0 24 24">${IC[ic]}</svg></span><span class="s">${ti}<small>${sub}</small></span></summary><div class="body">${secs.map(([lab,c])=>(lab?`<span class="when">${t(lab)}</span>`:'')+(Array.isArray(c)?`<ul>${c.map(x=>`<li>${x}</li>`).join('')}</ul>`:`<p>${c}</p>`)).join('')}</div></details>`).join('');
+}
+function renderPlannerOpts(){const v=$('#rb-svc').value;$('#rb-svc').innerHTML=Object.entries(RULES).map(([k,r])=>`<option value="${k}">${r.n[LI[lang]]}</option>`).join('');if(v)$('#rb-svc').value=v}
+function applyLang(){
+  document.documentElement.lang=lang;
+  $$('[data-t]').forEach(el=>{const v=t(el.dataset.t);if(typeof v==='string'){if(v.includes('<'))el.innerHTML=v;else el.textContent=v}});
+  $$('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===lang));
+  renderSvc(curCat);renderTips();renderPlannerOpts();plan();
+}
+$$('.lang button').forEach(b=>b.addEventListener('click',()=>{lang=b.dataset.lang;try{localStorage.setItem('ipa-lang',lang)}catch(e){}applyLang()}));
+
+$('#strip').innerHTML=PHOTOS.slice(0,10).map(thumb).join('');
+$('#hero-thumbs').innerHTML=BROWS.slice(1,5).map(thumb).join('');
+renderGal('all');
+$$('#galseg [data-g]').forEach(b=>b.addEventListener('click',()=>renderGal(b.dataset.g)));
+$$('#catseg [data-cat]').forEach(b=>b.addEventListener('click',()=>renderSvc(b.dataset.cat)));
+function openLB(src){const d=document.createElement('div');d.className='lightbox';d.innerHTML=`<img src="${src}" alt=""><button aria-label="Close">✕</button>`;d.addEventListener('click',()=>d.remove());document.body.appendChild(d)}
+
+function show(tab,focus){
+  $$('section.screen').forEach(s=>s.hidden=s.dataset.tab!==tab);
+  $$('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===tab));
+  if(focus)document.getElementById(focus)?.scrollIntoView({block:'start'});else window.scrollTo(0,0);
+}
+$$('nav.tabs button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+$$('[data-go]').forEach(b=>{const go=()=>{const tg=b.dataset.go;if(tg==='book'&&b.dataset.cat)renderSvc(b.dataset.cat);if(tg==='club'){show('more','club');return}show(tg)};b.addEventListener('click',go);b.addEventListener('keydown',e=>{if(e.key==='Enter')go()})});
+
+// planner + reminders
+const svcSel=$('#rb-svc'),dateIn=$('#rb-date'),out=$('#rb-out');
+function plan(){
+  if(!svcSel.value)return;
+  const r=RULES[svcSel.value];const last=dateIn.value?new Date(dateIn.value+'T12:00:00'):null;
+  if(!last){out.innerHTML=`<span class="small">${t('pickDate')}</span>`;return}
+  const next=new Date(last);next.setDate(next.getDate()+r.days);if(next.getDay()===0)next.setDate(next.getDate()+1);
+  const lim=new Date(last);lim.setDate(lim.getDate()+(r.limit||r.days));
+  const loc=LOCALE[lang];
+  const note=r.limit?`<span class="small">${T[lang].keepBy(lim.toLocaleDateString(loc,{month:'short',day:'numeric'}))}</span>`:'';
+  out.innerHTML=`<span class="small">${t('idealNext')}</span><span class="big">${next.toLocaleDateString(loc,{weekday:'long',month:'long',day:'numeric'})}</span>${note}<div class="btns"><a class="pill" href="${SITE}/book-online">${t('bookDate')}</a><button class="pill soft" id="remind" style="background:var(--surface)">${t('remindMe')}</button></div>`;
+  try{localStorage.setItem('ipa-rb',JSON.stringify({s:svcSel.value,d:dateIn.value}))}catch(e){}
+}
+function toast(msg){const d=document.createElement('div');d.className='toast';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),4200)}
+async function remind(){
+  const installed=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
+  if(!installed||!('Notification' in window)){toast(t('remInstall'));return}
+  const perm=await Notification.requestPermission();
+  if(perm!=='granted'){toast(t('remDenied'));return}
+  // Installed version: subscription + tags (service, last visit, language) are sent to the push service, which sends the 2- and 4-week reminders.
+  try{localStorage.setItem('ipa-remind',JSON.stringify({s:svcSel.value,d:dateIn.value,l:lang}))}catch(e){}
+  toast(t('remOk'));
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('#remind')){remind();return}
+  const ph=e.target.closest('[data-src]');if(ph){openLB(ph.dataset.src);return}
+  const a=e.target.closest('a[href^="'+SITE+'"]');if(a&&a.id!=='sheet-ext'){e.preventDefault();$('#sheet-frame').src=a.href;$('#sheet-ext').href=a.href;$('#sheet').hidden=false;document.body.style.overflow='hidden'}
+});
+$('#sheet-close').addEventListener('click',()=>{$('#sheet').hidden=true;$('#sheet-frame').src='about:blank';document.body.style.overflow=''});
+svcSel.addEventListener('change',plan);dateIn.addEventListener('input',plan);
+renderPlannerOpts();
+try{const s=JSON.parse(localStorage.getItem('ipa-rb')||'null');if(s){svcSel.value=s.s;dateIn.value=s.d}}catch(e){}
+if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=ex.toISOString().slice(0,10)}
+$$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
+const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
+applyLang();
+if('serviceWorker' in navigator&&/ipanemabeautyandspa\.com$|github\.io$/.test(location.hostname))navigator.serviceWorker.register('sw.js');
+</script>
+
+</body>
+</html>
