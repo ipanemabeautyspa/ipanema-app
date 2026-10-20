@@ -510,20 +510,25 @@ async function remind(){
   try{localStorage.setItem('ipa-remind',JSON.stringify({s:svcSel.value,d:dateIn.value,l:lang}))}catch(e){}
   toast(t('remOk'));
 }
+// several appointments (e.g. mom + kids): keep a local list, tag the next upcoming one
+function apptList(){try{return JSON.parse(localStorage.getItem('ipa-appts')||'[]')}catch(e){return[]}}
+function syncAppt(){
+  const now=Date.now()/1000+7200;const L=apptList().filter(x=>x>now).sort((a,b)=>a-b);
+  try{localStorage.setItem('ipa-appts',JSON.stringify(L))}catch(e){}
+  if(L.length)withOS(OS=>OS.User.addTags({appt:String(L[0])}));
+}
 async function saveAppt(){
   const v=$('#ap-dt').value;if(!v)return;
   if(!await askPush())return;
   const d=new Date(v);const ts=Math.floor(d.getTime()/1000);
-  await withOS(OS=>OS.User.addTags({appt:String(ts),appt_cat:curCat,lang}));
-  $('#apcard').hidden=true;
+  const L=apptList();if(!L.includes(ts))L.push(ts);
+  try{localStorage.setItem('ipa-appts',JSON.stringify(L))}catch(e){}
+  await withOS(OS=>OS.User.addTags({appt_cat:curCat,lang}));
+  syncAppt();
+  $('#apcard').hidden=true;$('#ap-dt').value='';
   const prev=new Date(d.getTime()-86400000);
   toast(T[lang].apOk(prev.toLocaleDateString(LOCALE[lang],{weekday:'long',month:'long',day:'numeric'})));
 }
-document.addEventListener('click',e=>{
-  if(e.target.closest('#remind')){remind();return}
-  const ph=e.target.closest('[data-src]');if(ph){openLB(ph.dataset.src);return}
-  const a=e.target.closest('a[href^="'+SITE+'"]');if(a&&a.id!=='sheet-ext'){e.preventDefault();$('#sheet-frame').src=a.href;$('#sheet-ext').href=a.href;$('#sheet').hidden=false;document.body.style.overflow='hidden'}
-});
 $('#sheet-close').addEventListener('click',()=>{$('#sheet').hidden=true;$('#sheet-frame').src='about:blank';document.body.style.overflow='';$('#apcard').hidden=false});
 $('#ap-skip').addEventListener('click',()=>$('#apcard').hidden=true);
 $('#ap-save').addEventListener('click',saveAppt);
@@ -534,7 +539,7 @@ if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=e
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
-if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.setLanguage(lang);OS.User.addTags({lang})}catch(e){}});const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
+if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.setLanguage(lang);OS.User.addTags({lang})}catch(e){}});syncAppt();const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
 </script>
 
 </body>
