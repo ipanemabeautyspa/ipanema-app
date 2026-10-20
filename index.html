@@ -534,7 +534,7 @@ if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=e
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
-if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.addTags({lang})}catch(e){}});const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
+if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.addTags({lang})}catch(e){}});const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
 </script>
 
 </body>
