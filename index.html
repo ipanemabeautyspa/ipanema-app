@@ -8,6 +8,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ipanema Beauty &amp; Spa">
 <meta name="theme-color" content="#f2f2f2">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.onesignal.com https://onesignal.com https://*.onesignal.com; connect-src 'self' https://onesignal.com https://*.onesignal.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://*.onesignal.com; font-src 'self' data: https://*.onesignal.com; frame-src https://www.ipanemabeautyandspa.com https://*.wix.com https://onesignal.com https://*.onesignal.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="icon" href="img/icon-192.png">
@@ -345,6 +347,8 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 </div></nav>
 
 <script>
+// do not allow other sites to frame the app (clickjacking)
+if(window.top!==window.self&&/ipanemabeautyandspa\.com$/.test(location.hostname)){try{window.top.location=window.location.href}catch(e){document.documentElement.style.display='none'}}
 const SITE="https://www.ipanemabeautyandspa.com";
 const T={
 en:{book:"Book",heroTag:"Brows & Lashes",heroTitle:"Brows that frame your face.",heroText:"Shaping, tint, henna, lamination and microblading by Brazilian brow specialists since 2011.",heroCta:"Book my brows",
