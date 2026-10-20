@@ -154,6 +154,9 @@ select,input[type=date]{width:100%;font:16px var(--font);color:var(--fg);backgro
 @media (prefers-reduced-motion: no-preference){.sheet:not([hidden]){animation:up .3s cubic-bezier(.2,.8,.2,1)}section.screen:not([hidden]){animation:rise .28s cubic-bezier(.2,.8,.2,1)}}
 @keyframes up{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
 @keyframes rise{from{opacity:.5;transform:translateY(6px)}to{opacity:1;transform:none}}
+.apcard{position:fixed;left:12px;right:12px;bottom:calc(84px + env(safe-area-inset-bottom,0px));z-index:65;max-width:520px;margin:0 auto;background:var(--surface);border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.25);padding:18px;display:grid;gap:8px}
+.apcard[hidden]{display:none}
+input[type=datetime-local]{width:100%;font:16px var(--font);color:var(--fg);background:var(--surface-2);border:0;border-radius:10px;padding:11px 12px;min-height:44px}
 /* tab bar */
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--glass);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);padding-bottom:env(safe-area-inset-bottom,0px);padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
 nav.tabs .in{max-width:600px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
@@ -325,6 +328,14 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
   <iframe id="sheet-frame" title="Ipanema online booking"></iframe>
 </div>
 
+<div class="apcard" id="apcard" hidden role="dialog" aria-labelledby="ap-t">
+  <h3 id="ap-t" data-t="apTitle">Did you book?</h3>
+  <p class="sub" data-t="apText"></p>
+  <label for="ap-dt" data-t="apDate">Appointment date &amp; time</label>
+  <input type="datetime-local" id="ap-dt">
+  <div class="btns"><button class="pill" id="ap-save" data-t="apSave">Remind me</button><button class="pill soft" id="ap-skip" data-t="apSkip">Not now</button></div>
+</div>
+
 <nav class="tabs" aria-label="Main"><div class="in" role="tablist">
   <button role="tab" data-tab="home" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-t="tHome">Home</span></button>
   <button role="tab" data-tab="book" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span data-t="book">Book</span></button>
@@ -344,7 +355,7 @@ bookSub:"Pick a service and book right here in the app.",cBrows:"Brows",cBraz:"B
 bkbrows:"Book brows & lashes",bkbrazilian:"Book a Brazilian",bkwax:"Book waxing",bkhair:"Book hair",bkskin:"Book a facial",from:"from",seeMenu:"See menu",
 gallerySub:"Real clients, real results from our chairs.",all:"All",moreIg:"More on Instagram",tipsTitle:"Tips & Care",tipsSub:"How to prepare, how to care after, and when to come back.",plannerTitle:"Next visit planner",service:"Service",lastVisit:"Last visit",
 pickDate:"Pick the date of your last visit.",idealNext:"Your ideal next visit",bookDate:"Book this date",remindMe:"Remind me",
-remOk:"Done! We’ll remind you 2 and 4 weeks after this visit.",remInstall:"Reminders work in the installed app: add Ipanema to your Home Screen first, then tap “Remind me” again.",remDenied:"Notifications are off for Ipanema. Turn them on in your phone settings.",
+remOk:"Done! We’ll remind you 2 and 4 weeks after this visit.",apTitle:"Did you book?",apText:"Get a reminder the day before your appointment.",apDate:"Appointment date & time",apSave:"Remind me",apSkip:"Not now",apOk:d=>`Done! We’ll remind you on ${d}.`,remInstall:"Reminders work in the installed app: add Ipanema to your Home Screen first, then tap “Remind me” again.",remDenied:"Notifications are off for Ipanema. Turn them on in your phone settings.",
 keepBy:d=>`Book by ${d} to keep the maintenance price.`,
 clubCap:"Ipanema Club · buy 5, get the 6th free · valid 6 months",club1:"Brazilian Club",club1d:"6 Brazilian waxes",club2:"Brow Club",club2d:"6 brow maintenance visits",club3:"Blowout Club",club3d:"6 medium blowouts",clubFoot:"Ask at the front desk to join. VIP status: 10 visits or $600 in 12 months.",
 visit:"Visit",mon:"Monday",tuefri:"Tuesday – Friday",sat:"Saturday",sun:"Sunday",closed:"Closed",contact:"Contact",call:"Call",text:"Text or WhatsApp",copy:"Copy",copied:"Copied",wa:"Message us on WhatsApp",
@@ -359,7 +370,7 @@ bookSub:"Escolha o serviço e agende aqui mesmo no app.",cBrows:"Sobrancelha",cB
 bkbrows:"Agendar sobrancelha e cílios",bkbrazilian:"Agendar brasileira",bkwax:"Agendar depilação",bkhair:"Agendar cabelo",bkskin:"Agendar facial",from:"a partir de",seeMenu:"Ver menu",
 gallerySub:"Clientes reais, resultados reais do nosso salão.",all:"Todos",moreIg:"Mais no Instagram",tipsTitle:"Dicas e Cuidados",tipsSub:"Como se preparar, como cuidar depois e quando voltar.",plannerTitle:"Planejador da próxima visita",service:"Serviço",lastVisit:"Última visita",
 pickDate:"Escolha a data da sua última visita.",idealNext:"Sua próxima visita ideal",bookDate:"Agendar esta data",remindMe:"Me lembrar",
-remOk:"Pronto! Vamos te lembrar 2 e 4 semanas depois desta visita.",remInstall:"Os lembretes funcionam no app instalado: coloque a Ipanema na tela inicial e toque em “Me lembrar” de novo.",remDenied:"As notificações da Ipanema estão desligadas. Ative nos ajustes do celular.",
+remOk:"Pronto! Vamos te lembrar 2 e 4 semanas depois desta visita.",apTitle:"Agendou?",apText:"Receba um lembrete um dia antes do seu horário.",apDate:"Data e hora do horário",apSave:"Me lembrar",apSkip:"Agora não",apOk:d=>`Pronto! Vamos te lembrar em ${d}.`,remInstall:"Os lembretes funcionam no app instalado: coloque a Ipanema na tela inicial e toque em “Me lembrar” de novo.",remDenied:"As notificações da Ipanema estão desligadas. Ative nos ajustes do celular.",
 keepBy:d=>`Agende até ${d} para manter o preço de manutenção.`,
 clubCap:"Ipanema Club · compre 5, ganhe a 6ª · válido por 6 meses",club1:"Clube Brasileira",club1d:"6 depilações brasileiras",club2:"Clube Sobrancelha",club2d:"6 manutenções de sobrancelha",club3:"Clube Escova",club3d:"6 escovas médias",clubFoot:"Peça na recepção para entrar. Status VIP: 10 visitas ou $600 em 12 meses.",
 visit:"Visite",mon:"Segunda",tuefri:"Terça a sexta",sat:"Sábado",sun:"Domingo",closed:"Fechado",contact:"Contato",call:"Ligar",text:"Mensagem ou WhatsApp",copy:"Copiar",copied:"Copiado",wa:"Fale com a gente no WhatsApp",
@@ -374,7 +385,7 @@ bookSub:"Elige un servicio y reserva aquí mismo en la app.",cBrows:"Cejas",cBra
 bkbrows:"Reservar cejas y pestañas",bkbrazilian:"Reservar brasileña",bkwax:"Reservar depilación",bkhair:"Reservar cabello",bkskin:"Reservar facial",from:"desde",seeMenu:"Ver menú",
 gallerySub:"Clientas reales, resultados reales de nuestro salón.",all:"Todo",moreIg:"Más en Instagram",tipsTitle:"Consejos y Cuidados",tipsSub:"Cómo prepararte, cómo cuidarte después y cuándo volver.",plannerTitle:"Planificador de próxima visita",service:"Servicio",lastVisit:"Última visita",
 pickDate:"Elige la fecha de tu última visita.",idealNext:"Tu próxima visita ideal",bookDate:"Reservar esta fecha",remindMe:"Recordarme",
-remOk:"¡Listo! Te recordaremos 2 y 4 semanas después de esta visita.",remInstall:"Los recordatorios funcionan en la app instalada: agrega Ipanema a tu pantalla de inicio y toca “Recordarme” otra vez.",remDenied:"Las notificaciones de Ipanema están desactivadas. Actívalas en los ajustes del teléfono.",
+remOk:"¡Listo! Te recordaremos 2 y 4 semanas después de esta visita.",apTitle:"¿Reservaste?",apText:"Recibe un recordatorio el día antes de tu cita.",apDate:"Fecha y hora de la cita",apSave:"Recordarme",apSkip:"Ahora no",apOk:d=>`¡Listo! Te recordaremos el ${d}.`,remInstall:"Los recordatorios funcionan en la app instalada: agrega Ipanema a tu pantalla de inicio y toca “Recordarme” otra vez.",remDenied:"Las notificaciones de Ipanema están desactivadas. Actívalas en los ajustes del teléfono.",
 keepBy:d=>`Reserva antes del ${d} para conservar el precio de mantenimiento.`,
 clubCap:"Ipanema Club · compra 5, la 6ª gratis · válido 6 meses",club1:"Club Brasileña",club1d:"6 depilaciones brasileñas",club2:"Club Cejas",club2d:"6 mantenimientos de cejas",club3:"Club Brushing",club3d:"6 brushings medianos",clubFoot:"Pide unirte en recepción. Estado VIP: 10 visitas o $600 en 12 meses.",
 visit:"Visítanos",mon:"Lunes",tuefri:"Martes a viernes",sat:"Sábado",sun:"Domingo",closed:"Cerrado",contact:"Contacto",call:"Llamar",text:"Mensaje o WhatsApp",copy:"Copiar",copied:"Copiado",wa:"Escríbenos por WhatsApp",
@@ -481,21 +492,41 @@ function plan(){
   try{localStorage.setItem('ipa-rb',JSON.stringify({s:svcSel.value,d:dateIn.value}))}catch(e){}
 }
 function toast(msg){const d=document.createElement('div');d.className='toast';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),4200)}
+const PROD=/ipanemabeautyandspa\.com$/.test(location.hostname);
+const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);
+const installed=()=>matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+function withOS(fn){return new Promise(res=>{if(!PROD||!window.OneSignalDeferred)return res(null);OneSignalDeferred.push(async OS=>{try{res(await fn(OS))}catch(e){res(null)}})})}
+async function askPush(){
+  if(isIOS&&!installed()){toast(t('remInstall'));return false}
+  const ok=await withOS(async OS=>{if(!OS.Notifications.isPushSupported())return false;if(!OS.Notifications.permission)await OS.Notifications.requestPermission();return OS.Notifications.permission});
+  if(ok===null){toast(t('remInstall'));return false}
+  if(!ok){toast(t('remDenied'));return false}
+  return true;
+}
 async function remind(){
-  const installed=matchMedia('(display-mode: standalone)').matches||navigator.standalone;
-  if(!installed||!('Notification' in window)){toast(t('remInstall'));return}
-  const perm=await Notification.requestPermission();
-  if(perm!=='granted'){toast(t('remDenied'));return}
-  // Installed version: subscription + tags (service, last visit, language) are sent to the push service, which sends the 2- and 4-week reminders.
+  if(!await askPush())return;
+  const ts=Math.floor(new Date(dateIn.value+'T12:00:00').getTime()/1000);
+  await withOS(OS=>OS.User.addTags({svc:svcSel.value,last_visit:String(ts),lang}));
   try{localStorage.setItem('ipa-remind',JSON.stringify({s:svcSel.value,d:dateIn.value,l:lang}))}catch(e){}
   toast(t('remOk'));
+}
+async function saveAppt(){
+  const v=$('#ap-dt').value;if(!v)return;
+  if(!await askPush())return;
+  const d=new Date(v);const ts=Math.floor(d.getTime()/1000);
+  await withOS(OS=>OS.User.addTags({appt:String(ts),appt_cat:curCat,lang}));
+  $('#apcard').hidden=true;
+  const prev=new Date(d.getTime()-86400000);
+  toast(T[lang].apOk(prev.toLocaleDateString(LOCALE[lang],{weekday:'long',month:'long',day:'numeric'})));
 }
 document.addEventListener('click',e=>{
   if(e.target.closest('#remind')){remind();return}
   const ph=e.target.closest('[data-src]');if(ph){openLB(ph.dataset.src);return}
   const a=e.target.closest('a[href^="'+SITE+'"]');if(a&&a.id!=='sheet-ext'){e.preventDefault();$('#sheet-frame').src=a.href;$('#sheet-ext').href=a.href;$('#sheet').hidden=false;document.body.style.overflow='hidden'}
 });
-$('#sheet-close').addEventListener('click',()=>{$('#sheet').hidden=true;$('#sheet-frame').src='about:blank';document.body.style.overflow=''});
+$('#sheet-close').addEventListener('click',()=>{$('#sheet').hidden=true;$('#sheet-frame').src='about:blank';document.body.style.overflow='';$('#apcard').hidden=false});
+$('#ap-skip').addEventListener('click',()=>$('#apcard').hidden=true);
+$('#ap-save').addEventListener('click',saveAppt);
 svcSel.addEventListener('change',plan);dateIn.addEventListener('input',plan);
 renderPlannerOpts();
 try{const s=JSON.parse(localStorage.getItem('ipa-rb')||'null');if(s){svcSel.value=s.s;dateIn.value=s.d}}catch(e){}
@@ -503,7 +534,7 @@ if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=e
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
-if('serviceWorker' in navigator&&/ipanemabeautyandspa\.com$|github\.io$/.test(location.hostname))navigator.serviceWorker.register('sw.js');
+if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.addTags({lang})}catch(e){}});const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
 </script>
 
 </body>
