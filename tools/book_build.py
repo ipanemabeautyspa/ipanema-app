@@ -173,7 +173,6 @@ h1{margin:14px 0 0;text-align:center;font-size:72px;line-height:1.02;font-weight
 .pr{font-size:17px;font-weight:600;white-space:nowrap;text-align:end}
 .pr small{display:block;font-size:12px;font-weight:500;color:#6b6b6b}
 .bk{flex:none;display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 18px;border-radius:999px;background:#333;color:#fff;text-decoration:none;font-size:15px;font-weight:600}
-.bk:hover{background:#1f1f1f}
 .none{padding:28px 0;text-align:center;color:#6b6b6b}
 .help{margin:28px auto 0;max-width:620px;text-align:center;font-size:15px;line-height:1.6;color:#6b6b6b}
 .help a{color:#333;font-weight:600}
@@ -187,6 +186,31 @@ h1{margin:14px 0 0;text-align:center;font-size:72px;line-height:1.02;font-weight
 :host([data-narrow]) .pr{text-align:start;flex:1}
 :host([data-narrow]) .tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;margin-inline:-16px;padding-inline:16px}
 :host([data-narrow]) .tabs button{flex:none}
+:host{--ease-out:cubic-bezier(0.23,1,0.32,1)}
+h1,.sub,.help{text-wrap:balance}
+.tabs button{transition:background-color 200ms ease,color 200ms ease,border-color 200ms ease,transform 160ms var(--ease-out)}
+.tabs button:active,.bk:active{transform:scale(0.97)}
+.bk{transition:background-color 200ms ease,transform 160ms var(--ease-out)}
+.q{transition:background-color 200ms ease,border-color 200ms ease,box-shadow 200ms ease}
+.q:focus{box-shadow:0 0 0 4px rgba(51,51,51,.08)}
+.tabs button:focus-visible,.bk:focus-visible,.help a:focus-visible,.lang select:focus-visible{outline:2px solid #333;outline-offset:2px}
+.row{transition:background-color 200ms ease}
+@media (hover:hover) and (pointer:fine){
+ .tabs button:not(.on):hover{border-color:#333;background:#fafafa}
+ .bk:hover{background:#1f1f1f}
+}
+@keyframes ri{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.list.anim .row,.list.anim .none{animation:ri 320ms var(--ease-out) both;animation-delay:calc(min(var(--i,0),8) * 30ms)}
+.intro .ey,.intro h1,.intro .sub,.intro .tabs,.intro .q,.intro .list{animation:ri 700ms var(--ease-out) both}
+.intro h1{animation-delay:70ms}.intro .sub{animation-delay:140ms}.intro .tabs{animation-delay:210ms}.intro .q{animation-delay:260ms}.intro .list{animation-delay:310ms}
+.intro .tabs button{animation:ri 500ms var(--ease-out) both;animation-delay:calc(240ms + var(--i,0) * 50ms)}
+:host([data-narrow]) .tabs{-webkit-mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent);mask-image:linear-gradient(90deg,transparent,#000 16px,#000 calc(100% - 28px),transparent);scrollbar-width:none}
+:host([data-narrow]) .tabs::-webkit-scrollbar{display:none}
+@media (prefers-reduced-motion:reduce){
+ .list.anim .row,.list.anim .none,.intro .ey,.intro h1,.intro .sub,.intro .tabs,.intro .q,.intro .list,.intro .tabs button{animation-name:rf;animation-duration:200ms;animation-delay:0ms}
+ .tabs button:active,.bk:active{transform:none}
+}
+@keyframes rf{from{opacity:0}to{opacity:1}}
 '''
 
 JS = r'''/* Ipanema Beauty & Spa — ipa-book (generated) */
@@ -222,22 +246,30 @@ class E extends HTMLElement {
   rows(){ const t = T[this.lang], q = this.q.trim().toLowerCase();
     const list = D.filter(s => q ? s.n.toLowerCase().indexOf(q) >= 0 : s.c === this.cat);
     if (!list.length) return '<div class="none">' + t.none + '</div>';
-    return list.map(s => '<div class="row"><div class="nm"><b>' + esc(s.n) + (s.s.indexOf('new-client-special') === 0 ? '<i>' + t.sat + '</i>' : '') + '</b><span>' + this.dur(s.m) + '</span></div>' +
+    return list.map((s, i) => '<div class="row" style="--i:' + i + '"><div class="nm"><b>' + esc(s.n) + (s.s.indexOf('new-client-special') === 0 ? '<i>' + t.sat + '</i>' : '') + '</b><span>' + this.dur(s.m) + '</span></div>' +
       '<div class="pr">' + this.price(s.p) + '</div><a class="bk" target="_top" href="' + SITE + '/booking-calendar/' + s.s + '">' + t.book + '</a></div>').join(''); }
   render(){ const t = T[this.lang], rtl = this.lang === 'he' || this.lang === 'ar';
     const opts = [['en','English'],['pt','Português'],['es','Español'],['he','עברית'],['ar','العربية']].map(o => '<option value="' + o[0] + '"' + (o[0] === this.lang ? ' selected' : '') + '>' + o[1] + '</option>').join('');
-    this.root.innerHTML = '<style>' + CSS + '</style><div class="r" dir="' + (rtl ? 'rtl' : 'ltr') + '" lang="' + this.lang + '">' +
+    const intro = !this._shown; this._shown = 1;
+    this.root.innerHTML = '<style>' + CSS + '</style><div class="r' + (intro ? ' intro' : '') + '" dir="' + (rtl ? 'rtl' : 'ltr') + '" lang="' + this.lang + '">' +
       '<label class="lang"><span aria-hidden="true">🌐</span><select aria-label="Language">' + opts + '</select></label><div class="w">' +
       '<p class="ey">' + t.eyebrow + '</p><h1>' + t.title + '</h1><p class="sub">' + t.sub + '</p>' +
-      '<div class="tabs" role="tablist">' + CATS.map(c => '<button type="button" role="tab" data-c="' + c + '" class="' + (c === this.cat && !this.q ? 'on' : '') + '">' + t[c] + '</button>').join('') + '</div>' +
+      '<div class="tabs" role="tablist">' + CATS.map((c, i) => '<button type="button" role="tab" style="--i:' + i + '" data-c="' + c + '" class="' + (c === this.cat && !this.q ? 'on' : '') + '">' + t[c] + '</button>').join('') + '</div>' +
       '<input class="q" type="search" placeholder="' + t.search + '" value="' + esc(this.q) + '">' +
       '<div class="list">' + this.rows() + '</div>' +
       '<p class="help">' + t.help + '<br><a href="' + SITE + '/copy-of-terms-and-conditions" target="_top">' + t.policy + '</a></p></div></div>';
     const r = this.root;
     r.querySelector('.lang select').onchange = e => { const v = e.target.value; try { localStorage.setItem('ipa-site-lang', v); } catch (x) {} window.dispatchEvent(new CustomEvent('ipa-lang', { detail: v })); };
-    r.querySelectorAll('.tabs button').forEach(b => b.onclick = () => { this.cat = b.dataset.c; this.q = ''; this.render(); });
-    const inp = r.querySelector('.q');
-    inp.oninput = () => { this.q = inp.value; r.querySelector('.list').innerHTML = this.rows(); r.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', !this.q && b.dataset.c === this.cat)); };
+    const inp = r.querySelector('.q'), lst = r.querySelector('.list'), tabs = r.querySelectorAll('.tabs button');
+    if (intro) setTimeout(() => { const x = r.querySelector('.intro'); if (x) x.classList.remove('intro'); }, 1400);
+    tabs.forEach(b => b.onclick = () => {
+      if (b.dataset.c === this.cat && !this.q) return;
+      this.cat = b.dataset.c; this.q = ''; inp.value = '';
+      tabs.forEach(x => x.classList.toggle('on', x === b));
+      lst.classList.remove('anim'); lst.innerHTML = this.rows(); void lst.offsetWidth; lst.classList.add('anim');
+      if (this.hasAttribute('data-narrow')) try { b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); } catch (e) {}
+    });
+    inp.oninput = () => { this.q = inp.value; lst.classList.remove('anim'); lst.innerHTML = this.rows(); r.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', !this.q && b.dataset.c === this.cat)); };
   }
 }
 customElements.define('ipa-book', E);

@@ -167,6 +167,41 @@ MODAL_CSS = '''.ipa-modal{position:fixed;inset:0;z-index:99999;background:rgba(4
 .ipa-card ol{margin:20px 0 0;padding-left:22px;font-size:17px;line-height:1.7;color:#333}.ipa-card ol[hidden]{display:none}
 .ipa-go{margin-top:22px;height:52px;border-radius:999px;background:#333;color:#fff !important;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center}'''
 
+
+MOTION_CSS = (
+ ':host{--ease-out:cubic-bezier(0.23,1,0.32,1);--ease-in-out:cubic-bezier(0.77,0,0.175,1)}'
+ 'h1,h2,h3{text-wrap:balance}p{text-wrap:pretty}'
+ # press feedback on everything pressable
+ 'a[style*="border-radius: 999px"],button,.ipa-soc,.ipa-lang,.ipa-go{transition:transform 160ms var(--ease-out),background-color 150ms ease,color 150ms ease,border-color 150ms ease}'
+ 'a[style*="border-radius: 999px"]:active,button:active,.ipa-soc:active,.ipa-go:active{transform:scale(0.97)}'
+ # tiles / cards: press + hover lift (desktop only)
+ 'a[style*="border-radius: 28px"],div[style*="border-radius: 24px"]{transition:transform 250ms var(--ease-out),box-shadow 250ms var(--ease-out)}'
+ 'a[style*="border-radius: 28px"]:active{transform:scale(0.985)}'
+ 'a[style*="border-radius: 28px"] img{transition:transform 600ms var(--ease-out)}'
+ '@media (hover:hover) and (pointer:fine){'
+ 'a[style*="border-radius: 28px"]:hover{transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.10)}'
+ 'a[style*="border-radius: 28px"]:hover img{transform:scale(1.04)}'
+ 'div[style*="border-radius: 24px"]:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.07)}'
+ 'a[style*="background: #333333"]:hover{background:#1f1f1f!important}'
+ 'a[style*="border: 1px solid"]:hover{border-color:#333!important}'
+ 'a{transition:color 150ms ease}}'
+ # focus ring
+ 'a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid #333;outline-offset:3px;border-radius:12px}'
+ # scroll reveal (only armed when JS adds .ipa-m to root)
+ '.ipa-m .rv{opacity:0;transform:translateY(18px);transition:opacity 700ms var(--ease-out),transform 700ms var(--ease-out);transition-delay:var(--d,0ms)}'
+ '.ipa-m .rv.in{opacity:1;transform:none}'
+ '.ipa-m img.rv{transform:translateY(18px) scale(1.03)}.ipa-m img.rv.in{transform:none}'
+ '.ipa-m .rv-logo{opacity:0;transform:scale(0.96);filter:blur(6px);transition:opacity 800ms var(--ease-out),transform 800ms var(--ease-out),filter 800ms var(--ease-out)}'
+ '.ipa-m .rv-logo.in{opacity:1;transform:none;filter:none}'
+ # install modal enter/exit
+ '.ipa-modal{transition:opacity 220ms var(--ease-out)}.ipa-modal .ipa-card{transition:transform 260ms var(--ease-out),opacity 260ms var(--ease-out)}'
+ '.ipa-modal:not(.open){opacity:0}.ipa-modal:not(.open) .ipa-card{opacity:0;transform:scale(0.96)}'
+ '.ipa-modal.closing{transition-duration:150ms}.ipa-modal.closing .ipa-card{transition-duration:150ms}'
+ '@media (prefers-reduced-motion:reduce){'
+ '.ipa-m .rv,.ipa-m img.rv,.ipa-m .rv-logo{transform:none!important;filter:none!important;transition:opacity 300ms ease!important}'
+ 'a,button,.ipa-soc,a[style*="border-radius: 28px"],a[style*="border-radius: 28px"] img,div[style*="border-radius: 24px"],.ipa-modal .ipa-card{transform:none!important}}'
+)
+
 LANGBAR = ('<label class="ipa-lang"><span aria-hidden="true">🌐</span><select aria-label="Language">'
            '<option value="en">English</option><option value="pt">Português</option><option value="es">Español</option>'
            '<option value="he">עברית</option><option value="ar">العربية</option></select></label>')
@@ -280,11 +315,28 @@ class E extends HTMLElement {
     if (sel) sel.addEventListener('change', () => { try { localStorage.setItem('ipa-site-lang', sel.value); } catch (e) {} window.dispatchEvent(new CustomEvent('ipa-lang', { detail: sel.value })); });
     window.addEventListener('ipa-lang', e => apply(e.detail));
     const m = r.querySelector('.ipa-modal');
+    (() => {
+      const root = r.querySelector('.ipa-root'); if (!root || !('IntersectionObserver' in window)) return;
+      const sel = 'section h1, section h2, section > .wrap > p, section > div > p, section .tiles > *, section .cards > *, section .two > *, section .split > *, section .three > *, section .wrap > div > div[style*="border-radius"], section img, section iframe, section [style*="display: flex"] > a, footer > .wrap > *';
+      const all = Array.prototype.slice.call(root.querySelectorAll(sel));
+      const set = new Set();
+      all.forEach(el => { let p = el.parentElement, nested = false; while (p && p !== root) { if (set.has(p)) { nested = true; break; } p = p.parentElement; } if (!nested) set.add(el); });
+      const logo = root.querySelector('section img[src*="logo3d"]');
+      set.forEach(el => el.classList.add(el === logo ? 'rv-logo' : 'rv'));
+      const kids = new Map();
+      set.forEach(el => { const k = el.parentElement; const n = kids.get(k) || 0; kids.set(k, n + 1); el.style.setProperty('--d', Math.min(n, 5) * 70 + 'ms'); });
+      root.classList.add('ipa-m');
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8px 0px', threshold: 0.08 });
+      set.forEach(el => io.observe(el));
+      setTimeout(() => set.forEach(el => { const b = el.getBoundingClientRect(); if (b.top < innerHeight && b.bottom > 0) el.classList.add('in'); }), 1200);
+    })();
     r.querySelectorAll('a[href^="#"]').forEach(a => { if (a.hasAttribute('data-install')) return; a.addEventListener('click', e => { const id = a.getAttribute('href').slice(1); const el = id && r.getElementById(id); if (el) { e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); } else if (id==='top') { e.preventDefault(); this.scrollIntoView({behavior:'smooth'}); } }); });
     if (m) {
-      r.querySelectorAll('[data-install]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); m.hidden = false; }));
-      m.querySelector('.ipa-x').addEventListener('click', () => m.hidden = true);
-      m.addEventListener('click', e => { if (e.target === m) m.hidden = true; });
+      const openM = () => { m.classList.remove('closing', 'open'); m.hidden = false; requestAnimationFrame(() => requestAnimationFrame(() => m.classList.add('open'))); };
+      const closeM = () => { m.classList.add('closing'); m.classList.remove('open'); setTimeout(() => { m.hidden = true; m.classList.remove('closing'); }, 160); };
+      r.querySelectorAll('[data-install]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openM(); }));
+      m.querySelector('.ipa-x').addEventListener('click', closeM);
+      m.addEventListener('click', e => { if (e.target === m) closeM(); });
       m.querySelectorAll('.ipa-tabs button').forEach(b => b.addEventListener('click', () => {
         m.querySelectorAll('.ipa-tabs button').forEach(x => x.classList.toggle('on', x === b));
         m.querySelectorAll('ol').forEach(o => o.hidden = o.dataset.p !== b.dataset.t); }));
@@ -301,7 +353,7 @@ for name, (tag, _) in PAGES.items():
            '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
     html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
-    css = _narrowize(css)
+    css = _narrowize(css) + MOTION_CSS
     (OUT / f'{tag}.js').write_text(encoding='utf-8', data=TPL % {'tag': tag, 'css': json.dumps(css), 'html': json.dumps(html_), 'modal': json.dumps(modal), 'i18n': I18N_JSON})
     # preview page
     (OUT / f'{tag}.html').write_text(f'<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>{tag}</title><body style="margin:0"><script src="{tag}.js"></script><{tag}></{tag}></body>')

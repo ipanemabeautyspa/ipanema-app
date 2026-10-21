@@ -11,21 +11,44 @@ T = {
 CSS = ''':host{display:block;width:100%;height:100%}*{box-sizing:border-box}
 .w{font-family:Inter,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,"Noto Sans Hebrew","Noto Sans Arabic",sans-serif;-webkit-font-smoothing:antialiased;color:#1f1f1f;background:#fff;border-radius:28px;overflow:auto;display:grid;grid-template-columns:42% 58%;width:100%;height:100%;min-height:440px;position:relative}
 .ph{background:#e9e3cf url(APPURL/img/w/brow-076.jpg) center/cover no-repeat}
-.bd{padding:34px 36px 24px;display:flex;flex-direction:column;justify-content:center}
+.bd{padding:20px 36px 14px;display:flex;flex-direction:column;justify-content:center}
 .ey{margin:0;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b}
-h2{margin:10px 0 0;font-size:34px;line-height:1.08;font-weight:700;letter-spacing:-.03em}
+h2{margin:8px 0 0;font-size:31px;line-height:1.06;font-weight:700;letter-spacing:-.03em}
 .sub{margin:12px 0 0;font-size:16px;line-height:1.5;color:#4d4d4d}
-form{margin-top:20px;display:flex;flex-direction:column;gap:10px}
-input{width:100%%;height:48px;border:1px solid #d6d6d6;border-radius:14px;padding:0 16px;font:inherit;font-size:16px;color:#1f1f1f;background:#fafafa;outline:none}
+form{margin-top:16px;display:flex;flex-direction:column;gap:9px}
+input{width:100%%;height:46px;border:1px solid #d6d6d6;border-radius:14px;padding:0 16px;font:inherit;font-size:16px;color:#1f1f1f;background:#fafafa;outline:none}
 input:focus{border-color:#333;background:#fff}
-button.go{height:52px;border:0;border-radius:999px;background:#333;color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
+button.go{height:50px;border:0;border-radius:999px;background:#333;color:#fff;font:inherit;font-size:16px;font-weight:600;cursor:pointer;margin-top:4px}
 button.go[disabled]{opacity:.6}
-.fine{margin:12px 0 0;font-size:12px;line-height:1.5;color:#8a8a8a}
+.fine{margin:10px 0 0;font-size:11.5px;line-height:1.45;color:#8a8a8a}
 .msg{margin:10px 0 0;font-size:14px;color:#b3261e;min-height:0}
 .x{position:absolute;top:14px;inset-inline-end:14px;width:40px;height:40px;border-radius:50%%;border:0;background:rgba(255,255,255,.9);font-size:20px;color:#4d4d4d;cursor:pointer;z-index:2}
 .no{margin-top:8px;background:none;border:0;color:#6b6b6b;font:inherit;font-size:14px;cursor:pointer;text-decoration:underline}
 .done h2{font-size:30px}.done a{display:inline-flex;align-items:center;justify-content:center;height:50px;padding:0 28px;border-radius:999px;background:#333;color:#fff;text-decoration:none;font-weight:600;margin-top:20px}
 @media(max-width:640px){.w{grid-template-columns:1fr;grid-template-rows:150px auto;border-radius:22px}.bd{padding:24px 22px 20px}h2{font-size:27px}}
+:host{--ease-out:cubic-bezier(0.23,1,0.32,1)}
+:host([data-narrow]) .w{grid-template-columns:1fr;grid-template-rows:118px auto;border-radius:22px}
+:host([data-narrow]) .bd{padding:18px 20px 14px;justify-content:flex-start}
+:host([data-narrow]) h2{font-size:25px}:host([data-narrow]) .sub{font-size:15px;margin-top:8px}:host([data-narrow]) form{margin-top:14px;gap:8px}
+:host([data-narrow]) input{height:44px}:host([data-narrow]) button.go{height:48px}:host([data-narrow]) .fine{margin-top:8px}
+h2{text-wrap:balance}
+.w{transition:opacity 260ms var(--ease-out),transform 260ms var(--ease-out)}
+.w.pre{opacity:0;transform:scale(0.96)}
+.w.out{opacity:0;transform:scale(0.97);transition-duration:150ms}
+.bd > *{animation:wi 520ms var(--ease-out) both}
+.bd > *:nth-child(2){animation-delay:60ms}.bd > *:nth-child(3){animation-delay:120ms}.bd > *:nth-child(4){animation-delay:180ms}.bd > *:nth-child(5){animation-delay:240ms}.bd > *:nth-child(n+6){animation-delay:280ms}
+.ph{animation:wf 600ms var(--ease-out) both}
+@keyframes wi{from{opacity:0;transform:translateY(10px)}}
+@keyframes wf{from{opacity:0}}
+button.go,.x,.no,.done a{transition:transform 160ms var(--ease-out),background-color 150ms ease,color 150ms ease}
+button.go:active,.x:active,.done a:active{transform:scale(0.97)}
+@media (hover:hover) and (pointer:fine){button.go:hover,.done a:hover{background:#1f1f1f}.x:hover{background:#fff}.no:hover{color:#1f1f1f}}
+input{transition:border-color 150ms ease,background-color 150ms ease,box-shadow 150ms ease}
+input:focus{box-shadow:0 0 0 4px rgba(51,51,51,.08)}
+button:focus-visible,a:focus-visible{outline:2px solid #333;outline-offset:3px}
+.msg.shake{animation:sh 320ms var(--ease-out)}
+@keyframes sh{20%{transform:translateX(-6px)}50%{transform:translateX(5px)}80%{transform:translateX(-2px)}}
+@media (prefers-reduced-motion:reduce){.w,.w.pre,.w.out{transform:none}.bd > *,.msg.shake{animation:wf 250ms ease both}button.go:active,.x:active,.done a:active{transform:none}}
 '''.replace('APPURL', APP).replace('%%','%')
 JS = r'''/* Ipanema Beauty & Spa — ipa-welcome (generated) */
 (function(){
@@ -41,7 +64,9 @@ class E extends HTMLElement {
     if (LS.indexOf(lang)<0){ const b=(navigator.language||'en').slice(0,2).toLowerCase(); lang=LS.indexOf(b)>=0?b:'en'; }
     this.t = T[lang]; this.lang = lang;
     this.root = this.attachShadow({mode:'open'});
+    const setN = () => { const w = this.clientWidth; if (w) this.toggleAttribute('data-narrow', w < 560); }; setN(); try { new ResizeObserver(setN).observe(this); } catch (e) {}
     this.render();
+    const w0 = this.root.querySelector('.w'); w0.classList.add('pre'); requestAnimationFrame(() => requestAnimationFrame(() => w0.classList.remove('pre')));
   }
   render(state){
     const t=this.t, rtl=(this.lang==='he'||this.lang==='ar');
@@ -55,13 +80,13 @@ class E extends HTMLElement {
         '<button class="go" type="submit">'+t.btn+'</button></form><p class="msg" role="alert"></p><p class="fine">'+t.fine+'</p><button class="no" type="button">'+t.no+'</button></div>';
     }
     this.root.innerHTML = '<style>'+CSS+'</style><div class="w" dir="'+(rtl?'rtl':'ltr')+'" lang="'+this.lang+'"><button class="x" aria-label="Close">×</button><div class="ph" role="img" aria-label="Brows at Ipanema Beauty & Spa"></div>'+body+'</div>';
-    const close=()=>this.dispatchEvent(new CustomEvent('ipa-close',{bubbles:true,composed:true}));
+    const close=()=>{ const w=this.root.querySelector('.w'); if(w) w.classList.add('out'); setTimeout(()=>this.dispatchEvent(new CustomEvent('ipa-close',{bubbles:true,composed:true})),150); };
     this.root.querySelector('.x').onclick=close; const no=this.root.querySelector('.no'); if(no) no.onclick=close;
     const f=this.root.querySelector('form');
     if (f) f.onsubmit=(e)=>{ e.preventDefault();
       const d={name:f.name.value.trim(), email:f.email.value.trim().toLowerCase(), phone:f.phone.value.trim(), lang:this.lang};
       const msg=this.root.querySelector('.msg');
-      if(!d.name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email) || d.phone.replace(/\D/g,'').length<10){ msg.textContent=t.req; return; }
+      if(!d.name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(d.email) || d.phone.replace(/\D/g,'').length<10){ msg.textContent=t.req; msg.classList.remove('shake'); void msg.offsetWidth; msg.classList.add('shake'); return; }
       msg.textContent=''; const b=f.querySelector('button'); b.disabled=true; b.textContent='…';
       this.dispatchEvent(new CustomEvent('ipa-submit',{detail:d,bubbles:true,composed:true}));
       clearTimeout(this._to); this._to=setTimeout(()=>{ if(!this._done){ msg.textContent=t.err; b.disabled=false; b.textContent=t.btn; } }, 15000);
