@@ -10,9 +10,7 @@ class E extends HTMLElement {
     if (!document.getElementById('ipa-inter')) { const l = document.createElement('link'); l.id='ipa-inter'; l.rel='stylesheet'; l.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'; document.head.appendChild(l); }
     const r = this.attachShadow({mode:'open'});
     r.innerHTML = '<style>'+CSS+'</style>' + HTML + MODAL;
-    this.style.display = 'flex'; this.style.flexDirection = 'column'; this.style.width = '100%'; this.style.minHeight = '100%';
-    const ft = r.querySelector('footer');
-    if (ft) { let el = ft; while (el.parentElement) { const p = el.parentElement; p.style.display = 'flex'; p.style.flexDirection = 'column'; p.style.flex = '1 0 auto'; el = p; } ft.style.flex = '1 0 auto'; }
+    this.style.display = 'block'; this.style.width = '100%';
     const m = r.querySelector('.ipa-modal');
     r.querySelectorAll('a[href^="#"]').forEach(a => { if (a.hasAttribute('data-install')) return; a.addEventListener('click', e => { const id = a.getAttribute('href').slice(1); const el = id && r.getElementById(id); if (el) { e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); } else if (id==='top') { e.preventDefault(); this.scrollIntoView({behavior:'smooth'}); } }); });
     if (m) {
