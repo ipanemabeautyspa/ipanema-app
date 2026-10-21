@@ -248,3 +248,43 @@ hh = json.loads(re.search(r'const HTML = (".*?");\n', (OUT / 'ipa-home.js').read
 fh = re.search(r'<footer.*?</footer>', hh, re.S).group(0)
 (OUT / 'ipa-footer.js').write_text(src.replace(m.group(0), 'const HTML = ' + json.dumps('<div class="ipa-root">' + fh + '</div>') + ';\n').replace("'ipa-visit'", "'ipa-footer'"))
 print('visit-nf/footer ok')
+
+# ---------- legal pages ----------
+LEGAL = {
+ 'ipa-refund': ('Refund and Cancellation', 'At Ipanema Beauty & Spa, we value your time and ours. This policy explains how cancellations, reschedules, and refunds are handled.', [
+   ('1. Cancellations & Reschedules', ['Clients may cancel or reschedule appointments at least 48 hours in advance with no penalty.', 'Cancellations or reschedules made within 48 hours of the scheduled time are subject to a fee equal to 50% of the service price.', 'Exceptions may apply in cases of medical emergencies or other unforeseen circumstances, at our discretion.']),
+   ('2. No-Shows', ['Clients who do not show up for their appointment without notice will also be subject to the 50% service fee.', 'Repeated no-shows may result in limited booking privileges in the future.']),
+   ('3. Refunds', ['Payments for services already rendered are non-refundable.', 'Refunds will only be considered in cases of proven error or unsatisfactory service, and are granted solely at the discretion of Ipanema Beauty & Spa.']),
+   ('4. Refunds and Cancellations', ['Service fees are non-refundable once the service has been completed.', 'Refunds are only considered in cases of proven error or unsatisfactory service, at our sole discretion.']),
+   ('5. Right to Refuse Refunds', ['We reserve the right to decline partial or full refunds if the request falls outside of this policy.'])]),
+ 'ipa-terms': ('Terms and Conditions', 'Welcome to Ipanema Beauty & Spa. By accessing or using our website and booking our services, you agree to the following terms and conditions.', [
+   ('1. Services', ['All services listed on our website are subject to availability.', 'Prices may vary depending on service type and duration.', 'We reserve the right to update or change services and pricing at any time.']),
+   ('2. Appointments', ['Appointments can be booked online, by phone, or in person.', 'Please arrive on time for your scheduled appointment. Late arrivals may result in reduced service time.', 'If you need to cancel or reschedule, please notify us at least 48 hours in advance. Cancellations made within 48 hours may incur a fee of 50% of the service price.']),
+   ('3. Payments', ['Payments are due at the time of service.', 'Accepted payment methods are shown at the front desk.']),
+   ('4. Refunds and Cancellations', ['Service fees are non-refundable once the service has been completed.', 'Refunds are only considered in cases of proven error or unsatisfactory service, at our sole discretion.']),
+   ('5. Website Use', ['The content on this website (text, images, design, logo) is owned by Ipanema Beauty & Spa and may not be copied or used without permission.', 'You agree not to use this website for any unlawful or harmful activity.']),
+   ('6. Limitation of Liability', ['While we strive to provide the best care and services, Ipanema Beauty & Spa is not responsible for any indirect damages, allergic reactions, or outcomes beyond normal professional standards.', 'Please inform your esthetician or stylist of any allergies, sensitivities, or health conditions before your service.']),
+   ('7. Changes to These Terms', ['We may update these Terms & Conditions at any time. Changes will be effective immediately when posted on this page.'])]),
+ 'ipa-privacy': ('Privacy Policy', 'At Ipanema Beauty & Spa, your privacy is very important to us. This Privacy Policy explains how we collect, use, and protect your personal information when you visit our website and book our services.', [
+   ('1. Information We Collect', ['When you use our website or contact us, we may collect the following information:', '• Name, email address, and phone number', '• Billing information (when making a payment)', '• Booking details (service type, date, time)', '• Messages or inquiries you send us through forms or email']),
+   ('2. How We Use Your Information', ['We use your information to:', '• Confirm and manage your appointments', '• Communicate with you about your booking or inquiries', '• Improve our services and website', '• Send promotional offers or updates (only if you agree)']),
+   ('3. Sharing of Information', ['We do not sell or trade your personal information.', 'Your information may only be shared with:', '• Payment processors (to complete transactions securely)', '• Service providers that help us operate the website (always under confidentiality)', '• When required by law']),
+   ('4. Data Security', ['We take reasonable measures to protect your personal information from unauthorized access, disclosure, or misuse.']),
+   ('5. Cookies and Tracking', ['Our website may use cookies to improve user experience, track visits, and help us understand how the website is used. You can disable cookies in your browser settings at any time.']),
+   ('6. Your Rights', ['You have the right to:', '• Request access to your personal data', '• Ask us to correct or delete your data', '• Opt out of receiving promotional emails', 'To exercise these rights, contact us at <a href="mailto:ipanemabeautyandspa@gmail.com" style="color:#1f1f1f;font-weight:600">ipanemabeautyandspa@gmail.com</a>.'])]),
+}
+_hj = json.loads(re.search(r'const HTML = (".*?");\n', (OUT / 'ipa-home.js').read_text(encoding='utf-8'), re.S).group(1))
+_foot = re.search(r'<footer.*?</footer>', _hj, re.S).group(0)
+_home_css = json.loads(re.search(r'const CSS = (".*?");\n', (OUT / 'ipa-home.js').read_text(encoding='utf-8'), re.S).group(1))
+for tag, (title, intro, secs) in LEGAL.items():
+    cards = ''.join('<div style="background:#f5f5f7;border-radius:24px;padding:30px 30px 22px;margin-top:16px"><h2 style="margin:0 0 12px;font-size:21px;font-weight:700;letter-spacing:-0.01em;color:#1f1f1f">%s</h2>%s</div>' % (h, ''.join('<p style="margin:0 0 10px;font-size:17px;line-height:1.6;color:#3d3d3d">%s</p>' % p for p in ps)) for h, ps in secs)
+    page = ('<div class="ipa-root"><section style="background:#ffffff;padding:72px 0 96px"><div class="wrap" style="max-width:820px">'
+            '<p style="margin:0;font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b">Policies</p>'
+            '<h1 style="margin:14px 0 0;font-size:clamp(40px,7vw,64px);line-height:1.05;font-weight:700;letter-spacing:-0.04em;color:#1f1f1f">%s</h1>'
+            '<p style="margin:14px 0 0;font-size:15px;color:#8a8a8a">Last updated: 09/23/2025</p>'
+            '<p style="margin:26px 0 12px;font-size:20px;line-height:1.55;color:#4d4d4d">%s</p>%s'
+            '<p style="margin:34px 0 0;font-size:17px"><a href="%s/privacy-policy" target="_top" style="color:#1f1f1f;font-weight:600;margin-inline-end:22px">Privacy</a><a href="%s/copy-of-privacy-policy" target="_top" style="color:#1f1f1f;font-weight:600;margin-inline-end:22px">Terms</a><a href="%s/copy-of-terms-and-conditions" target="_top" style="color:#1f1f1f;font-weight:600">Refund &amp; Cancellation</a></p>'
+            '</div></section>%s</div>') % (title, intro, cards, SITE, SITE, SITE, _foot)
+    (OUT / f'{tag}.js').write_text(encoding='utf-8', data=TPL % {'tag': tag, 'css': json.dumps(_home_css + '.ipa-root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#333}@media(max-width:600px){.ipa-root section div[style*="border-radius:24px"]{padding:24px 20px 16px!important}}'), 'html': json.dumps(page), 'modal': json.dumps(''), 'i18n': I18N_JSON})
+    (OUT / f'{tag}.html').write_text(f'<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>{tag}</title><body style="margin:0"><script src="{tag}.js"></script><{tag}></{tag}></body>')
+print('legal ok')
