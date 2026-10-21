@@ -45,6 +45,14 @@ SOCIAL = {'Instagram': 'https://www.instagram.com/ipanemabeauty_spa', 'Facebook'
 MAP = '<iframe title="Map to Ipanema Beauty &amp; Spa" src="https://www.google.com/maps?q=Ipanema+Beauty+and+Spa,+6735+Conroy+Rd+Suite+114,+Orlando,+FL+32835&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;width:100%;height:100%;min-height:{h}px;border-radius:28px;display:block"></iframe>'
 
 SOC = {k.lower(): v for k, v in SOCIAL.items()}
+import os as _os
+_SI = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'si/package/icons')
+def svg(n):
+    t = open(_os.path.join(_SI, n + '.svg')).read()
+    return t.replace('<svg ', '<svg aria-hidden="true" focusable="false" ', 1).replace(re.search(r'<title>.*?</title>', t).group(0), '')
+GMAPS = 'https://www.google.com/maps/search/?api=1&amp;query=Ipanema+Beauty+and+Spa+6735+Conroy+Rd+Orlando'
+GICON = '<span class="ipa-gi">' + svg('google') + '</span>'
+
 def fix_link(m):
     attrs, text = m.group(1), m.group(2)
     t = re.sub('<[^>]+>', '', text).strip().lower()
@@ -104,6 +112,21 @@ def convert(name):
         body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 34px;width:min(440px,82vw);height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
     body = re.sub(r'<a([^>]*)>(.*?)</a>', fix_link, body, flags=re.S)
     body = body.replace('onClick="{{openInstall}}"', 'data-install')
+    # social names -> clickable icons
+    def _ico(m):
+        a, n = m.group(1), m.group(2)
+        return a[:-1] + ' class="ipa-soc" aria-label="%s" title="%s">' % (n, n) + svg(n.lower()) + '</a>'
+    body = body.replace('>Instagram · Facebook · TikTok · YouTube · Pinterest · Yelp</p>', '>' + ''.join('<a href="%s" target="_blank" rel="noopener">%s</a>' % (SOCIAL[n], n) for n in ['Instagram','Facebook','TikTok','YouTube','Pinterest','Yelp']) + '</p>')
+    body = re.sub(r'(<a [^>]*>)(Instagram|Facebook|TikTok|YouTube|Pinterest|Yelp)</a>', _ico, body)
+    body = re.sub(r'</a>\s*·\s*(?=<a [^>]*class="ipa-soc")', '</a>', body)
+    # Google icon + link
+    body = body.replace('<span><strong style="color: #1f1f1f">★ 4.9</strong> on Google · 100+ reviews</span>',
+        '<a class="ipa-glink" href="%s" target="_blank" rel="noopener"><strong style="color: #1f1f1f">★ 4.9</strong> %s on Google · 100+ reviews</a>' % (GMAPS, GICON))
+    body = re.sub(r'(<p[^>]*>)(★★★★★ 4.9 on Google from 115 reviews)</p>', lambda m: m.group(1) + '<a class="ipa-glink" href="%s" target="_blank" rel="noopener">%s %s</a></p>' % (GMAPS, GICON, m.group(2)), body)
+    body = re.sub(r' · Google</p>', ' <a class="ipa-glink" href="%s" target="_blank" rel="noopener" aria-label="Google review">%s</a></p>' % (GMAPS, GICON), body)
+    # the app is presented once (dedicated section), not also as a tile
+    body = re.sub(r'<a href="#app" style="background: linear-gradient.*?</a>\n(?=</div>\n</section>)', '', body, flags=re.S)
+    body = body.replace('<a id="hair" href="#book" style="background: #f5f5f7;', '<a id="hair" href="#book" style="grid-column: 1 / -1; background: #f5f5f7;', 1)
     body = body.replace('Privacy · Terms · Refund &amp; Cancellation', '<a href="%s/privacy-policy" target="_top">Privacy</a> · <a href="%s/copy-of-privacy-policy" target="_top">Terms</a> · <a href="%s/copy-of-terms-and-conditions" target="_top">Refund &amp; Cancellation</a>' % (SITE, SITE, SITE))
     body = re.sub(r'<div style="[^"]*">\[Google Map[^\]]*\]</div>', lambda m: MAP.format(h=440), body)
     # contact form -> contact buttons
@@ -138,6 +161,10 @@ LANG_CSS = ('.ipa-root{position:relative}.ipa-lang{position:absolute;top:14px;in
             'background:rgba(255,255,255,.92);border:1px solid #dcdcdc;border-radius:999px;padding:0 10px 0 12px;height:38px;'
             'box-shadow:0 4px 14px rgba(0,0,0,.08);font:600 13px Inter,system-ui,sans-serif;color:#333}'
             '.ipa-lang select{appearance:none;-webkit-appearance:none;border:0;background:transparent;font:inherit;color:inherit;padding:0 2px;cursor:pointer;outline:none}'
+            '.ipa-soc{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;border:1px solid rgba(128,128,128,.35);margin:2px;color:inherit}div:has(>.ipa-soc){gap:6px!important;justify-content:center}'
+            '.ipa-soc svg{width:19px;height:19px;fill:currentColor}.ipa-soc:hover{background:rgba(128,128,128,.12)}'
+            '.ipa-gi{display:inline-flex;vertical-align:-3px}.ipa-gi svg{width:18px;height:18px;fill:#4285F4}.ipa-glink{color:inherit}'
+            'div[style*="justify-content: space-between"]>strong:last-child{white-space:nowrap;text-align:end;flex-shrink:0}'
             '.ipa-root[dir=rtl],.ipa-card[dir=rtl]{font-family:Inter,"Noto Sans Hebrew","Noto Sans Arabic",system-ui,sans-serif}')
 import os
 _src = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_src.json')))
@@ -148,6 +175,9 @@ for _l in ['pt', 'es', 'he', 'ar']:
         _t = json.load(open(_f))
         assert len(_t) == len(_src), _l
         _I[_l] = {a: b for a, b in zip(_src, _t) if b and b != a}
+        for a, b in zip(_src, _t):
+            if a.endswith(' · Google'):
+                _I[_l][a[:-9]] = re.sub(r'\s*·\s*Google\s*$', '', b)
 I18N_JSON = json.dumps(_I, ensure_ascii=False)
 
 TPL = '''/* Ipanema Beauty & Spa — %(tag)s (generated) */
