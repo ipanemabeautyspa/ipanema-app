@@ -268,7 +268,7 @@ customElements.define('%(tag)s', E);
 
 for name, (tag, _) in PAGES.items():
     style, body = convert(name)
-    css = (':host{display:block;width:100%}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
+    css = (':host{display:block;width:100%;max-width:100vw;overflow-x:hidden}.ipa-root{max-width:100vw;overflow-x:hidden}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
            '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
     html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
