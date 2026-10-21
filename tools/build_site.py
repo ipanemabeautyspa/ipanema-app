@@ -107,6 +107,15 @@ def convert(name):
     for k, v in BLOBS.items():
         body = body.replace('/_blob/' + k, APP + v)
     body = re.sub(r'7 languages</strong>[^<]*', 'We speak</strong> · English · Português · Español', body)
+
+    if name == 'Waxing':
+        _items = [('women-legs','Legs'),('women-underarm','Underarms'),('women-arms','Arms'),('women-back','Back'),('women-full-face','Full face'),('women-lip','Lip'),('men-chest','Men · chest'),('men-legs','Men · legs')]
+        _g = ('<section style="padding: 96px 0 40px"><div class="wrap"><h2 class="h-sec" style="margin: 0; text-align: center; font-size: 52px; line-height: 1.05; font-weight: 700; letter-spacing: -0.04em; color: #1f1f1f">Every area, done with care.</h2>'
+              '<p style="margin: 14px 0 0; text-align: center; font-size: 19px; color: #5c5c5c">Face and body, for women and men.</p><div class="ipa-wgal">'
+              + ''.join('<figure><img src="%s/img/w/wax-%s.jpg" alt="%s waxing at Ipanema Beauty &amp; Spa" loading="lazy"><figcaption>%s</figcaption></figure>' % (APP, k, t, t) for k, t in _items)
+              + '</div></div></section>\n')
+        _i = body.find('How often should I wax'); _j = body.rfind('<section', 0, _i)
+        if _j > 0: body = body[:_j] + _g + body[_j:]
     if name == 'Main':
         body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 64px 0 0;', 1)
         body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 34px;width:min(440px,82vw);height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
@@ -165,6 +174,9 @@ LANG_CSS = ('.ipa-root{position:relative}.ipa-lang{position:absolute;top:14px;in
             '.ipa-soc svg{width:19px;height:19px;fill:currentColor}.ipa-soc:hover{background:rgba(128,128,128,.12)}'
             '.ipa-gi{display:inline-flex;vertical-align:-3px}.ipa-gi svg{width:18px;height:18px;fill:#4285F4}.ipa-glink{color:inherit}'
             'div[style*="justify-content: space-between"]>strong:last-child{white-space:nowrap;text-align:end;flex-shrink:0}'
+            '.ipa-wgal{margin-top:44px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ipa-wgal figure{margin:0;position:relative;border-radius:22px;overflow:hidden;aspect-ratio:1/1;background:#f5f5f7}'
+            '.ipa-wgal img{width:100%;height:100%;object-fit:cover;display:block}.ipa-wgal figcaption{position:absolute;inset-inline-start:12px;bottom:12px;background:rgba(255,255,255,.92);color:#1f1f1f;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px}'
+            '@media(max-width:760px){.ipa-wgal{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}'
             '.ipa-root[dir=rtl],.ipa-card[dir=rtl]{font-family:Inter,"Noto Sans Hebrew","Noto Sans Arabic",system-ui,sans-serif}')
 import os
 _src = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_src.json')))
@@ -178,6 +190,21 @@ for _l in ['pt', 'es', 'he', 'ar']:
         for a, b in zip(_src, _t):
             if a.endswith(' · Google'):
                 _I[_l][a[:-9]] = re.sub(r'\s*·\s*Google\s*$', '', b)
+_EXTRA = {
+ 'Every area, done with care.': {'pt':'Cada área, com todo o cuidado.','es':'Cada zona, con todo el cuidado.','he':'כל אזור, בקפידה.','ar':'كل منطقة، بعناية فائقة.'},
+ 'Face and body, for women and men.': {'pt':'Rosto e corpo, para mulheres e homens.','es':'Rostro y cuerpo, para mujeres y hombres.','he':'פנים וגוף, לנשים ולגברים.','ar':'الوجه والجسم، للنساء والرجال.'},
+ 'Legs': {'pt':'Pernas','es':'Piernas','he':'רגליים','ar':'الساقان'},
+ 'Underarms': {'pt':'Axilas','es':'Axilas','he':'בית שחי','ar':'الإبطان'},
+ 'Arms': {'pt':'Braços','es':'Brazos','he':'ידיים','ar':'الذراعان'},
+ 'Back': {'pt':'Costas','es':'Espalda','he':'גב','ar':'الظهر'},
+ 'Full face': {'pt':'Rosto inteiro','es':'Rostro completo','he':'פנים מלאות','ar':'الوجه كاملاً'},
+ 'Lip': {'pt':'Buço','es':'Labio superior','he':'שפם','ar':'الشفة العليا'},
+ 'Men · chest': {'pt':'Homens · peito','es':'Hombres · pecho','he':'גברים · חזה','ar':'رجال · الصدر'},
+ 'Men · legs': {'pt':'Homens · pernas','es':'Hombres · piernas','he':'גברים · רגליים','ar':'رجال · الساقان'},
+}
+for _k, _v in _EXTRA.items():
+    for _l, _t in _v.items():
+        _I.setdefault(_l, {})[_k] = _t
 I18N_JSON = json.dumps(_I, ensure_ascii=False)
 
 TPL = '''/* Ipanema Beauty & Spa — %(tag)s (generated) */
@@ -260,7 +287,7 @@ LEGAL = {
  'ipa-terms': ('Terms and Conditions', 'Welcome to Ipanema Beauty & Spa. By accessing or using our website and booking our services, you agree to the following terms and conditions.', [
    ('1. Services', ['All services listed on our website are subject to availability.', 'Prices may vary depending on service type and duration.', 'We reserve the right to update or change services and pricing at any time.']),
    ('2. Appointments', ['Appointments can be booked online, by phone, or in person.', 'Please arrive on time for your scheduled appointment. Late arrivals may result in reduced service time.', 'If you need to cancel or reschedule, please notify us at least 48 hours in advance. Cancellations made within 48 hours may incur a fee of 50% of the service price.']),
-   ('3. Payments', ['Payments are due at the time of service.', 'Accepted payment methods are shown at the front desk.']),
+   ('3. Payments', ['Payments are due at the time of service.', 'We accept cash, debit and credit cards, and Zelle.']),
    ('4. Refunds and Cancellations', ['Service fees are non-refundable once the service has been completed.', 'Refunds are only considered in cases of proven error or unsatisfactory service, at our sole discretion.']),
    ('5. Website Use', ['The content on this website (text, images, design, logo) is owned by Ipanema Beauty & Spa and may not be copied or used without permission.', 'You agree not to use this website for any unlawful or harmful activity.']),
    ('6. Limitation of Liability', ['While we strive to provide the best care and services, Ipanema Beauty & Spa is not responsible for any indirect damages, allergic reactions, or outcomes beyond normal professional standards.', 'Please inform your esthetician or stylist of any allergies, sensitivities, or health conditions before your service.']),
