@@ -177,7 +177,7 @@ LANG_CSS = ('.ipa-root{position:relative}.ipa-lang{position:absolute;top:14px;in
             '.ipa-wgal{margin-top:44px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ipa-wgal figure{margin:0;position:relative;border-radius:22px;overflow:hidden;aspect-ratio:1/1;background:#f5f5f7}'
             '.ipa-wgal img{width:100%;height:100%;object-fit:cover;display:block}.ipa-wgal figcaption{position:absolute;inset-inline-start:12px;bottom:12px;background:rgba(255,255,255,.92);color:#1f1f1f;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px}'
             '@media(max-width:760px){.ipa-wgal{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}'
-            '@media(max-width:600px){.h-hero{font-size:clamp(30px,11.5vw,52px)!important;font-size:clamp(30px,12.5cqi,52px)!important;overflow-wrap:break-word}.h-sec{font-size:clamp(26px,9vw,40px)!important;font-size:clamp(26px,9.5cqi,40px)!important;overflow-wrap:break-word}div[style*="padding: 28px 32px"][style*="space-between"]{flex-wrap:wrap;padding:24px 22px!important}.ipa-root p a{overflow-wrap:anywhere}}'
+            '@media(max-width:600px){.h-hero{font-size:clamp(28px,calc(var(--ipa-w,390px)*0.12),52px)!important;overflow-wrap:break-word}.h-sec{font-size:clamp(24px,calc(var(--ipa-w,390px)*0.09),40px)!important;overflow-wrap:break-word}div[style*="padding: 28px 32px"][style*="space-between"]{flex-wrap:wrap;padding:24px 22px!important}.ipa-root p a{overflow-wrap:anywhere}}'
             '.ipa-root[dir=rtl],.ipa-card[dir=rtl]{font-family:Inter,"Noto Sans Hebrew","Noto Sans Arabic",system-ui,sans-serif}')
 import os
 _src = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_src.json')))
@@ -233,6 +233,7 @@ class E extends HTMLElement {
     const r = this.attachShadow({mode:'open'});
     r.innerHTML = '<style>'+CSS+'</style>' + HTML + MODAL;
     this.style.display = 'block'; this.style.width = '100%%';
+    const setW = () => { const w = this.clientWidth; if (w) this.style.setProperty('--ipa-w', w + 'px'); }; setW(); try { new ResizeObserver(setW).observe(this); } catch (e) { window.addEventListener('resize', setW); }
     const LS = ['en','pt','es','he','ar'];
     const walk = () => { const out = []; const w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentNode && n.parentNode.nodeName === 'STYLE' ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT }); let n; while ((n = w.nextNode())) out.push(n); return out; };
     const nodes = walk().filter(n => /[A-Za-z]/.test(n.nodeValue));
@@ -269,7 +270,7 @@ customElements.define('%(tag)s', E);
 
 for name, (tag, _) in PAGES.items():
     style, body = convert(name)
-    css = (':host{display:block;width:100%;max-width:100%;overflow-x:clip}.ipa-root{max-width:100%;overflow-x:clip;container-type:inline-size}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
+    css = (':host{display:block;width:100%;max-width:100%;overflow-x:clip}.ipa-root{max-width:100%;overflow-x:clip}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
            '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
     html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
