@@ -100,7 +100,7 @@ def convert(name):
         body = body.replace('/_blob/' + k, APP + v)
     body = re.sub(r'7 languages</strong>[^<]*', 'We speak</strong> · English · Português · Español', body)
     if name == 'Main':
-        body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 40px 0 0;', 1)
+        body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 64px 0 0;', 1)
         body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 34px;width:min(440px,82vw);height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
     body = re.sub(r'<a([^>]*)>(.*?)</a>', fix_link, body, flags=re.S)
     body = body.replace('onClick="{{openInstall}}"', 'data-install')
@@ -131,12 +131,32 @@ MODAL_CSS = '''.ipa-modal{position:fixed;inset:0;z-index:99999;background:rgba(4
 .ipa-card ol{margin:20px 0 0;padding-left:22px;font-size:17px;line-height:1.7;color:#333}.ipa-card ol[hidden]{display:none}
 .ipa-go{margin-top:22px;height:52px;border-radius:999px;background:#333;color:#fff !important;font-size:17px;font-weight:600;display:flex;align-items:center;justify-content:center}'''
 
+LANGBAR = ('<label class="ipa-lang"><span aria-hidden="true">🌐</span><select aria-label="Language">'
+           '<option value="en">English</option><option value="pt">Português</option><option value="es">Español</option>'
+           '<option value="he">עברית</option><option value="ar">العربية</option></select></label>')
+LANG_CSS = ('.ipa-root{position:relative}.ipa-lang{position:absolute;top:14px;inset-inline-end:16px;z-index:20;display:flex;align-items:center;gap:6px;'
+            'background:rgba(255,255,255,.92);border:1px solid #dcdcdc;border-radius:999px;padding:0 10px 0 12px;height:38px;'
+            'box-shadow:0 4px 14px rgba(0,0,0,.08);font:600 13px Inter,system-ui,sans-serif;color:#333}'
+            '.ipa-lang select{appearance:none;-webkit-appearance:none;border:0;background:transparent;font:inherit;color:inherit;padding:0 2px;cursor:pointer;outline:none}'
+            '.ipa-root[dir=rtl],.ipa-card[dir=rtl]{font-family:Inter,"Noto Sans Hebrew","Noto Sans Arabic",system-ui,sans-serif}')
+import os
+_src = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_src.json')))
+_I = {}
+for _l in ['pt', 'es', 'he', 'ar']:
+    _f = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_%s.json' % _l)
+    if os.path.exists(_f):
+        _t = json.load(open(_f))
+        assert len(_t) == len(_src), _l
+        _I[_l] = {a: b for a, b in zip(_src, _t) if b and b != a}
+I18N_JSON = json.dumps(_I, ensure_ascii=False)
+
 TPL = '''/* Ipanema Beauty & Spa — %(tag)s (generated) */
 (function(){
 if (customElements.get('%(tag)s')) return;
 const CSS = %(css)s;
 const HTML = %(html)s;
 const MODAL = %(modal)s;
+const I18N = %(i18n)s;
 class E extends HTMLElement {
   connectedCallback(){
     if (this._r) return; this._r = 1;
@@ -144,6 +164,24 @@ class E extends HTMLElement {
     const r = this.attachShadow({mode:'open'});
     r.innerHTML = '<style>'+CSS+'</style>' + HTML + MODAL;
     this.style.display = 'block'; this.style.width = '100%%';
+    const LS = ['en','pt','es','he','ar'];
+    const walk = () => { const out = []; const w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentNode && n.parentNode.nodeName === 'STYLE' ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT }); let n; while ((n = w.nextNode())) out.push(n); return out; };
+    const nodes = walk().filter(n => /[A-Za-z]/.test(n.nodeValue));
+    nodes.forEach(n => n.__en = n.nodeValue);
+    const sel = r.querySelector('.ipa-lang select');
+    const apply = l => {
+      const d = I18N[l] || {};
+      nodes.forEach(n => { const o = n.__en, k = o.replace(/\\s+/g, ' ').trim(); const t = d[k]; n.nodeValue = t ? o.match(/^\\s*/)[0] + t + o.match(/\\s*$/)[0] : o; });
+      const rtl = l === 'he' || l === 'ar';
+      r.querySelectorAll('.ipa-root, .ipa-card').forEach(x => { x.dir = rtl ? 'rtl' : 'ltr'; x.lang = l; });
+      if (sel) sel.value = l;
+    };
+    let lang = '';
+    try { lang = new URLSearchParams(location.search).get('lang') || localStorage.getItem('ipa-site-lang') || ''; } catch (e) {}
+    if (LS.indexOf(lang) < 0) { const b = (navigator.language || 'en').slice(0, 2).toLowerCase(); lang = LS.indexOf(b) >= 0 ? b : 'en'; }
+    apply(lang);
+    if (sel) sel.addEventListener('change', () => { try { localStorage.setItem('ipa-site-lang', sel.value); } catch (e) {} window.dispatchEvent(new CustomEvent('ipa-lang', { detail: sel.value })); });
+    window.addEventListener('ipa-lang', e => apply(e.detail));
     const m = r.querySelector('.ipa-modal');
     r.querySelectorAll('a[href^="#"]').forEach(a => { if (a.hasAttribute('data-install')) return; a.addEventListener('click', e => { const id = a.getAttribute('href').slice(1); const el = id && r.getElementById(id); if (el) { e.preventDefault(); el.scrollIntoView({behavior:'smooth'}); } else if (id==='top') { e.preventDefault(); this.scrollIntoView({behavior:'smooth'}); } }); });
     if (m) {
@@ -163,10 +201,10 @@ customElements.define('%(tag)s', E);
 for name, (tag, _) in PAGES.items():
     style, body = convert(name)
     css = (':host{display:block;width:100%}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
-           '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS)
-    html_ = '<div class="ipa-root">' + body + '</div>'
+           '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
+    html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
-    (OUT / f'{tag}.js').write_text(TPL % {'tag': tag, 'css': json.dumps(css), 'html': json.dumps(html_), 'modal': json.dumps(modal)})
+    (OUT / f'{tag}.js').write_text(encoding='utf-8', data=TPL % {'tag': tag, 'css': json.dumps(css), 'html': json.dumps(html_), 'modal': json.dumps(modal), 'i18n': I18N_JSON})
     # preview page
     (OUT / f'{tag}.html').write_text(f'<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>{tag}</title><body style="margin:0"><script src="{tag}.js"></script><{tag}></{tag}></body>')
     print(tag, len(html_))
