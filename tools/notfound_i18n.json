@@ -1,12 +1,68 @@
 {
-"Page not found": {"pt":"Página não encontrada","es":"Página no encontrada","he":"הדף לא נמצא","ar":"الصفحة غير موجودة"},
-"This page took a day off.": {"pt":"Esta página tirou folga.","es":"Esta página se tomó el día libre.","he":"הדף הזה לקח יום חופש.","ar":"هذه الصفحة في إجازة اليوم."},
-"The link may be old or mistyped. Everything you came for is still here.": {"pt":"O link pode estar antigo ou digitado errado. Tudo o que você procura continua aqui.","es":"El enlace puede ser antiguo o estar mal escrito. Todo lo que buscas sigue aquí.","he":"ייתכן שהקישור ישן או שגוי. כל מה שחיפשת עדיין כאן.","ar":"قد يكون الرابط قديمًا أو مكتوبًا بشكل خاطئ. كل ما تبحث عنه لا يزال هنا."},
-"Brows & Lashes": {"pt":"Sobrancelhas e cílios","es":"Cejas y pestañas","he":"גבות וריסים","ar":"الحواجب والرموش"},
-"Shaping, henna, microblading, lash lift.": {"pt":"Design, henna, microblading, lash lift.","es":"Diseño, henna, microblading, lifting de pestañas.","he":"עיצוב, חינה, מיקרובליידינג, הרמת ריסים.","ar":"تشكيل، حناء، مايكروبليدنج، رفع الرموش."},
-"Waxing": {"pt":"Depilação","es":"Depilación","he":"שעווה","ar":"إزالة الشعر بالشمع"},
-"Brazilian and full-body waxing.": {"pt":"Depilação brasileira e de corpo inteiro.","es":"Depilación brasileña y de cuerpo completo.","he":"שעווה ברזילאית ולכל הגוף.","ar":"الشمع البرازيلي ولكامل الجسم."},
-"Hair": {"pt":"Cabelo","es":"Cabello","he":"שיער","ar":"الشعر"},
-"Cuts, color, balayage, keratin.": {"pt":"Cortes, coloração, balayage, queratina.","es":"Cortes, color, balayage, keratina.","he":"תספורות, צבע, בליאז', קרטין.","ar":"قص، صبغ، بالياج، كيراتين."},
-"Back to home": {"pt":"Voltar ao início","es":"Volver al inicio","he":"חזרה לדף הבית","ar":"العودة إلى الرئيسية"}
+"Page not found": {
+"pt": "Página não encontrada",
+"es": "Página no encontrada",
+"he": "הדף לא נמצא",
+"ar": "الصفحة غير موجودة"
+},
+"This page took a day off.": {
+"pt": "Esta página tirou folga.",
+"es": "Esta página se tomó el día libre.",
+"he": "הדף הזה לקח יום חופש.",
+"ar": "هذه الصفحة في إجازة اليوم."
+},
+"The link may be old or mistyped. Everything you came for is still here.": {
+"pt": "O link pode estar antigo ou digitado errado. Tudo o que você procura continua aqui.",
+"es": "El enlace puede ser antiguo o estar mal escrito. Todo lo que buscas sigue aquí.",
+"he": "ייתכן שהקישור ישן או שגוי. כל מה שחיפשת עדיין כאן.",
+"ar": "قد يكون الرابط قديمًا أو مكتوبًا بشكل خاطئ. كل ما تبحث عنه لا يزال هنا."
+},
+"Brows & Lashes": {
+"pt": "Sobrancelhas e cílios",
+"es": "Cejas y pestañas",
+"he": "גבות וריסים",
+"ar": "الحواجب والرموش"
+},
+"Shaping, henna, microblading, lash lift.": {
+"pt": "Design, henna, microblading, lash lift.",
+"es": "Diseño, henna, microblading, lifting de pestañas.",
+"he": "עיצוב, חינה, מיקרובליידינג, הרמת ריסים.",
+"ar": "تشكيل، حناء، مايكروبليدنج، رفع الرموش."
+},
+"Waxing": {
+"pt": "Depilação",
+"es": "Depilación",
+"he": "שעווה",
+"ar": "إزالة الشعر بالشمع"
+},
+"Brazilian and full-body waxing.": {
+"pt": "Depilação brasileira e de corpo inteiro.",
+"es": "Depilación brasileña y de cuerpo completo.",
+"he": "שעווה ברזילאית ולכל הגוף.",
+"ar": "الشمع البرازيلي ولكامل الجسم."
+},
+"Hair": {
+"pt": "Cabelo",
+"es": "Cabello",
+"he": "שיער",
+"ar": "الشعر"
+},
+"Cuts, color, balayage, keratin.": {
+"pt": "Cortes, coloração, balayage, queratina.",
+"es": "Cortes, color, balayage, keratina.",
+"he": "תספורות, צבע, בליאז', קרטין.",
+"ar": "قص، صبغ، بالياج، كيراتين."
+},
+"Back to home": {
+"pt": "Voltar ao início",
+"es": "Volver al inicio",
+"he": "חזרה לדף הבית",
+"ar": "العودة إلى الرئيسية"
+},
+"Home": {
+"pt": "Início",
+"es": "Inicio",
+"he": "דף הבית",
+"ar": "الرئيسية"
+}
 }

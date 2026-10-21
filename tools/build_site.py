@@ -125,6 +125,14 @@ def convert(name):
     if name == 'Main':
         body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 64px 0 0;', 1)
         body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 26px;width:320px;max-width:68%%;height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
+    _cr = {'Brows': 'Brows &amp; Lashes', 'Waxing': 'Waxing', 'Hair': 'Hair'}.get(name)
+    if _cr:
+        _ti = body.find('<section id="top"')
+        _pi = body.find('<p style="margin: 0; font-size: 15px; font-weight: 600; letter-spacing: 0.14em', _ti)
+        _col = re.search(r'color: (#[0-9a-fA-F]{3,6})', body[_pi:_pi + 300]).group(1)
+        _nav = ('<nav class="ipa-crumb" aria-label="Breadcrumb" style="color: %s"><ol><li><a href="%s/" target="_top">Home</a></li>'
+                '<li aria-hidden="true">›</li><li aria-current="page">%s</li></ol></nav>\n') % (_col, SITE, _cr)
+        body = body[:_pi] + _nav + body[_pi:]
     _faq = FAQ_NEW.get(name, [])
     if _faq:
         _det = ''.join('<details style="background: #ffffff; border-radius: 18px; padding: 22px 26px"><summary style="font-size: 18px; font-weight: 600; color: #1f1f1f; cursor: pointer">%s</summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #5c5c5c">%s</p></details>\n' % (q, a) for q, a, _t in _faq)
@@ -368,7 +376,7 @@ customElements.define('%(tag)s', E);
 for name, (tag, _) in PAGES.items():
     style, body = convert(name)
     css = (':host{display:block;width:100%;max-width:100vw;overflow-x:clip}.ipa-root{max-width:100%;overflow-x:clip}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
-           '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
+           '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS + '.ipa-crumb{margin:0 0 18px}.ipa-crumb ol{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0;padding:0;list-style:none;font-size:14px;font-weight:500;letter-spacing:0}.ipa-crumb a{color:inherit;opacity:.78;transition:opacity 160ms ease}.ipa-crumb li[aria-hidden]{opacity:.5}.ipa-crumb li[aria-current]{font-weight:600}@media (hover:hover) and (pointer:fine){.ipa-crumb a:hover{opacity:1;text-decoration:underline;text-underline-offset:3px}}[dir=rtl] .ipa-crumb li[aria-hidden]{transform:scaleX(-1)}')
     html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
     css = _narrowize(css) + MOTION_CSS
