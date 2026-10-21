@@ -178,6 +178,7 @@ LANG_CSS = ('.ipa-root{position:relative}.ipa-lang{position:absolute;top:14px;in
             '.ipa-wgal img{width:100%;height:100%;object-fit:cover;display:block}.ipa-wgal figcaption{position:absolute;inset-inline-start:12px;bottom:12px;background:rgba(255,255,255,.92);color:#1f1f1f;font-size:14px;font-weight:600;padding:6px 12px;border-radius:999px}'
             '@media(max-width:760px){.ipa-wgal{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}'
             '@media(max-width:600px){.h-hero{font-size:clamp(28px,calc(var(--ipa-w,390px)*0.12),52px)!important;overflow-wrap:break-word}.h-sec{font-size:clamp(24px,calc(var(--ipa-w,390px)*0.09),40px)!important;overflow-wrap:break-word}div[style*="padding: 28px 32px"][style*="space-between"]{flex-wrap:wrap;padding:24px 22px!important}.ipa-root p a{overflow-wrap:anywhere}}'
+            ':host([data-narrow]) .h-hero{font-size:clamp(28px,calc(var(--ipa-w,390px)*0.12),52px)!important;overflow-wrap:break-word}:host([data-narrow]) .h-sec{font-size:clamp(24px,calc(var(--ipa-w,390px)*0.09),40px)!important;overflow-wrap:break-word}'
             '.ipa-root[dir=rtl],.ipa-card[dir=rtl]{font-family:Inter,"Noto Sans Hebrew","Noto Sans Arabic",system-ui,sans-serif}')
 import os
 _src = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n_src.json')))
@@ -219,6 +220,24 @@ for _k, _v in _EXTRA.items():
         _I.setdefault(_l, {})[_k] = _t
 I18N_JSON = json.dumps(_I, ensure_ascii=False)
 
+
+def _narrowize(css):
+    """Duplicate @media(max-width>=600) rules under :host([data-narrow]) so they apply when the
+    host is narrow even if the page viewport is wide (Wix mobile preview)."""
+    out = []
+    for m in re.finditer(r'@media\s*\(max-width:\s*(\d+)px\)\s*\{', css):
+        if int(m.group(1)) < 600: continue
+        i = m.end(); depth = 1; j = i
+        while j < len(css) and depth:
+            if css[j] == '{': depth += 1
+            elif css[j] == '}': depth -= 1
+            j += 1
+        body = css[i:j-1]
+        for r in re.finditer(r'([^{}]+)\{([^{}]*)\}', body):
+            sels = ','.join(':host([data-narrow]) ' + x.strip() for x in r.group(1).split(',') if x.strip())
+            out.append(sels + '{' + r.group(2) + '}')
+    return css + '\n' + ''.join(out)
+
 TPL = '''/* Ipanema Beauty & Spa — %(tag)s (generated) */
 (function(){
 if (customElements.get('%(tag)s')) return;
@@ -233,7 +252,7 @@ class E extends HTMLElement {
     const r = this.attachShadow({mode:'open'});
     r.innerHTML = '<style>'+CSS+'</style>' + HTML + MODAL;
     this.style.display = 'block'; this.style.width = '100%%';
-    const setW = () => { const w = this.clientWidth; if (w) this.style.setProperty('--ipa-w', w + 'px'); }; setW(); try { new ResizeObserver(setW).observe(this); } catch (e) { window.addEventListener('resize', setW); }
+    const setW = () => { let m = Infinity, p = this.parentElement; while (p && p !== document.documentElement) { const cw = p.clientWidth; if (cw > 0 && cw < m) m = cw; p = p.parentElement; } if (m < Infinity && Math.abs(this.offsetWidth - m) > 1) { this.style.maxWidth = m + 'px'; this.style.width = m + 'px'; } const w = Math.min(this.clientWidth || m, m); if (w && w < Infinity) { this.style.setProperty('--ipa-w', w + 'px'); this.toggleAttribute('data-narrow', w < 600); } }; setW(); try { new ResizeObserver(setW).observe(this); } catch (e) { window.addEventListener('resize', setW); }
     const LS = ['en','pt','es','he','ar'];
     const walk = () => { const out = []; const w = document.createTreeWalker(r, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentNode && n.parentNode.nodeName === 'STYLE' ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT }); let n; while ((n = w.nextNode())) out.push(n); return out; };
     const nodes = walk().filter(n => /[A-Za-z]/.test(n.nodeValue));
@@ -270,10 +289,11 @@ customElements.define('%(tag)s', E);
 
 for name, (tag, _) in PAGES.items():
     style, body = convert(name)
-    css = (':host{display:block;width:100%;max-width:100%;overflow-x:clip}.ipa-root{max-width:100%;overflow-x:clip}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
+    css = (':host{display:block;width:100%;max-width:100vw;overflow-x:clip}.ipa-root{max-width:100%;overflow-x:clip}*{box-sizing:border-box}' + style.replace('body{', '.ipa-root{') +
            '\nimg{max-width:100%}a{color:#4d4d4d;text-decoration:none}\n' + MODAL_CSS + LANG_CSS)
     html_ = '<div class="ipa-root">' + LANGBAR + body + '</div>'
     modal = INSTALL
+    css = _narrowize(css)
     (OUT / f'{tag}.js').write_text(encoding='utf-8', data=TPL % {'tag': tag, 'css': json.dumps(css), 'html': json.dumps(html_), 'modal': json.dumps(modal), 'i18n': I18N_JSON})
     # preview page
     (OUT / f'{tag}.html').write_text(f'<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>{tag}</title><body style="margin:0"><script src="{tag}.js"></script><{tag}></{tag}></body>')
