@@ -95,6 +95,8 @@ def fix_link(m):
         new_attrs += ' target="_top"'
     return '<a%s%s>%s</a>' % (new_attrs, extra, text)
 
+FAQ_NEW = json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'faq_new.json'), encoding='utf-8'))
+
 def convert(name):
     s = (SRC / f'{name}.dc.html').read_text()
     style = '\n'.join(re.findall(r'<style>(.*?)</style>', s, re.S))
@@ -123,6 +125,17 @@ def convert(name):
     if name == 'Main':
         body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 64px 0 0;', 1)
         body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 26px;width:320px;max-width:68%%;height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
+    _faq = FAQ_NEW.get(name, [])
+    if _faq:
+        _det = ''.join('<details style="background: #ffffff; border-radius: 18px; padding: 22px 26px"><summary style="font-size: 18px; font-weight: 600; color: #1f1f1f; cursor: pointer">%s</summary><p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #5c5c5c">%s</p></details>\n' % (q, a) for q, a, _t in _faq)
+        _qi = body.find('>Questions.</h2>')
+        if _qi > 0:
+            _last = body.rfind('</details>', 0, body.find('</section>', _qi)) + len('</details>\n')
+            body = body[:_last] + _det + body[_last:]
+        else:
+            _sec = ('<section style="background: #f5f5f7; padding: 100px 0">\n<div class="wrap" style="max-width: 860px">\n<h2 class="h-sec" style="margin: 0; text-align: center; font-size: 52px; line-height: 1.05; font-weight: 700; letter-spacing: -0.04em; color: #1f1f1f">Questions.</h2>\n<div style="margin-top: 44px; display: flex; flex-direction: column; gap: 12px">\n' + _det + '</div>\n</div>\n</section>\n')
+            _bi = body.find('<section id="book"')
+            if _bi > 0: body = body[:_bi] + _sec + body[_bi:]
     body = re.sub(r'<a([^>]*)>(.*?)</a>', fix_link, body, flags=re.S)
     body = body.replace('onClick="{{openInstall}}"', 'data-install')
     # social names -> clickable icons
@@ -258,6 +271,10 @@ for _l in ['pt', 'es', 'he', 'ar']:
 for _l in ['pt', 'es', 'he', 'ar']:
     _v6 = _I.get(_l, {}).get('6. Right to Refuse Refunds')
     if _v6: _I[_l]['5. Right to Refuse Refunds'] = _v6.replace('6', '5', 1).replace('٦', '٥', 1)
+for _pg in FAQ_NEW.values():
+    for _q, _a, _t in _pg:
+        _EXTRA[_q] = {l: v[0] for l, v in _t.items()}
+        _EXTRA[_a] = {l: v[1] for l, v in _t.items()}
 for _k, _v in _EXTRA.items():
     for _l, _t in _v.items():
         _I.setdefault(_l, {})[_k] = _t

@@ -1,0 +1,48 @@
+{
+"Brows": [
+ ["How often should I come back for brow maintenance?", "Every 2 to 4 weeks. Maintenance is priced by time since your last visit: $18 within 2 weeks, $21 within 4 weeks and $25 after 4 weeks.",
+  {"pt":["De quanto em quanto tempo devo voltar para a manutenção da sobrancelha?","A cada 2 a 4 semanas. A manutenção é cobrada pelo tempo desde a última visita: $18 até 2 semanas, $21 até 4 semanas e $25 após 4 semanas."],
+   "es":["¿Cada cuánto debo volver para el mantenimiento de cejas?","Cada 2 a 4 semanas. El mantenimiento se cobra según el tiempo desde tu última visita: $18 hasta 2 semanas, $21 hasta 4 semanas y $25 después de 4 semanas."],
+   "he":["כל כמה זמן כדאי לחזור לתחזוקת גבות?","כל 2 עד 4 שבועות. מחיר התחזוקה נקבע לפי הזמן מהביקור האחרון: $18 עד שבועיים, $21 עד 4 שבועות ו-$25 אחרי 4 שבועות."],
+   "ar":["كل كم يجب أن أعود لصيانة الحواجب؟","كل 2 إلى 4 أسابيع. يُحسب سعر الصيانة حسب المدة منذ آخر زيارة: $18 حتى أسبوعين، و$21 حتى 4 أسابيع، و$25 بعد 4 أسابيع."]}]
+],
+"Waxing": [
+ ["How should I prepare for my wax?", "Let hair grow about ¼ inch, roughly 2 to 3 weeks after shaving. Exfoliate gently 1 to 2 days before, avoid sun on the area for 48 hours and come with clean skin, no lotion or oil.",
+  {"pt":["Como devo me preparar para a depilação?","Deixe o pelo crescer cerca de 0,5 cm, umas 2 a 3 semanas depois de raspar. Esfolie de leve 1 a 2 dias antes, evite sol na região por 48 horas e venha com a pele limpa, sem creme ou óleo."],
+   "es":["¿Cómo debo prepararme para la depilación?","Deja crecer el vello unos 0,5 cm, unas 2 a 3 semanas después de afeitarte. Exfolia suavemente 1 a 2 días antes, evita el sol en la zona por 48 horas y ven con la piel limpia, sin crema ni aceite."],
+   "he":["איך להתכונן לשעווה?","תני לשיער לצמוח כחצי סנטימטר, בערך 2 עד 3 שבועות אחרי גילוח. עשי פילינג עדין יום-יומיים לפני, הימנעי משמש באזור 48 שעות והגיעי עם עור נקי, בלי קרם או שמן."],
+   "ar":["كيف أستعد لإزالة الشعر بالشمع؟","اتركي الشعر ينمو نحو نصف سنتيمتر، أي بعد 2 إلى 3 أسابيع من الحلاقة. قشّري بلطف قبل يوم أو يومين، وتجنّبي الشمس على المنطقة لمدة 48 ساعة، وتعالي ببشرة نظيفة بدون كريم أو زيت."]}],
+ ["What should I avoid after waxing?", "For 24 to 48 hours, skip hot tubs, saunas, pools and intense workouts, and wear loose cotton clothing. From day 3, exfoliate 2 to 3 times a week to prevent ingrown hairs.",
+  {"pt":["O que devo evitar depois da depilação?","Por 24 a 48 horas, evite jacuzzi, sauna, piscina e treinos intensos, e use roupas de algodão folgadas. A partir do 3º dia, esfolie 2 a 3 vezes por semana para evitar pelos encravados."],
+   "es":["¿Qué debo evitar después de depilarme?","Durante 24 a 48 horas, evita jacuzzi, sauna, piscina y ejercicio intenso, y usa ropa de algodón holgada. Desde el día 3, exfolia 2 a 3 veces por semana para evitar vellos encarnados."],
+   "he":["ממה להימנע אחרי שעווה?","במשך 24 עד 48 שעות הימנעי מג׳קוזי, סאונה, בריכה ואימון מאומץ, ולבשי בגדי כותנה רפויים. מהיום השלישי עשי פילינג 2 עד 3 פעמים בשבוע כדי למנוע שערות חודרניות."],
+   "ar":["ما الذي يجب تجنّبه بعد إزالة الشعر بالشمع؟","لمدة 24 إلى 48 ساعة تجنّبي الجاكوزي والساونا والمسبح والتمارين الشاقة، وارتدي ملابس قطنية واسعة. ومن اليوم الثالث قشّري 2 إلى 3 مرات أسبوعيًا لتجنّب الشعر تحت الجلد."]}]
+],
+"Hair": [
+ ["Why are color and keratin “starting at” prices?", "Because they depend on the length and density of your hair. Your stylist confirms the price at your visit, before starting.",
+  {"pt":["Por que coloração e queratina têm preço “a partir de”?","Porque dependem do comprimento e do volume do cabelo. A profissional confirma o valor no atendimento, antes de começar."],
+   "es":["¿Por qué el color y la queratina tienen precio “desde”?","Porque dependen del largo y la densidad de tu cabello. Tu estilista confirma el precio en tu visita, antes de empezar."],
+   "he":["למה לצבע ולקרטין יש מחיר ״החל מ״?","כי הם תלויים באורך ובצפיפות של השיער. המעצבת מאשרת את המחיר בביקור, לפני שמתחילים."],
+   "ar":["لماذا تكون أسعار الصبغة والكيراتين «ابتداءً من»؟","لأنها تعتمد على طول الشعر وكثافته. تؤكد الأخصائية السعر خلال زيارتك قبل البدء."]}],
+ ["How often should I touch up my roots?", "Root touch up every 4 to 6 weeks; highlights and balayage every 8 to 12 weeks.",
+  {"pt":["De quanto em quanto tempo devo retocar a raiz?","Retoque de raiz a cada 4 a 6 semanas; mechas e balayage a cada 8 a 12 semanas."],
+   "es":["¿Cada cuánto debo retocar la raíz?","Retoque de raíz cada 4 a 6 semanas; mechas y balayage cada 8 a 12 semanas."],
+   "he":["כל כמה זמן לעשות צבע שורשים?","צבע שורשים כל 4 עד 6 שבועות; גוונים ובלאיאז׳ כל 8 עד 12 שבועות."],
+   "ar":["كل كم يجب أن أصبغ الجذور؟","صبغ الجذور كل 4 إلى 6 أسابيع، والهايلايت والبالاياج كل 8 إلى 12 أسبوعًا."]}],
+ ["How do I make my color last longer?", "Wait 48 to 72 hours before the first wash, use sulfate-free shampoo with cool or lukewarm water, and always use heat protection before blow drying or flat ironing.",
+  {"pt":["Como faço minha cor durar mais?","Espere 48 a 72 horas para a primeira lavagem, use shampoo sem sulfato com água fria ou morna e sempre use protetor térmico antes do secador ou da chapinha."],
+   "es":["¿Cómo hago que mi color dure más?","Espera 48 a 72 horas antes del primer lavado, usa champú sin sulfatos con agua fría o tibia y siempre usa protector térmico antes del secador o la plancha."],
+   "he":["איך לגרום לצבע להחזיק יותר?","חכי 48 עד 72 שעות לפני החפיפה הראשונה, השתמשי בשמפו ללא סולפטים עם מים קרירים או פושרים, ותמיד השתמשי בהגנה מחום לפני פן או החלקה."],
+   "ar":["كيف أجعل لون شعري يدوم أطول؟","انتظري 48 إلى 72 ساعة قبل أول غسلة، واستخدمي شامبو خاليًا من الكبريتات مع ماء بارد أو فاتر، واستخدمي دائمًا واقيًا من الحرارة قبل السشوار أو المكواة."]}],
+ ["Do you cut men’s and kids’ hair?", "Yes. We offer men’s haircuts and kids’ haircuts for children up to 12 years old.",
+  {"pt":["Vocês cortam cabelo masculino e infantil?","Sim. Fazemos corte masculino e corte infantil para crianças de até 12 anos."],
+   "es":["¿Cortan cabello de hombre y de niños?","Sí. Ofrecemos cortes de hombre y cortes infantiles para niños de hasta 12 años."],
+   "he":["אתם מספרים גברים וילדים?","כן. יש לנו תספורת גברים ותספורת ילדים עד גיל 12."],
+   "ar":["هل تقصّون شعر الرجال والأطفال؟","نعم. نقدّم قصّ الشعر للرجال وللأطفال حتى عمر 12 سنة."]}],
+ ["Do you offer hydration treatments?", "Yes, with or without the machine. If you lighten your hair, we recommend a hydration every 4 to 6 weeks.",
+  {"pt":["Vocês fazem hidratação?","Sim, com ou sem máquina. Se você descolore o cabelo, recomendamos uma hidratação a cada 4 a 6 semanas."],
+   "es":["¿Ofrecen tratamientos de hidratación?","Sí, con o sin máquina. Si aclaras tu cabello, recomendamos una hidratación cada 4 a 6 semanas."],
+   "he":["יש לכם טיפולי לחות?","כן, עם או בלי מכשיר. אם את מבהירה את השיער, אנחנו ממליצים על טיפול לחות כל 4 עד 6 שבועות."],
+   "ar":["هل تقدّمون جلسات ترطيب للشعر؟","نعم، مع الجهاز أو بدونه. إذا كنتِ تفتّحين شعرك، ننصح بجلسة ترطيب كل 4 إلى 6 أسابيع."]}]
+]
+}
