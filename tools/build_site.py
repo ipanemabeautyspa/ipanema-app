@@ -275,6 +275,7 @@ for _pg in FAQ_NEW.values():
     for _q, _a, _t in _pg:
         _EXTRA[_q] = {l: v[0] for l, v in _t.items()}
         _EXTRA[_a] = {l: v[1] for l, v in _t.items()}
+_EXTRA.update(json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'notfound_i18n.json'), encoding='utf-8')))
 for _k, _v in _EXTRA.items():
     for _l, _t in _v.items():
         _I.setdefault(_l, {})[_k] = _t
@@ -425,3 +426,26 @@ for tag, (title, intro, secs) in LEGAL.items():
     (OUT / f'{tag}.js').write_text(encoding='utf-8', data=TPL % {'tag': tag, 'css': json.dumps(_home_css + '.ipa-root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#333}@media(max-width:600px){.ipa-root section div[style*="border-radius:24px"]{padding:24px 20px 16px!important}}:host([data-narrow]) section{text-align:start!important}:host([data-narrow]) section h1,:host([data-narrow]) section > div > p:first-child{text-align:start}'), 'html': json.dumps(page), 'modal': json.dumps(''), 'i18n': I18N_JSON})
     (OUT / f'{tag}.html').write_text(f'<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>{tag}</title><body style="margin:0"><script src="{tag}.js"></script><{tag}></{tag}></body>')
 print('legal ok')
+_nf_cards = ''.join('<a class="nf-card" href="%s/%s" target="_top"><span class="nf-t">%s</span><span class="nf-d">%s</span><span class="nf-m">See prices ›</span></a>' % (SITE, u, t, d) for u, t, d in [('browsandlashes', 'Brows &amp; Lashes', 'Shaping, henna, microblading, lash lift.'), ('waxing', 'Waxing', 'Brazilian and full-body waxing.'), ('hair', 'Hair', 'Cuts, color, balayage, keratin.')])
+_nf_page = ('<div class="ipa-root">' + LANGBAR + '<section class="nf" style="background:#ffffff;padding:88px 0 104px"><div class="wrap" style="max-width:980px;text-align:center">'
+    '<p class="nf-in" style="margin:0;font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b">Page not found</p>'
+    '<h1 class="nf-in" style="margin:14px 0 0;font-size:clamp(40px,7vw,64px);line-height:1.05;font-weight:700;letter-spacing:-0.04em;color:#1f1f1f">This page took a day off.</h1>'
+    '<p class="nf-in" style="margin:18px auto 0;max-width:560px;font-size:20px;line-height:1.55;color:#4d4d4d">The link may be old or mistyped. Everything you came for is still here.</p>'
+    '<div class="nf-grid nf-in">' + _nf_cards + '</div>'
+    '<p class="nf-in" style="margin:40px 0 0;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">'
+    '<a class="nf-btn" href="%s/services-5" target="_top" style="background:#333333;color:#ffffff;font-size:17px;font-weight:600;padding:15px 30px;border-radius:999px">Book now</a>'
+    '<a class="nf-btn" href="%s/" target="_top" style="border:1px solid #c9c9c9;color:#333333;font-size:17px;font-weight:600;padding:14px 28px;border-radius:999px">Back to home</a></p>'
+    '</div></section>%s</div>') % (SITE, SITE, _foot)
+_nf_css = ('.nf-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:48px;text-align:start}'
+    '.nf-card{display:flex;flex-direction:column;gap:8px;background:#f5f5f7;border-radius:24px;padding:28px 26px;color:#1f1f1f;transition:transform 160ms cubic-bezier(0.23,1,0.32,1)}'
+    '.nf-card:active,.nf-btn:active{transform:scale(0.97)}.nf-btn{display:inline-block;transition:transform 160ms cubic-bezier(0.23,1,0.32,1)}'
+    '.nf-t{font-size:21px;font-weight:700;letter-spacing:-0.01em}.nf-d{font-size:16px;line-height:1.5;color:#4d4d4d}.nf-m{margin-top:6px;font-size:16px;font-weight:600;color:#4d4d4d}'
+    '@media (hover:hover) and (pointer:fine){.nf-card:hover{transform:translateY(-2px)}.nf-card:hover .nf-m{color:#1f1f1f}}'
+    '.nf-in{opacity:0;transform:translateY(8px);animation:nfIn 400ms cubic-bezier(0.23,1,0.32,1) forwards}'
+    '.nf-in:nth-child(2){animation-delay:50ms}.nf-in:nth-child(3){animation-delay:100ms}.nf-in:nth-child(4){animation-delay:150ms}.nf-in:nth-child(5){animation-delay:200ms}'
+    '@keyframes nfIn{to{opacity:1;transform:none}}'
+    '@media (prefers-reduced-motion:reduce){.nf-in{animation:nfFade 200ms ease forwards;transform:none}.nf-card,.nf-btn{transition:none}}@keyframes nfFade{to{opacity:1}}'
+    '@media(max-width:760px){.nf-grid{grid-template-columns:1fr}}:host([data-narrow]) .nf-grid{grid-template-columns:1fr}')
+(OUT / 'ipa-404.js').write_text(encoding='utf-8', data=TPL % {'tag': 'ipa-404', 'css': json.dumps(_home_css + '.ipa-root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#333}' + _nf_css), 'html': json.dumps(_nf_page), 'modal': json.dumps(''), 'i18n': I18N_JSON})
+(OUT / 'ipa-404.html').write_text('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>ipa-404</title><body style="margin:0"><script src="ipa-404.js"></script><ipa-404></ipa-404></body>')
+print('404 ok')
