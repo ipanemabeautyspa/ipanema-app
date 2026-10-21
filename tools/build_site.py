@@ -122,7 +122,7 @@ def convert(name):
         if _j > 0: body = body[:_j] + _g + body[_j:]
     if name == 'Main':
         body = body.replace('<section id="top" style="background: #f5f5f7; padding: 88px 0 0;', '<section id="top" style="background: #f5f5f7; padding: 64px 0 0;', 1)
-        body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 34px;width:min(440px,82vw);height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
+        body = body.replace('<div class="wrap">', '<div class="wrap"><img src="%s/img/logo3d.png" alt="Ipanema Beauty &amp; Spa" style="display:block;margin:0 auto 26px;width:320px;max-width:68%%;height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.16))">' % APP, 1)
     body = re.sub(r'<a([^>]*)>(.*?)</a>', fix_link, body, flags=re.S)
     body = body.replace('onClick="{{openInstall}}"', 'data-install')
     # social names -> clickable icons
