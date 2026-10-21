@@ -191,6 +191,8 @@ for _l in ['pt', 'es', 'he', 'ar']:
             if a.endswith(' · Google'):
                 _I[_l][a[:-9]] = re.sub(r'\s*·\s*Google\s*$', '', b)
 _EXTRA = {
+ 'Payments for services already provided are non-refundable.': {'pt':'Pagamentos por serviços já realizados não são reembolsáveis.','es':'Los pagos por servicios ya realizados no son reembolsables.','he':'תשלומים עבור שירותים שכבר ניתנו אינם ניתנים להחזר.','ar':'المدفوعات مقابل الخدمات التي تم تقديمها غير قابلة للاسترداد.'},
+ 'Billing errors, such as a duplicate charge, will be corrected.': {'pt':'Erros de cobrança, como uma cobrança em duplicidade, serão corrigidos.','es':'Los errores de facturación, como un cobro duplicado, serán corregidos.','he':'טעויות בחיוב, כמו חיוב כפול, יתוקנו.','ar':'سيتم تصحيح أخطاء الفوترة، مثل الخصم المكرر.'},
  'Every area, done with care.': {'pt':'Cada área, com todo o cuidado.','es':'Cada zona, con todo el cuidado.','he':'כל אזור, בקפידה.','ar':'كل منطقة، بعناية فائقة.'},
  'Face and body, for women and men.': {'pt':'Rosto e corpo, para mulheres e homens.','es':'Rostro y cuerpo, para mujeres y hombres.','he':'פנים וגוף, לנשים ולגברים.','ar':'الوجه والجسم، للنساء والرجال.'},
  'Legs': {'pt':'Pernas','es':'Piernas','he':'רגליים','ar':'الساقان'},
@@ -208,6 +210,9 @@ for _l in ['pt', 'es', 'he', 'ar']:
     assert len(_t) == len(_lsrc)
     for _a, _b in zip(_lsrc, _t):
         if _b and _b != _a: _I.setdefault(_l, {})[_a] = _b
+for _l in ['pt', 'es', 'he', 'ar']:
+    _v6 = _I.get(_l, {}).get('6. Right to Refuse Refunds')
+    if _v6: _I[_l]['5. Right to Refuse Refunds'] = _v6.replace('6', '5', 1).replace('٦', '٥', 1)
 for _k, _v in _EXTRA.items():
     for _l, _t in _v.items():
         _I.setdefault(_l, {})[_k] = _t
@@ -288,14 +293,13 @@ LEGAL = {
    ('1. Cancellations & Reschedules', ['Plans change, and we understand. We kindly ask for at least 24 hours’ notice if you need to cancel or reschedule, so we can offer your time to another client.', 'Cancellations or reschedules with less than 24 hours’ notice may be subject to a fee. Microblading follows its own deposit policy (see section 2).']),
    ('2. Microblading Deposit', ['Microblading is the only service that requires a deposit. A $63.75 deposit is paid at booking, online through our website or through Square. It is part of the $212.50 session price, and the remaining $148.75 is paid at the salon.', 'The deposit is never refunded in cash.', 'If you cancel or reschedule at least 48 hours in advance, the full deposit is credited to your next appointment.', 'Cancellations with less than 48 hours’ notice, no-shows, or arriving more than 15 minutes late forfeit the deposit.', 'This policy applies equally to every client.']),
    ('3. No-Shows', ['If you can’t make it, please let us know as early as possible by phone, text or WhatsApp.', 'No-shows may be subject to a fee, and repeated no-shows may result in limited online booking in the future.']),
-   ('4. Refunds', ['Payments for services already rendered are non-refundable.', 'Refunds will only be considered in cases of proven error or unsatisfactory service, and are granted solely at the discretion of Ipanema Beauty & Spa.']),
-   ('5. Refunds and Cancellations', ['Service fees are non-refundable once the service has been completed.', 'Refunds are only considered in cases of proven error or unsatisfactory service, at our sole discretion.']),
-   ('6. Right to Refuse Refunds', ['We reserve the right to decline partial or full refunds if the request falls outside of this policy.'])]),
+   ('4. Refunds', ['Payments for services already provided are non-refundable.', 'Billing errors, such as a duplicate charge, will be corrected.']),
+   ('5. Right to Refuse Refunds', ['We reserve the right to decline partial or full refunds if the request falls outside of this policy.'])]),
  'ipa-terms': ('Terms and Conditions', 'Welcome to Ipanema Beauty & Spa. By accessing or using our website and booking our services, you agree to the following terms and conditions.', [
    ('1. Services', ['All services listed on our website are subject to availability.', 'Prices may vary depending on service type and duration.', 'We reserve the right to update or change services and pricing at any time.']),
    ('2. Appointments', ['Appointments can be booked online, by phone, or in person.', 'Please arrive on time for your scheduled appointment. Late arrivals may result in reduced service time.', 'If you need to cancel or reschedule, please give us at least 24 hours’ notice (48 hours for Microblading). Late cancellations and no-shows may be subject to a fee. Microblading requires a deposit, described below.']),
    ('3. Payments', ['Payments are due at the time of service.', 'We accept cash, debit and credit cards, and Zelle.', 'Microblading is the only exception: a $63.75 non-refundable deposit is paid at booking (online or through Square) and counts toward the $212.50 session price. With at least 48 hours’ notice it is credited to your next appointment; see our Refund and Cancellation policy.']),
-   ('4. Refunds and Cancellations', ['Service fees are non-refundable once the service has been completed.', 'Refunds are only considered in cases of proven error or unsatisfactory service, at our sole discretion.']),
+   ('4. Refunds and Cancellations', ['Payments for services already provided are non-refundable.', 'Billing errors, such as a duplicate charge, will be corrected.']),
    ('5. Website Use', ['The content on this website (text, images, design, logo) is owned by Ipanema Beauty & Spa and may not be copied or used without permission.', 'You agree not to use this website for any unlawful or harmful activity.']),
    ('6. Limitation of Liability', ['While we strive to provide the best care and services, Ipanema Beauty & Spa is not responsible for any indirect damages, allergic reactions, or outcomes beyond normal professional standards.', 'Please inform your esthetician or stylist of any allergies, sensitivities, or health conditions before your service.']),
    ('7. Changes to These Terms', ['We may update these Terms & Conditions at any time. Changes will be effective immediately when posted on this page.'])]),
