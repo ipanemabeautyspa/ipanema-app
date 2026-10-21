@@ -202,6 +202,12 @@ _EXTRA = {
  'Men · chest': {'pt':'Homens · peito','es':'Hombres · pecho','he':'גברים · חזה','ar':'رجال · الصدر'},
  'Men · legs': {'pt':'Homens · pernas','es':'Hombres · piernas','he':'גברים · רגליים','ar':'رجال · الساقان'},
 }
+_lsrc = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'legal_src.json')))
+for _l in ['pt', 'es', 'he', 'ar']:
+    _t = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'legal_%s.json' % _l)))
+    assert len(_t) == len(_lsrc)
+    for _a, _b in zip(_lsrc, _t):
+        if _b and _b != _a: _I.setdefault(_l, {})[_a] = _b
 for _k, _v in _EXTRA.items():
     for _l, _t in _v.items():
         _I.setdefault(_l, {})[_k] = _t
@@ -306,7 +312,7 @@ _foot = re.search(r'<footer.*?</footer>', _hj, re.S).group(0)
 _home_css = json.loads(re.search(r'const CSS = (".*?");\n', (OUT / 'ipa-home.js').read_text(encoding='utf-8'), re.S).group(1))
 for tag, (title, intro, secs) in LEGAL.items():
     cards = ''.join('<div style="background:#f5f5f7;border-radius:24px;padding:30px 30px 22px;margin-top:16px"><h2 style="margin:0 0 12px;font-size:21px;font-weight:700;letter-spacing:-0.01em;color:#1f1f1f">%s</h2>%s</div>' % (h, ''.join('<p style="margin:0 0 10px;font-size:17px;line-height:1.6;color:#3d3d3d">%s</p>' % p for p in ps)) for h, ps in secs)
-    page = ('<div class="ipa-root"><section style="background:#ffffff;padding:72px 0 96px"><div class="wrap" style="max-width:820px">'
+    page = ('<div class="ipa-root">' + LANGBAR + '<section style="background:#ffffff;padding:72px 0 96px"><div class="wrap" style="max-width:820px">'
             '<p style="margin:0;font-size:15px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b">Policies</p>'
             '<h1 style="margin:14px 0 0;font-size:clamp(40px,7vw,64px);line-height:1.05;font-weight:700;letter-spacing:-0.04em;color:#1f1f1f">%s</h1>'
             '<p style="margin:14px 0 0;font-size:15px;color:#8a8a8a">Last updated: 10/20/2026</p>'
