@@ -8,7 +8,7 @@ class E extends HTMLElement {
   connectedCallback(){
     if (this._r) return; this._r = 1;
     if (!document.getElementById('ipa-inter')) { const l=document.createElement('link'); l.id='ipa-inter'; l.rel='stylesheet'; l.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'; document.head.appendChild(l); }
-    let lang=''; try{ lang=localStorage.getItem('ipa-site-lang')||''; }catch(e){}
+    let lang=''; try{ lang=new URLSearchParams(location.search).get('lang')||localStorage.getItem('ipa-site-lang')||''; }catch(e){}
     if (LS.indexOf(lang)<0){ const b=(navigator.language||'en').slice(0,2).toLowerCase(); lang=LS.indexOf(b)>=0?b:'en'; }
     this.t = T[lang]; this.lang = lang;
     this.root = this.attachShadow({mode:'open'});
