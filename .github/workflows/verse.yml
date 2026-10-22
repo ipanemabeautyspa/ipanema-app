@@ -3,6 +3,10 @@ on:
   schedule:
     - cron: '30 8 * * *'   # 4:30 AM Orlando (EDT) / 3:30 AM (EST), before the earliest 5 AM slot
   workflow_dispatch:
+    inputs:
+      mode:
+        description: 'check = only test the key (sends nothing); send = schedule today'
+        default: check
 jobs:
   send:
     runs-on: ubuntu-latest
@@ -14,3 +18,4 @@ jobs:
       - run: python tools/send_verse.py
         env:
           ONESIGNAL_KEY: ${{ secrets.ONESIGNAL_KEY }}
+          MODE: ${{ github.event.inputs.mode || 'send' }}

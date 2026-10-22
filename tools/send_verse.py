@@ -7,6 +7,16 @@ APP_ID = 'de3c4b19-f481-4b2d-b56a-b19364dda31a'
 if not KEY:
     print('ONESIGNAL_KEY not set; nothing sent'); sys.exit(0)
 
+if os.environ.get('MODE') == 'check':
+    req = urllib.request.Request(f'https://api.onesignal.com/notifications?app_id={APP_ID}&limit=1',
+                                 headers={'Authorization': f'Key {KEY}'})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            print('KEY OK - OneSignal answered', r.status)
+        sys.exit(0)
+    except urllib.error.HTTPError as e:
+        print('KEY FAILED', e.code, e.read()[:300]); sys.exit(1)
+
 verses = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'verses.json'), encoding='utf-8'))
 today = datetime.datetime.now(zoneinfo.ZoneInfo('America/New_York')).date()
 idx = min(364, (today - datetime.date(today.year, 1, 1)).days)
