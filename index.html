@@ -64,6 +64,33 @@ p{margin:0}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand{background:radial-gradient(60% 70% at 50% 45%,rgba(255,255,255,.07),rgba(255,255,255,0) 70%)}}
 :root[data-theme="dark"] .brand{background:radial-gradient(60% 70% at 50% 45%,rgba(255,255,255,.07),rgba(255,255,255,0) 70%)}
 .brand img{width:min(100%,440px);height:auto}
+/* verse of the day */
+.vd{position:relative;padding:18px 18px 14px;background:linear-gradient(160deg,var(--soft),var(--surface) 78%);display:grid;gap:12px;transition:opacity 280ms cubic-bezier(.23,1,.32,1),transform 280ms cubic-bezier(.23,1,.32,1)}
+.vd[hidden]{display:none}
+.vd[data-ready="0"]{opacity:0;transform:translateY(6px)}
+.vd .eb{display:flex;align-items:center;gap:8px;font:700 12px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--fg-2)}
+.vd .eb svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;flex:0 0 auto}
+.vd .eb time{margin-inline-start:auto;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted)}
+.vd blockquote{margin:0;font-size:19px;line-height:1.45;font-weight:500;letter-spacing:-.012em;text-wrap:pretty}
+.vd .ref{font-size:14px;color:var(--muted);font-weight:600}
+.vd .ref small{font-weight:400;font-size:12px;margin-inline-start:6px}
+.vd .act{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.vd .act .pill{padding:7px 14px;font-size:14px;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.vd .act .pill:active,.vd .sw:active{transform:scale(.97)}
+.vd .remw{margin-inline-start:auto;display:inline-flex;align-items:center;gap:10px}
+.vd .hr{display:inline-flex;align-items:center;gap:6px;font:600 13px var(--font);color:var(--fg-2)}
+.vd .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.vd .hr{position:relative;gap:0}.vd .hr svg{position:absolute;inset-inline-start:10px;width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round;pointer-events:none}
+.vd .hr select{appearance:none;-webkit-appearance:none;border:0;background:var(--surface-2);color:var(--fg);font:600 14px var(--font);border-radius:999px;padding:6px 12px 6px 32px;width:auto;cursor:pointer;box-shadow:inset 0 0 0 1px var(--sep);transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.vd .hr select:active{transform:scale(.97)}
+.vd .sw{display:inline-flex;align-items:center;gap:8px;border:0;background:none;color:var(--fg-2);font:600 13px var(--font);cursor:pointer;padding:4px 0;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.vd .sw .tr{width:42px;height:26px;border-radius:999px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--sep);position:relative;transition:background-color 200ms ease;flex:0 0 auto}
+.vd .sw .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform 200ms cubic-bezier(.23,1,.32,1)}
+.vd .sw[aria-checked="true"] .tr{background:var(--accent)}
+.vd .sw[aria-checked="true"] .kn{transform:translateX(16px)}
+[dir=rtl] .vd .hr select{padding:6px 32px 6px 12px}
+[dir=rtl] .vd .sw .kn{left:auto;right:2px}[dir=rtl] .vd .sw[aria-checked="true"] .kn{transform:translateX(-16px)}
+@media (prefers-reduced-motion:reduce){.vd[data-ready="0"]{transform:none}.vd .sw .kn,.vd .act .pill,.vd .sw{transition:none}}
 /* brows hero */
 .bhero{position:relative}
 .bhero .ph{position:relative;aspect-ratio:4/5;background:var(--surface-2)}
@@ -185,6 +212,12 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 <!-- HOME -->
 <section class="screen" data-tab="home">
   <div class="brand"><img class="lt-only" src="img/logo3d.png" alt="Ipanema Beauty &amp; Spa"><img class="dk-only" src="img/logo3d-dark.png" alt="Ipanema Beauty &amp; Spa"></div>
+  <div class="card vd" id="vd" data-ready="0" hidden>
+    <div class="eb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span id="vd-t"></span><time id="vd-date"></time></div>
+    <blockquote id="vd-text"></blockquote>
+    <div class="ref" id="vd-ref"></div>
+    <div class="act"><button class="pill soft" id="vd-share"></button><span class="remw"><label class="hr"><span id="vd-rem-l" class="sr"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><select id="vd-hour" aria-labelledby="vd-rem-l"></select></label><button class="sw" id="vd-rem" role="switch" aria-checked="false" aria-labelledby="vd-rem-l"><span class="tr"><span class="kn"></span></span></button></span></div>
+  </div>
   <div class="card bhero">
     <div class="ph"><img src="img/w/brow-149.jpg" alt=""><span class="tag" data-t="heroTag">Brows &amp; Lashes</span></div>
     <div class="in">
@@ -469,7 +502,7 @@ function applyLang(){
   document.documentElement.lang=lang;document.documentElement.dir=(lang==='he'||lang==='ar')?'rtl':'ltr';
   $$('[data-t]').forEach(el=>{const v=t(el.dataset.t);if(typeof v==='string'){if(v.includes('<'))el.innerHTML=v;else el.textContent=v}});
   $('#langsel').value=lang;
-  renderSvc(curCat);renderTips();renderPlannerOpts();plan();
+  renderSvc(curCat);renderTips();renderPlannerOpts();plan();if(typeof renderVerse==='function')renderVerse();
 }
 $('#langsel').addEventListener('change',e=>{lang=e.target.value;try{localStorage.setItem('ipa-lang',lang)}catch(e){}applyLang();if(window.OneSignalDeferred&&/ipanemabeautyandspa\.com$/.test(location.hostname))OneSignalDeferred.push(OS=>{try{OS.User.setLanguage(lang);OS.User.addTags({lang})}catch(e){}})});
 
@@ -547,9 +580,66 @@ renderPlannerOpts();
 try{const s=JSON.parse(localStorage.getItem('ipa-rb')||'null');if(s){svcSel.value=s.s;dateIn.value=s.d}}catch(e){}
 if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=ex.toISOString().slice(0,10)}
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
+// ---- verse of the day ----
+const VT={
+en:{t:"Verse of the day",share:"Share",rem:"Remind me at",on:h=>`Reminder on for ${h} ☀️`,off:"Reminder off",foot:"Verse of the day · Ipanema app"},
+pt:{t:"Versículo do dia",share:"Compartilhar",rem:"Lembrete às",on:h=>`Lembrete ativado para as ${h} ☀️`,off:"Lembrete desativado",foot:"Versículo do dia · app Ipanema",credit:"Bíblia Livre"},
+es:{t:"Versículo del día",share:"Compartir",rem:"Recordarme a las",on:h=>`Recordatorio activado a las ${h} ☀️`,off:"Recordatorio desactivado",foot:"Versículo del día · app Ipanema"},
+he:{t:"פסוק היום",share:"שיתוף",rem:"תזכורת ב-",on:h=>`התזכורת הופעלה ל-${h} ☀️`,off:"התזכורת כובתה",foot:"פסוק היום · אפליקציית Ipanema"},
+ar:{t:"آية اليوم",share:"مشاركة",rem:"ذكّرني الساعة",on:h=>`تم تفعيل التذكير الساعة ${h} ☀️`,off:"تم إيقاف التذكير",foot:"آية اليوم · تطبيق Ipanema"}};
+const vt=k=>(VT[lang]||VT.en)[k]||'';
+function vdHour(){let h=8;try{h=parseInt(localStorage.getItem('ipa-vhour')||'8',10)}catch(e){}return h>=5&&h<=22?h:8}
+function fmtH(h){if(lang==='en')return (h%12||12)+(h<12?' AM':' PM');if(lang==='pt')return h+'h';return h+':00'}
+function renderHours(){const s=$('#vd-hour');const cur=vdHour();let o='';for(let h=5;h<=22;h++)o+=`<option value="${h}"${h===cur?' selected':''}>${fmtH(h)}</option>`;s.innerHTML=o}
+let VERSES=null,vdItem=null;
+function vdDay(){const n=new Date();const s=new Date(n.getFullYear(),0,1);return Math.min(364,Math.floor((n-s)/864e5))}
+function vdKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()}
+function vdRemOn(){let p=null;try{p=localStorage.getItem('ipa-vrem')}catch(e){}return p==='1'||(p===null&&typeof Notification!=='undefined'&&Notification.permission==='granted')}
+function renderVerse(){
+  const card=$('#vd');
+  if(!vdItem){try{const c=JSON.parse(localStorage.getItem('ipa-vd')||'null');if(c&&c.k===vdKey())vdItem=c.v}catch(e){}}
+  if(!vdItem&&VERSES)vdItem=VERSES[vdDay()];
+  if(!vdItem)return;
+  const i=LI[lang];
+  $('#vd-t').textContent=vt('t');
+  $('#vd-date').textContent=new Date().toLocaleDateString(LOCALE[lang],{weekday:'short',month:'short',day:'numeric'});
+  $('#vd-text').textContent=vdItem[1][i];
+  $('#vd-ref').textContent=vdItem[0][i];
+  if(vt('credit')){const sm=document.createElement('small');sm.textContent='· '+vt('credit');$('#vd-ref').appendChild(sm)}
+  $('#vd-share').textContent=vt('share');
+  $('#vd-rem-l').textContent=vt('rem');renderHours();
+  $('#vd-rem').setAttribute('aria-checked',String(vdRemOn()));
+  if(card.hidden){card.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>{card.dataset.ready='1'}))}
+}
+async function loadVerses(){
+  renderVerse();
+  if(vdItem)return;
+  try{const r=await fetch('verses.json');VERSES=await r.json();vdItem=VERSES[vdDay()];try{localStorage.setItem('ipa-vd',JSON.stringify({k:vdKey(),v:vdItem}))}catch(e){}}catch(e){}
+  renderVerse();
+}
+$('#vd-share').addEventListener('click',async()=>{
+  if(!vdItem)return;const i=LI[lang];
+  const txt=`“${vdItem[1][i]}”\n— ${vdItem[0][i]}\n\n${vt('foot')}: https://app.ipanemabeautyandspa.com`;
+  if(navigator.share){try{await navigator.share({text:txt})}catch(e){}return}
+  try{await navigator.clipboard.writeText(txt);toast(t('copied'))}catch(e){}
+});
+$('#vd-rem').addEventListener('click',async()=>{
+  const sw=$('#vd-rem');
+  if(sw.getAttribute('aria-checked')==='true'){
+    sw.setAttribute('aria-checked','false');try{localStorage.setItem('ipa-vrem','0')}catch(e){}
+    withOS(OS=>OS.User.addTags({verse:'0'}));toast(vt('off'));return;
+  }
+  if(!await askPush())return;
+  sw.setAttribute('aria-checked','true');try{localStorage.setItem('ipa-vrem','1')}catch(e){}
+  await withOS(OS=>OS.User.addTags({verse:'1',verse_hour:String(vdHour()),lang}));toast(vt('on')(fmtH(vdHour())));
+});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible'||!vdItem)return;let c=null;try{c=JSON.parse(localStorage.getItem('ipa-vd')||'null')}catch(e){}if(!c||c.k!==vdKey()){vdItem=null;loadVerses()}});
+$('#vd-hour').addEventListener('change',async e=>{const h=parseInt(e.target.value,10);try{localStorage.setItem('ipa-vhour',String(h))}catch(err){}
+  if($('#vd-rem').getAttribute('aria-checked')==='true'){await withOS(OS=>OS.User.addTags({verse_hour:String(h)}));toast(vt('on')(fmtH(h)))}});
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
-if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.setLanguage(lang);OS.User.addTags({lang})}catch(e){}});syncAppt();const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
+loadVerses();
+if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.setLanguage(lang);OS.User.addTags({lang});let vp=null;try{vp=localStorage.getItem('ipa-vrem')}catch(e){}if(vp!=='0'&&OS.Notifications.permission){OS.User.addTags({verse:'1',verse_hour:localStorage.getItem('ipa-vhour')||'8'});try{localStorage.setItem('ipa-vrem','1')}catch(e){}}}catch(e){}});syncAppt();const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
 </script>
 
 </body>
