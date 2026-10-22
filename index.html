@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Ipanema Beauty &amp; Spa">
 <meta name="theme-color" content="#f2f2f2">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.onesignal.com https://onesignal.com https://*.onesignal.com; connect-src 'self' https://onesignal.com https://*.onesignal.com https://api.weather.gov; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://*.onesignal.com; font-src 'self' data: https://*.onesignal.com; frame-src https://www.ipanemabeautyandspa.com https://*.wix.com https://onesignal.com https://*.onesignal.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://cdn.onesignal.com https://onesignal.com https://*.onesignal.com; connect-src 'self' https://onesignal.com https://*.onesignal.com https://api.weather.gov https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://*.onesignal.com; font-src 'self' data: https://*.onesignal.com; frame-src https://www.ipanemabeautyandspa.com https://*.wix.com https://onesignal.com https://*.onesignal.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -734,6 +734,8 @@ async function loadWx(){
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')loadWx()});
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
+// ---- visit counter (Google Analytics, anonymous) ----
+if(PROD){try{const GA='G-GC3DRDX8ZS';const sc=document.createElement('script');sc.async=true;sc.src='https://www.googletagmanager.com/gtag/js?id='+GA;document.head.appendChild(sc);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag('js',new Date());gtag('set','user_properties',{app_mode:installed()?'installed':'browser',app_lang:lang});gtag('config',GA,{allow_google_signals:false,allow_ad_personalization_signals:false,app_mode:installed()?'installed':'browser'})}catch(e){}}
 loadVerses();
 loadWx();
 if(PROD){window.OneSignalDeferred=window.OneSignalDeferred||[];OneSignalDeferred.push(async OS=>{await OS.init({appId:"de3c4b19-f481-4b2d-b56a-b19364dda31a",safari_web_id:"web.onesignal.auto.11512f5d-61af-48e1-99c6-cc09fe5cc2c2",serviceWorkerPath:"OneSignalSDKWorker.js",serviceWorkerParam:{scope:"/"}});try{OS.User.setLanguage(lang);OS.User.addTags({lang});let vp=null;try{vp=localStorage.getItem('ipa-vrem')}catch(e){}if(vp!=='0'&&OS.Notifications.permission){OS.User.addTags({verse:'1',verse_hour:localStorage.getItem('ipa-vhour')||'8'});try{localStorage.setItem('ipa-vrem','1')}catch(e){}}}catch(e){}});syncAppt();const sc=document.createElement('script');sc.src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js';sc.defer=true;document.head.appendChild(sc)}
