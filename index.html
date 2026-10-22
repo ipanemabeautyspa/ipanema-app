@@ -76,21 +76,27 @@ p{margin:0}
 .vd .ref small{font-weight:400;font-size:12px;margin-inline-start:6px}
 .vd .act{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .vd .act .pill{padding:7px 14px;font-size:14px;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
-.vd .act .pill:active,.vd .sw:active{transform:scale(.97)}
+.vd .act .pill:active,.sw:active{transform:scale(.97)}
 .vd .remw{margin-inline-start:auto;display:inline-flex;align-items:center;gap:10px}
 .vd .hr{display:inline-flex;align-items:center;gap:6px;font:600 13px var(--font);color:var(--fg-2)}
 .vd .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .vd .hr{position:relative;gap:0}.vd .hr svg{position:absolute;inset-inline-start:10px;width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linejoin:round;pointer-events:none}
 .vd .hr select{appearance:none;-webkit-appearance:none;border:0;background:var(--surface-2);color:var(--fg);font:600 14px var(--font);border-radius:999px;padding:6px 12px 6px 32px;width:auto;cursor:pointer;box-shadow:inset 0 0 0 1px var(--sep);transition:transform 160ms cubic-bezier(.23,1,.32,1)}
 .vd .hr select:active{transform:scale(.97)}
-.vd .sw{display:inline-flex;align-items:center;gap:8px;border:0;background:none;color:var(--fg-2);font:600 13px var(--font);cursor:pointer;padding:4px 0;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
-.vd .sw .tr{width:42px;height:26px;border-radius:999px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--sep);position:relative;transition:background-color 200ms ease;flex:0 0 auto}
-.vd .sw .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform 200ms cubic-bezier(.23,1,.32,1)}
-.vd .sw[aria-checked="true"] .tr{background:var(--accent)}
-.vd .sw[aria-checked="true"] .kn{transform:translateX(16px)}
+.sw{display:inline-flex;align-items:center;gap:8px;border:0;background:none;color:var(--fg-2);font:600 13px var(--font);cursor:pointer;padding:4px 0;transition:transform 160ms cubic-bezier(.23,1,.32,1)}
+.sw .tr{width:42px;height:26px;border-radius:999px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--sep);position:relative;transition:background-color 200ms ease;flex:0 0 auto}
+.sw .kn{position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform 200ms cubic-bezier(.23,1,.32,1)}
+.sw[aria-checked="true"] .tr{background:var(--accent)}
+.sw[aria-checked="true"] .kn{transform:translateX(16px)}
 [dir=rtl] .vd .hr select{padding:6px 32px 6px 12px}
-[dir=rtl] .vd .sw .kn{left:auto;right:2px}[dir=rtl] .vd .sw[aria-checked="true"] .kn{transform:translateX(-16px)}
-@media (prefers-reduced-motion:reduce){.vd[data-ready="0"]{transform:none}.vd .sw .kn,.vd .act .pill,.vd .sw{transition:none}}
+[dir=rtl] .sw .kn{left:auto;right:2px}[dir=rtl] .sw[aria-checked="true"] .kn{transform:translateX(-16px)}
+@media (prefers-reduced-motion:reduce){.vd[data-ready="0"]{transform:none}.sw .kn,.vd .act .pill,.sw{transition:none}}
+.vd.out{transition-duration:180ms}
+.vd .x{display:grid;place-items:center;width:28px;height:28px;margin:-4px -6px -4px 2px;border:0;border-radius:50%;background:transparent;color:var(--muted);cursor:pointer;transition:transform 160ms cubic-bezier(.23,1,.32,1),background-color 160ms ease}
+.vd .x svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round}
+.vd .x:active{transform:scale(.92)}
+@media (hover:hover) and (pointer:fine){.vd .x:hover{background:var(--surface-2);color:var(--fg)}}
+.row .v .sw{vertical-align:middle}
 /* brows hero */
 .bhero{position:relative}
 .bhero .ph{position:relative;aspect-ratio:4/5;background:var(--surface-2)}
@@ -213,7 +219,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
 <section class="screen" data-tab="home">
   <div class="brand"><img class="lt-only" src="img/logo3d.png" alt="Ipanema Beauty &amp; Spa"><img class="dk-only" src="img/logo3d-dark.png" alt="Ipanema Beauty &amp; Spa"></div>
   <div class="card vd" id="vd" data-ready="0" hidden>
-    <div class="eb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span id="vd-t"></span><time id="vd-date"></time></div>
+    <div class="eb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span id="vd-t"></span><time id="vd-date"></time><button class="x" id="vd-hide" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></button></div>
     <blockquote id="vd-text"></blockquote>
     <div class="ref" id="vd-ref"></div>
     <div class="act"><button class="pill soft" id="vd-share"></button><span class="remw"><label class="hr"><span id="vd-rem-l" class="sr"></span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg><select id="vd-hour" aria-labelledby="vd-rem-l"></select></label><button class="sw" id="vd-rem" role="switch" aria-checked="false" aria-labelledby="vd-rem-l"><span class="tr"><span class="kn"></span></span></button></span></div>
@@ -345,6 +351,7 @@ button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,su
   <div>
     <p class="caption" data-t="reminders">Reminders</p>
     <div class="group">
+      <div class="row"><span class="t" id="vd-row-t"></span><span class="d" id="vd-row-d"></span><span class="v"><button class="sw" id="vd-show" type="button" role="switch" aria-checked="true" aria-labelledby="vd-row-t"><span class="tr"><span class="kn"></span></span></button></span></div>
       <div class="row"><span class="t" data-t="r1">Appointment reminder</span><span class="d" data-t="r1d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
       <div class="row"><span class="t" data-t="r2">2-week reminder</span><span class="d" data-t="r2d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
       <div class="row"><span class="t" data-t="r3">4-week reminder</span><span class="d" data-t="r3d"></span><span class="v" style="font-weight:500;color:var(--muted)" data-t="notif">App</span></div>
@@ -582,11 +589,11 @@ if(!dateIn.value){const ex=new Date();ex.setDate(ex.getDate()-24);dateIn.value=e
 $$('[data-copy]').forEach(b=>b.addEventListener('click',async e=>{e.stopPropagation();try{await navigator.clipboard.writeText(b.dataset.copy)}catch(err){}b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}));
 // ---- verse of the day ----
 const VT={
-en:{t:"Verse of the day",share:"Share",rem:"Remind me at",on:h=>`Reminder on for ${h} ☀️`,off:"Reminder off",foot:"Verse of the day · Ipanema app"},
-pt:{t:"Versículo do dia",share:"Compartilhar",rem:"Lembrete às",on:h=>`Lembrete ativado para as ${h} ☀️`,off:"Lembrete desativado",foot:"Versículo do dia · app Ipanema",credit:"Bíblia Livre"},
-es:{t:"Versículo del día",share:"Compartir",rem:"Recordarme a las",on:h=>`Recordatorio activado a las ${h} ☀️`,off:"Recordatorio desactivado",foot:"Versículo del día · app Ipanema"},
-he:{t:"פסוק היום",share:"שיתוף",rem:"תזכורת ב-",on:h=>`התזכורת הופעלה ל-${h} ☀️`,off:"התזכורת כובתה",foot:"פסוק היום · אפליקציית Ipanema"},
-ar:{t:"آية اليوم",share:"مشاركة",rem:"ذكّرني الساعة",on:h=>`تم تفعيل التذكير الساعة ${h} ☀️`,off:"تم إيقاف التذكير",foot:"آية اليوم · تطبيق Ipanema"}};
+en:{hide:"Hide",hid:"Verse hidden. Turn it back on anytime in More.",where:"On the Home screen",t:"Verse of the day",share:"Share",rem:"Remind me at",on:h=>`Reminder on for ${h} ☀️`,off:"Reminder off",foot:"Verse of the day · Ipanema app"},
+pt:{hide:"Ocultar",hid:"Versículo oculto. Para mostrar de novo, vá em Mais.",where:"Na tela inicial",t:"Versículo do dia",share:"Compartilhar",rem:"Lembrete às",on:h=>`Lembrete ativado para as ${h} ☀️`,off:"Lembrete desativado",foot:"Versículo do dia · app Ipanema",credit:"Bíblia Livre"},
+es:{hide:"Ocultar",hid:"Versículo oculto. Puedes mostrarlo de nuevo en Más.",where:"En la pantalla de inicio",t:"Versículo del día",share:"Compartir",rem:"Recordarme a las",on:h=>`Recordatorio activado a las ${h} ☀️`,off:"Recordatorio desactivado",foot:"Versículo del día · app Ipanema"},
+he:{hide:"הסתרה",hid:"הפסוק הוסתר. אפשר להציג שוב בכל עת בלשונית ״עוד״.",where:"במסך הבית",t:"פסוק היום",share:"שיתוף",rem:"תזכורת ב-",on:h=>`התזכורת הופעלה ל-${h} ☀️`,off:"התזכורת כובתה",foot:"פסוק היום · אפליקציית Ipanema"},
+ar:{hide:"إخفاء",hid:"تم إخفاء الآية. يمكنك إظهارها مجددًا من قسم «المزيد».",where:"على الشاشة الرئيسية",t:"آية اليوم",share:"مشاركة",rem:"ذكّرني الساعة",on:h=>`تم تفعيل التذكير الساعة ${h} ☀️`,off:"تم إيقاف التذكير",foot:"آية اليوم · تطبيق Ipanema"}};
 const vt=k=>(VT[lang]||VT.en)[k]||'';
 function vdHour(){let h=8;try{h=parseInt(localStorage.getItem('ipa-vhour')||'8',10)}catch(e){}return h>=5&&h<=22?h:8}
 function fmtH(h){if(lang==='en')return (h%12||12)+(h<12?' AM':' PM');if(lang==='pt')return h+'h';return h+':00'}
@@ -595,8 +602,11 @@ let VERSES=null,vdItem=null;
 function vdDay(){const n=new Date();const s=new Date(n.getFullYear(),0,1);return Math.min(364,Math.floor((n-s)/864e5))}
 function vdKey(){const n=new Date();return n.getFullYear()+'-'+(n.getMonth()+1)+'-'+n.getDate()}
 function vdRemOn(){let p=null;try{p=localStorage.getItem('ipa-vrem')}catch(e){}return p==='1'||(p===null&&typeof Notification!=='undefined'&&Notification.permission==='granted')}
+function vdHidden(){try{return localStorage.getItem('ipa-vhide')==='1'}catch(e){return false}}
 function renderVerse(){
   const card=$('#vd');
+  $('#vd-row-t').textContent=vt('t');$('#vd-row-d').textContent=vt('where');$('#vd-show').setAttribute('aria-checked',String(!vdHidden()));$('#vd-hide').setAttribute('aria-label',vt('hide'));
+  if(vdHidden()){card.hidden=true;card.dataset.ready='0';return}
   if(!vdItem){try{const c=JSON.parse(localStorage.getItem('ipa-vd')||'null');if(c&&c.k===vdKey())vdItem=c.v}catch(e){}}
   if(!vdItem&&VERSES)vdItem=VERSES[vdDay()];
   if(!vdItem)return;
@@ -636,6 +646,18 @@ $('#vd-rem').addEventListener('click',async()=>{
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible'||!vdItem)return;let c=null;try{c=JSON.parse(localStorage.getItem('ipa-vd')||'null')}catch(e){}if(!c||c.k!==vdKey()){vdItem=null;loadVerses()}});
 $('#vd-hour').addEventListener('change',async e=>{const h=parseInt(e.target.value,10);try{localStorage.setItem('ipa-vhour',String(h))}catch(err){}
   if($('#vd-rem').getAttribute('aria-checked')==='true'){await withOS(OS=>OS.User.addTags({verse_hour:String(h)}));toast(vt('on')(fmtH(h)))}});
+function vdSetHidden(hide){
+  try{localStorage.setItem('ipa-vhide',hide?'1':'0')}catch(e){}
+  const card=$('#vd');
+  if(hide){
+    card.classList.add('out');card.dataset.ready='0';setTimeout(()=>{card.hidden=true;card.classList.remove('out')},190);
+    $('#vd-show').setAttribute('aria-checked','false');
+    if($('#vd-rem').getAttribute('aria-checked')==='true'){$('#vd-rem').setAttribute('aria-checked','false');try{localStorage.setItem('ipa-vrem','0')}catch(e){}withOS(OS=>OS.User.addTags({verse:'0'}))}
+    toast(vt('hid'));
+  }else{renderVerse();if(!vdItem)loadVerses()}
+}
+$('#vd-hide').addEventListener('click',()=>vdSetHidden(true));
+$('#vd-show').addEventListener('click',()=>vdSetHidden($('#vd-show').getAttribute('aria-checked')==='true'));
 const h=(location.hash||'').slice(1);if(['home','book','gallery','tips','more'].includes(h))show(h);
 applyLang();
 loadVerses();
