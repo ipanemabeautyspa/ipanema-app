@@ -95,6 +95,10 @@ MB = {
 T['Natural-looking hair strokes for fuller brows. Done in 2 sessions, $425 in total.'] = ('Fios naturais desenhados para sobrancelhas mais cheias. Feito em 2 sessões, $425 no total.', 'Trazos naturales para cejas más pobladas. Se hace en 2 sesiones, $425 en total.', 'משיכות שיער טבעיות לגבות מלאות יותר. מתבצע ב-2 מפגשים, $425 בסך הכול.', 'شعيرات طبيعية لحواجب أكثر كثافة. يتم على جلستين، بإجمالي $425.')
 T['Natural hair strokes in 2 sessions ($425 total). $63.75 deposit to book.'] = ('Fios naturais em 2 sessões ($425 no total). Sinal de $63.75 para agendar.', 'Trazos naturales en 2 sesiones ($425 en total). Depósito de $63.75 para reservar.', 'משיכות שיער טבעיות ב-2 מפגשים ($425 בסך הכול). מקדמה של $63.75 להזמנת תור.', 'شعيرات طبيعية على جلستين (إجمالي $425). عربون $63.75 للحجز.')
 
+# Pre-wax exfoliation rule aligned with professional guidance (27/10/2026)
+MB.setdefault('ipa-waxing', []).append(('>Skip exfoliating and retinol creams the day before.<', '>Exfoliate gently 1–2 days before, not on the day of your wax. Pause retinol creams about 1 week before.<'))
+T['Exfoliate gently 1–2 days before, not on the day of your wax. Pause retinol creams about 1 week before.'] = ('Esfolie de leve 1 a 2 dias antes, nunca no dia da depilação. Pare os cremes com retinol cerca de 1 semana antes.', 'Exfolia suavemente 1 a 2 días antes, nunca el mismo día de la depilación. Suspende las cremas con retinol una semana antes.', 'עשי פילינג עדין יום-יומיים לפני, לא ביום השעווה. הפסיקי קרמים עם רטינול כשבוע לפני.', 'قشّري بلطف قبل يوم أو يومين، وليس يوم الشمع. أوقفي كريمات الريتينول قبل أسبوع تقريباً.')
+
 DET = ('<details style="background: #ffffff; border-radius: 18px; padding: 22px 26px"><summary style="font-size: 18px; font-weight: 600; color: #1f1f1f; cursor: pointer">%s</summary>'
        '<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #5c5c5c">%s</p></details>\n')
 QSEC = ('<section style="background: #f5f5f7; padding: 100px 0">\n<div class="wrap" style="max-width: 860px">\n'
