@@ -121,6 +121,7 @@ def patch(path):
         rest = h[m.end():h1_end]
         h = h[:m.start()] + '<h1 class="h-hero" style="margin: 0 %s 0;%s' % (side, rest) + '<span class="ipa-kw" style="%s">%s</span>' % (LABEL_STYLE % col, new) + h[h1_end:]
 
+    h = re.sub(r'(<span class="ipa-kw"[^>]*>[^<]*</span>)(?=[^\s<])', r'\1 ', h)
     # 2. Breadcrumb "Home" goes to the home page, not the booking page
     h = h.replace('href="%s/services-5" target="_top" target="_top">Home</a>' % SITE, 'href="%s/" target="_top">Home</a>' % SITE)
 
