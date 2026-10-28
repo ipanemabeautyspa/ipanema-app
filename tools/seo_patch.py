@@ -86,6 +86,15 @@ FAQ = {
  ],
 }
 
+# Microblading = $425 in 2 sessions of $212.50 (Ozeias 27/10/2026)
+MB = {
+ 'ipa-brows': [('>Natural-looking hair strokes for fuller brows.</p>', '>Natural-looking hair strokes for fuller brows. Done in 2 sessions, $425 in total.</p>')],
+ 'ipa-home': [('>Natural hair strokes. $63.75 deposit to book.</p>', '>Natural hair strokes in 2 sessions ($425 total). $63.75 deposit to book.</p>'),
+              ('color: #1f1f1f">$212.50</p>', 'color: #1f1f1f">$212.50 <span style="font-size: 16px; font-weight: 500; color: #4f4a3a">per session</span></p>')],
+}
+T['Natural-looking hair strokes for fuller brows. Done in 2 sessions, $425 in total.'] = ('Fios naturais desenhados para sobrancelhas mais cheias. Feito em 2 sessões, $425 no total.', 'Trazos naturales para cejas más pobladas. Se hace en 2 sesiones, $425 en total.', 'משיכות שיער טבעיות לגבות מלאות יותר. מתבצע ב-2 מפגשים, $425 בסך הכול.', 'شعيرات طبيعية لحواجب أكثر كثافة. يتم على جلستين، بإجمالي $425.')
+T['Natural hair strokes in 2 sessions ($425 total). $63.75 deposit to book.'] = ('Fios naturais em 2 sessões ($425 no total). Sinal de $63.75 para agendar.', 'Trazos naturales en 2 sesiones ($425 en total). Depósito de $63.75 para reservar.', 'משיכות שיער טבעיות ב-2 מפגשים ($425 בסך הכול). מקדמה של $63.75 להזמנת תור.', 'شعيرات طبيعية على جلستين (إجمالي $425). عربون $63.75 للحجز.')
+
 DET = ('<details style="background: #ffffff; border-radius: 18px; padding: 22px 26px"><summary style="font-size: 18px; font-weight: 600; color: #1f1f1f; cursor: pointer">%s</summary>'
        '<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #5c5c5c">%s</p></details>\n')
 QSEC = ('<section style="background: #f5f5f7; padding: 100px 0">\n<div class="wrap" style="max-width: 860px">\n'
@@ -122,6 +131,8 @@ def patch(path):
         h = h[:m.start()] + '<h1 class="h-hero" style="margin: 0 %s 0;%s' % (side, rest) + '<span class="ipa-kw" style="%s">%s</span>' % (LABEL_STYLE % col, new) + h[h1_end:]
 
     h = re.sub(r'(<span class="ipa-kw"[^>]*>[^<]*</span>)(?=[^\s<])', r'\1 ', h)
+    for a, b in MB.get(tag, []):
+        if b not in h: h = h.replace(a, b)
     # 2. Breadcrumb "Home" goes to the home page, not the booking page
     h = h.replace('href="%s/services-5" target="_top" target="_top">Home</a>' % SITE, 'href="%s/" target="_top">Home</a>' % SITE)
 
