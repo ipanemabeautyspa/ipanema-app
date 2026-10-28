@@ -176,6 +176,10 @@ def patch(path):
     if '.ipa-kw' not in css:
         css += '.h-hero .ipa-kw{text-wrap:balance}@media(max-width:600px){.h-hero .ipa-kw{font-size:13px!important;letter-spacing:.1em!important;margin-bottom:12px!important}}:host([data-narrow]) .h-hero .ipa-kw{font-size:13px!important;letter-spacing:.1em!important;margin-bottom:12px!important}'
         src = src[:mc.start()] + 'const CSS = %s;\n' % json.dumps(css) + src[mc.end():]
+    if 'details{align-self:stretch' not in css:
+        css += ':host([data-narrow]) section details{align-self:stretch;width:100%}@media(max-width:600px){section details{align-self:stretch;width:100%}}'
+        mc = re.search(r'const CSS = (".*?");\n', src, re.S)
+        src = src[:mc.start()] + 'const CSS = %s;\n' % json.dumps(css) + src[mc.end():]
     hook = "const logo = root.querySelector('section img[src*=\"logo3d\"]');"
     if hook in src and 'closest(\'#top\')' not in src:
         src = src.replace(hook, "Array.from(set).forEach(el => { if (el.closest('#top')) set.delete(el); });\n      " + hook)
