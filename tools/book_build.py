@@ -102,11 +102,18 @@ S = [  # name, category, slug, price, minutes
  ("Hydration (without machine)", "HAIR", "hydration-without-machine", "Starting at $65", 45),
  ("Hydration and Blow Dry (with machine)", "HAIR", "hydration-and-blow-dry-with-machine", "Starting at $100", 90),
 
+ ("Launch Combo: Gel Manicure + Gel Pedicure", "NAILS", "launch-combo-gel-manicure-gel-pedicure", "95", 150),
+ ("Manicure – Regular Polish", "NAILS", "manicure-regular-polish", "35", 60),
+ ("Pedicure – Regular Polish", "NAILS", "pedicure-regular-polish", "45", 60),
+ ("Gel Overlay Manicure (Natural Nails)", "NAILS", "gel-overlay-manicure-natural-nails", "55", 120),
+ ("Builder Gel Manicure", "NAILS", "builder-gel-manicure", "70", 120),
+ ("Russian Pedicure with Gel Polish", "NAILS", "russian-pedicure-with-gel-polish", "75", 75),
+
  ("Facial", "FACIALS & SKIN", "facial", "Starting at $110", 90),
  ("Dermaplane", "FACIALS & SKIN", "dermaplane", "85", 60),
 ]
 
-CATS = [("brows", "BROWS AND LASHES BAR"), ("brazilian", "BRAZILIAN WAXING"), ("waxing", "Waxing"), ("hair", "HAIR"), ("skin", "FACIALS & SKIN")]
+CATS = [("brows", "BROWS AND LASHES BAR"), ("brazilian", "BRAZILIAN WAXING"), ("waxing", "Waxing"), ("hair", "HAIR"), ("nails", "NAILS"), ("skin", "FACIALS & SKIN")]
 
 def fmt_price(p):
     p = p.strip()
@@ -123,27 +130,27 @@ DATA = [{'n': n, 'c': dict((v, k) for k, v in CATS)[c], 's': s, 'p': fmt_price(p
 
 T = {
  'en': {'eyebrow': 'Book online', 'title': 'Book your visit.', 'sub': 'Choose a service and pick a time. It takes less than a minute.',
-        'brows': 'Brows & Lashes', 'brazilian': 'Brazilian', 'waxing': 'Waxing', 'hair': 'Hair', 'skin': 'Facials & Skin',
+        'brows': 'Brows & Lashes', 'brazilian': 'Brazilian', 'waxing': 'Waxing', 'hair': 'Hair', 'nails': 'Nails', 'skin': 'Facials & Skin',
         'search': 'Search services', 'book': 'Book', 'from': 'from', 'free': 'Free', 'min': 'min', 'h': 'h',
         'none': 'No services found.', 'help': 'Not sure what to book? Message us on WhatsApp at 321-986-9171 or call 407-270-9102.',
         'sat': 'Saturdays only', 'policy': 'Cancellation & refund policy'},
  'pt': {'eyebrow': 'Agende online', 'title': 'Agende sua visita.', 'sub': 'Escolha o serviço e o horário. Leva menos de um minuto.',
-        'brows': 'Sobrancelhas & Cílios', 'brazilian': 'Brasileira', 'waxing': 'Depilação', 'hair': 'Cabelo', 'skin': 'Faciais & Pele',
+        'brows': 'Sobrancelhas & Cílios', 'brazilian': 'Brasileira', 'waxing': 'Depilação', 'hair': 'Cabelo', 'nails': 'Unhas', 'skin': 'Faciais & Pele',
         'search': 'Buscar serviço', 'book': 'Agendar', 'from': 'a partir de', 'free': 'Grátis', 'min': 'min', 'h': 'h',
         'none': 'Nenhum serviço encontrado.', 'help': 'Na dúvida? Fale com a gente no WhatsApp 321-986-9171 ou ligue 407-270-9102.',
         'sat': 'Só aos sábados', 'policy': 'Política de cancelamento e reembolso'},
  'es': {'eyebrow': 'Reserva en línea', 'title': 'Reserva tu visita.', 'sub': 'Elige un servicio y un horario. Toma menos de un minuto.',
-        'brows': 'Cejas y pestañas', 'brazilian': 'Brasileña', 'waxing': 'Depilación', 'hair': 'Cabello', 'skin': 'Faciales y piel',
+        'brows': 'Cejas y pestañas', 'brazilian': 'Brasileña', 'waxing': 'Depilación', 'hair': 'Cabello', 'nails': 'Uñas', 'skin': 'Faciales y piel',
         'search': 'Buscar servicios', 'book': 'Reservar', 'from': 'desde', 'free': 'Gratis', 'min': 'min', 'h': 'h',
         'none': 'No se encontraron servicios.', 'help': '¿Dudas? Escríbenos por WhatsApp al 321-986-9171 o llama al 407-270-9102.',
         'sat': 'Solo los sábados', 'policy': 'Política de cancelación y reembolso'},
  'he': {'eyebrow': 'הזמנה אונליין', 'title': 'הזמינו את הביקור שלכם.', 'sub': 'בחרו שירות ושעה. זה לוקח פחות מדקה.',
-        'brows': 'גבות וריסים', 'brazilian': 'ברזילאי', 'waxing': 'שעווה', 'hair': 'שיער', 'skin': 'טיפולי פנים ועור',
+        'brows': 'גבות וריסים', 'brazilian': 'ברזילאי', 'waxing': 'שעווה', 'hair': 'שיער', 'nails': 'ציפורניים', 'skin': 'טיפולי פנים ועור',
         'search': 'חיפוש שירות', 'book': 'הזמנה', 'from': 'החל מ-', 'free': 'חינם', 'min': 'דק׳', 'h': 'ש׳',
         'none': 'לא נמצאו שירותים.', 'help': 'לא בטוחים מה להזמין? כתבו לנו בוואטסאפ 321-986-9171 או התקשרו 407-270-9102.',
         'sat': 'רק בשבתות', 'policy': 'מדיניות ביטולים והחזרים'},
  'ar': {'eyebrow': 'احجز عبر الإنترنت', 'title': 'احجز زيارتك.', 'sub': 'اختر الخدمة والموعد. يستغرق الأمر أقل من دقيقة.',
-        'brows': 'الحواجب والرموش', 'brazilian': 'البرازيلي', 'waxing': 'إزالة الشعر بالشمع', 'hair': 'الشعر', 'skin': 'العناية بالبشرة',
+        'brows': 'الحواجب والرموش', 'brazilian': 'البرازيلي', 'waxing': 'إزالة الشعر بالشمع', 'hair': 'الشعر', 'nails': 'الأظافر', 'skin': 'العناية بالبشرة',
         'search': 'ابحث عن خدمة', 'book': 'احجز', 'from': 'ابتداءً من', 'free': 'مجاني', 'min': 'د', 'h': 'س',
         'none': 'لم يتم العثور على خدمات.', 'help': 'لست متأكدًا؟ راسلنا على واتساب 321-986-9171 أو اتصل على 407-270-9102.',
         'sat': 'أيام السبت فقط', 'policy': 'سياسة الإلغاء والاسترداد'},
