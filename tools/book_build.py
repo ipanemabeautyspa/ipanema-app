@@ -285,6 +285,7 @@ customElements.define('ipa-book', E);
 
 js = (JS.replace('__T__', json.dumps(T, ensure_ascii=False)).replace('__D__', json.dumps(DATA, ensure_ascii=False))
         .replace('__CSS__', json.dumps(CSS)).replace('__CATS__', json.dumps([k for k, _ in CATS])))
+js += '\n' + (pathlib.Path(__file__).parent / 'nav_i18n.js').read_text(encoding='utf-8')
 (OUT / 'ipa-book.js').write_text(js, encoding='utf-8')
 (OUT / 'ipa-book.html').write_text('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>ipa-book</title><body style="margin:0"><script src="ipa-book.js"></script><ipa-book></ipa-book></body>', encoding='utf-8')
 print('ok', len(DATA))
