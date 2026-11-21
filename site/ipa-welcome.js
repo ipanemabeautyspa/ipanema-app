@@ -21,7 +21,7 @@ class E extends HTMLElement {
     let body;
     if (state==='new' || state==='returning') {
       const ok = state==='new';
-      body = '<div class="bd done"><h2>'+(ok?t.ok_t:t.back_t)+'</h2><p class="sub">'+(ok?t.ok_s:t.back_s)+'</p><div><a href="https://www.ipanemabeautyandspa.com/services-5" target="_top">'+t.book+'</a></div></div>';
+      body = '<div class="bd done"><h2>'+(ok?t.ok_t:t.back_t)+'</h2><p class="sub">'+(ok?t.ok_s:t.back_s)+'</p><div><a href="https://www.ipanemabeautyandspa.com/book" target="_top">'+t.book+'</a></div></div>';
     } else {
       body = '<div class="bd"><p class="ey">'+t.eyebrow+'</p><h2>'+t.title+'</h2><p class="sub">'+t.sub+'</p>'+
         '<form novalidate><input name="name" autocomplete="name" placeholder="'+t.name+'" required><input name="email" type="email" autocomplete="email" placeholder="'+t.email+'" required><input name="phone" type="tel" autocomplete="tel" placeholder="'+t.phone+'" required>'+

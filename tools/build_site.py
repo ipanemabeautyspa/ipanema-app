@@ -5,7 +5,7 @@ OUT = pathlib.Path('/home/claude/ipanema-app/site')
 OUT.mkdir(exist_ok=True)
 APP = 'https://app.ipanemabeautyandspa.com'
 SITE = 'https://www.ipanemabeautyandspa.com'
-BOOK = SITE + '/services-5'
+BOOK = SITE + '/book'
 BRAZ = SITE + '/booking-calendar/new-client-special-first-brazilian-39'
 WA = 'https://wa.me/13219869171'
 
@@ -37,8 +37,8 @@ PAGE_BLOBS = {
            '3a8f815cb1136a0b2933c805db881d5b': '/img/w/brow-155.jpg'},
 }
 PAGES = {'Main': ('ipa-home', '/'), 'Brows': ('ipa-brows', '/browsandlashes'), 'Waxing': ('ipa-waxing', '/waxing'),
-         'Hair': ('ipa-hair', '/hair'), 'Contact': ('ipa-visit', '/contact-8')}
-NAV = {'brows': '/browsandlashes', 'waxing': '/waxing', 'hair': '/hair', 'visit': '/contact-8', 'contact': '/contact-8', 'home': '/', 'app': '/#app'}
+         'Hair': ('ipa-hair', '/hair'), 'Contact': ('ipa-visit', '/visit')}
+NAV = {'brows': '/browsandlashes', 'waxing': '/waxing', 'hair': '/hair', 'visit': '/visit', 'contact': '/visit', 'home': '/', 'app': '/#app'}
 SOCIAL = {'Instagram': 'https://www.instagram.com/ipanemabeauty_spa', 'Facebook': 'https://www.facebook.com/ipanemabeautyandspa',
           'TikTok': 'https://www.tiktok.com/@ipanemabeauty_spa', 'YouTube': 'https://www.youtube.com/@ipanemabeautyandspa',
           'Pinterest': 'https://www.pinterest.com/ipanemabeautyandspa/', 'Yelp': 'https://www.yelp.com/biz/ipanema-beauty-and-spa-orlando-2'}
@@ -441,7 +441,7 @@ _nf_page = ('<div class="ipa-root">' + LANGBAR + '<section class="nf" style="bac
     '<p class="nf-in" style="margin:18px auto 0;max-width:560px;font-size:20px;line-height:1.55;color:#4d4d4d">The link may be old or mistyped. Everything you came for is still here.</p>'
     '<div class="nf-grid nf-in">' + _nf_cards + '</div>'
     '<p class="nf-in" style="margin:40px 0 0;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">'
-    '<a class="nf-btn" href="%s/services-5" target="_top" style="background:#333333;color:#ffffff;font-size:17px;font-weight:600;padding:15px 30px;border-radius:999px">Book now</a>'
+    '<a class="nf-btn" href="%s/book" target="_top" style="background:#333333;color:#ffffff;font-size:17px;font-weight:600;padding:15px 30px;border-radius:999px">Book now</a>'
     '<a class="nf-btn" href="%s/" target="_top" style="border:1px solid #c9c9c9;color:#333333;font-size:17px;font-weight:600;padding:14px 28px;border-radius:999px">Back to home</a></p>'
     '</div></section>%s</div>') % (SITE, SITE, _foot)
 _nf_css = ('.nf-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:48px;text-align:start}'
