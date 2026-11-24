@@ -17,6 +17,25 @@ if os.environ.get('MODE') == 'check':
     except urllib.error.HTTPError as e:
         print('KEY FAILED', e.code, e.read()[:300]); sys.exit(1)
 
+if os.environ.get('MODE') == 'stats':
+    req = urllib.request.Request(f'https://api.onesignal.com/notifications?app_id={APP_ID}&limit=50',
+                                 headers={'Authorization': f'Key {KEY}'})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        d = json.loads(r.read())
+    import collections
+    tot = collections.Counter(); per = collections.defaultdict(int)
+    for n in d.get('notifications', []):
+        f = json.dumps(n.get('filters') or [])
+        if '"verse"' not in f: continue
+        hr = [x.get('value') for x in (n.get('filters') or []) if x.get('key') == 'verse_hour']
+        day = datetime.datetime.fromtimestamp(n.get('send_after') or n.get('queued_at') or 0).strftime('%m-%d')
+        ok = n.get('successful') or 0
+        per[(day, hr[0] if hr else '?')] += ok
+        tot[day] += ok
+        print('STAT', day, 'hour', hr, 'successful', ok, 'remaining', n.get('remaining'), 'failed', n.get('failed'), 'canceled', n.get('canceled'))
+    for k, v in sorted(tot.items()): print('DAYTOTAL', k, v)
+    sys.exit(0)
+
 verses = json.load(open(os.path.join(os.path.dirname(__file__), '..', 'verses.json'), encoding='utf-8'))
 today = datetime.datetime.now(zoneinfo.ZoneInfo('America/New_York')).date()
 idx = min(364, (today - datetime.date(today.year, 1, 1)).days)
